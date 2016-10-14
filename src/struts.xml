@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.action.extension" value="do,"/>
+
+    <package name="json-default" extends="struts-default">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult" />
+        </result-types>
+        <interceptors>
+            <interceptor name="json"
+                         class="org.apache.struts2.json.JSONInterceptor" />
+            <interceptor name="jsonValidation"
+                         class="org.apache.struts2.json.JSONValidationInterceptor" />
+            <interceptor-stack name="jsonValidationWorkflowStack">
+                <interceptor-ref name="basicStack" />
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel</param>
+                </interceptor-ref>
+                <interceptor-ref name="jsonValidation" />
+                <interceptor-ref name="workflow" />
+            </interceptor-stack>
+        </interceptors>
+    </package>
+    <package name="framework" namespace="/" extends="json-default">
+        <global-results>
+            <result name="ajaxActionCompleted" type="json">
+                <param name="root">ajaxActionResult</param>
+            </result>
+        </global-results>
+
+        <action name="File!*" class="pf.action.FileAction" method="{1}">
+        </action>
+
+        <!-- compatible api -->
+        <action name="getuseragent.*" class="pf.action.WebAction" method="judgeUserAgent">
+        </action>
+        <action name="shoppay.*" class="pf.action.WebAction" method="ChoogPayment">
+            <result name="WeixinJsPay" type="chain">
+                <param name="actionName">WebpagePayAction!prePay</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="JDJsPay" type="chain">
+                <param name="actionName">WebpagePayAction!prePay</param>
+                <param name="namespace">/jdpay</param>
+            </result>
+            <result name="AliJsPay" type="chain">
+                <param name="actionName">WebpagePayAction!prePay</param>
+                <param name="namespace">/alipay</param>
+            </result>
+            <result name="BestJsPay" type="chain">
+                <param name="actionName">WebpagePayAction!prePay</param>
+                <param name="namespace">/bestpay</param>
+            </result>
+            <result name="goto404">./weixin/404.jsp</result>
+        </action>
+
+        <action name="jjzzjjzz.*" class="pf.weixin.action.WebpagePayAction" method="scanPay">
+            <result name="scanPay">./weixin/scanpay.jsp</result>
+        </action>
+        <action name="WebpagePayAction!*" class="pf.weixin.action.WebpagePayAction" method="{1}">
+            <result name="scanPay">./weixin/scanpay.jsp</result>
+        </action>
+        <action name="downfile.*" class="pf.action.FileAction" method="DownLoadFile">
+        </action>
+        <action name="sign.*" class="pf.merchant.action.SubMerchantUserAction" method="oldBindMsg">
+        </action>
+        <action name="interface.*" class="pf.weixin.action.OrderAction" method="invalidQuery">
+        </action>
+    </package>
+
+    <include file="pf/api/struts-api.xml" />
+    <include file="pf/merchant/struts-merchant.xml" />
+    <constant name="struts.custom.i18n.resources" value="pf/weixin/mui/resources"/>
+    <include file="pf/weixin/struts-weixin.xml" />
+</struts>
