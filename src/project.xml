@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+    <id>1629719047391232</id>
+    <name>PaymentFramWork</name>
+    <serverAddress>127.0.0.1</serverAddress>
+    <idWorkerSeed>0</idWorkerSeed>
+    <notifyPort>2016</notifyPort>
+    <weixinserverinfo>
+        <appid>wx815b2be8e1f134ec</appid>
+        <appsecret>8ec3393b84db0d2d503896cc228c7051</appsecret>
+        <apikey>yongjiazhennihangkong1342007801s</apikey>
+        <mchid>1342007801</mchid>
+        <templateid>Sw7u_egCSixPsfOJB0lpSBdg0kz0tMAPujZhoqV41NM</templateid>
+        <noticetemplate_id>XqOGqOHpGq437NxHRGmQBuDk0tntAwm_LfM0RCItL-Y</noticetemplate_id>
+        <editer>CC客服</editer>
+    </weixinserverinfo>
+</project>
