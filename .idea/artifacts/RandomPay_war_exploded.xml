@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="RandomPay:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/RandomPay_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="RandomPay/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="RandomPay" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Struts 2-2.3.20.1" />
+          <element id="library" level="project" name="HttpClient 4.5.2" />
+          <element id="library" level="project" name="MyBatis 3.3.1" />
+          <element id="library" level="project" name="XStream 1.4.9" />
+          <element id="library" level="project" name="MySql 5.1.10" />
+          <element id="library" level="project" name="Log4j-1.2.17" />
+          <element id="library" level="project" name="Bouncy-Castle" />
+          <element id="library" level="project" name="Dom4j-1.6.1" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
