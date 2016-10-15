@@ -19,7 +19,7 @@ public class BonusPool {
             mapping.set(bonus - 1, mapping.get(bonus - 1) + 1);
         } while (bonusPool.PoolSize() != 0);
 
-        System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + POOLSIZE);
+        System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + 10000);
         System.out.println("Total Bonus:" + totalBonus);
         System.out.println("Bonus Distributed:");
         for (int index = 0; index < mapping.size(); ++index) {
@@ -33,6 +33,18 @@ public class BonusPool {
         bonusBase_ = bonusBase;
         bonusMax_ = bonusMax;
         lossRate_ = lossRate;
+        poolSize_ = 10000;
+        poolLossRate_ = 0.95;
+        bonusList_ = new ArrayList<>(poolSize_);
+    }
+
+    public BonusPool(Integer bonusBase, Integer bonusMax, double lossRate, Integer poolSize, Double poolLossRate) {
+        bonusBase_ = bonusBase;
+        bonusMax_ = bonusMax;
+        lossRate_ = lossRate;
+        poolSize_ = poolSize;
+        poolLossRate_ = poolLossRate;
+        bonusList_ = new ArrayList<>(poolSize);
     }
 
     public Integer popBonus() {
@@ -54,9 +66,9 @@ public class BonusPool {
 
     private boolean generateBonus() {
         bonusList_.clear();
-        int totalBonus = (int)(bonusBase_ * POOLSIZE * lossRate_);
-        int poolLossSize = (int)(POOLSIZE * POOLLOSSRATE);
-        int profitSize = POOLSIZE - poolLossSize;
+        int totalBonus = (int)(bonusBase_ * poolSize_ * lossRate_);
+        int poolLossSize = (int)(poolSize_ * poolLossRate_);
+        int profitSize = poolSize_ - poolLossSize;
 
         // generate loss bonus
         while (poolLossSize-- != 0) {
@@ -111,9 +123,9 @@ public class BonusPool {
     private Integer bonusBase_;
     private Integer bonusMax_;
     private double lossRate_;
-    private final static Integer POOLSIZE = 10000;
-    private final static Double POOLLOSSRATE = 0.95;
-    private List<Integer> bonusList_ = new ArrayList<Integer>(POOLSIZE);
+    private Integer poolSize_ = 1000;
+    private Double poolLossRate_ = 0.95;
+    private List<Integer> bonusList_;
     private Random indexRandom_ = new Random();
     private Random bonusRandom_ = new Random();
 }
