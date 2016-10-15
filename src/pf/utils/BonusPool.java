@@ -19,7 +19,7 @@ public class BonusPool {
             mapping.set(bonus - 1, mapping.get(bonus - 1) + 1);
         } while (bonusPool.PoolSize() != 0);
 
-        System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + 10000);
+        System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + 200);
         System.out.println("Total Bonus:" + totalBonus);
         System.out.println("Bonus Distributed:");
         for (int index = 0; index < mapping.size(); ++index) {
@@ -33,7 +33,7 @@ public class BonusPool {
         bonusBase_ = bonusBase;
         bonusMax_ = bonusMax;
         lossRate_ = lossRate;
-        poolSize_ = 10000;
+        poolSize_ = 200;
         poolLossRate_ = 0.95;
         bonusList_ = new ArrayList<>(poolSize_);
     }
