@@ -6,13 +6,27 @@ import java.util.Random;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
-        BonusPool bonusPool = new BonusPool(10, 200, 0.9);
+        ArrayList<Integer> mapping = new ArrayList<>();
+        for (int index = 0; index < 200; ++index) {
+            mapping.add(0);
+        }
+
         int totalBonus = 0;
-        while (true) {
+        BonusPool bonusPool = new BonusPool(10, 200, 0.9);
+        do {
             int bonus = bonusPool.popBonus();
             totalBonus += bonus;
-            System.out.println("Current Bonus is:" + bonus);
+            mapping.set(bonus - 1, mapping.get(bonus - 1) + 1);
+        } while (bonusPool.PoolSize() != 0);
+
+        System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + POOLSIZE);
+        System.out.println("Total Bonus:" + totalBonus);
+        System.out.println("Bonus Distributed:");
+        for (int index = 0; index < mapping.size(); ++index) {
+            totalBonus += mapping.get(index);
+            System.out.println("Bonus " + (index + 1) + " : " + mapping.get(index));
         }
+        System.out.println();
     }
 
     public BonusPool(Integer bonusBase, Integer bonusMax, double lossRate) {
@@ -32,6 +46,10 @@ public class BonusPool {
             bonusList_.remove(index);
             return bonus;
         }
+    }
+
+    public int PoolSize() {
+        return bonusList_.size();
     }
 
     private boolean generateBonus() {
