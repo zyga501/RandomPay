@@ -41,13 +41,11 @@ public class BonusPool {
         int profitSize = POOLSIZE - poolLossSize;
 
         // generate loss bonus
-        int totalLost = 0;
         while (poolLossSize-- != 0) {
             int bonus = (int)(bonusRandom_.nextDouble() * bonusBase_);
             if (bonus == 0) {
                 bonus++;
             }
-            totalLost += bonus;
             totalBonus -= bonus;
             bonusList_.add(bonus);
         }
@@ -71,29 +69,22 @@ public class BonusPool {
 
             int bonus = Math.min(bonusRandom_.nextInt(errorBase) + errorBase, totalError);
             int index = indexRandom_.nextInt(profitList.size());
-            if ((bonus + profitList.get(index)) > bonusMax_) {
+            if ((profitList.get(index) - bonus) > bonusMax_) {
                 bonus = bonusMax_ - profitList.get(index);
                 profitList.remove(index);
                 bonusList_.add(bonusMax_);
             }
-            else if (bonus + profitList.get(index) < bonusBase_) {
-                bonus = bonusBase_ - profitList.get(index);
-                profitList.remove(index);
-                bonusList_.add(bonusBase_);
+            else if ((profitList.get(index) - bonus) < bonusBase_) {
+                continue;
             }
             else {
-                profitList.set(index, profitList.get(index) + bonus);
+                profitList.set(index, profitList.get(index) - bonus);
             }
             totalError -= bonus;
         }
 
         for (Integer bonus : profitList) {
             bonusList_.add(bonus);
-        }
-
-        int total = 0;
-        for (Integer bonus : bonusList_) {
-            total += bonus;
         }
 
         return true;

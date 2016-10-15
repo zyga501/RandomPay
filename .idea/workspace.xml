@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0de99435-4da5-4695-9ff2-c22f11f500e2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pf/utils/BonusPool.java" afterPath="$PROJECT_DIR$/src/pf/utils/BonusPool.java" />
     </list>
     <ignored path="RandomPay.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,11 +53,11 @@
       <file leaf-file-name="BonusPool.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pf/utils/BonusPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.10166919">
-              <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.25948405">
+              <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3374#3383#0" expanded="true" />
+                <element signature="e#3092#3101#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1042,12 +1043,12 @@
       <workItem from="1476342252000" duration="315000" />
       <workItem from="1476342624618" duration="15344000" />
       <workItem from="1476428372121" duration="47000" />
-      <workItem from="1476530540483" duration="5697000" />
+      <workItem from="1476530540483" duration="7038000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78102000" />
+    <option name="totallyTimeSpent" value="79443000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-8" width="1870" height="1096" extended-state="6" />
@@ -1132,12 +1133,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/pf/utils/BonusPool.java</url>
-          <line>98</line>
+          <line>26</line>
           <properties />
-          <option name="timeStamp" value="27" />
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="38" />
+      <option name="time" value="47" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -1538,11 +1539,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pf/utils/BonusPool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10166919">
-          <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.25948405">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3374#3383#0" expanded="true" />
+            <element signature="e#3092#3101#0" expanded="true" />
           </folding>
         </state>
       </provider>
