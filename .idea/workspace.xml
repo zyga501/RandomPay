@@ -2,57 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0de99435-4da5-4695-9ff2-c22f11f500e2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/action/CommonAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/action/SpecialAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/mode/BaseMode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/mode/WeixinMode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/struts-api.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/test/RequestData/JsPayData.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/test/RequestData/MicroPayRequestData.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/test/RequestData/ScanPayRequestData.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/api/test/TestPayAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/Database.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/IdMapUUID.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/MerchantInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/OAuthLogin.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/OrderInfoCollect.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/SubMerchantInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/SubMerchantUser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/conf.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/mapping/IdMapUUID.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/mapping/MerchantInfo.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/mapping/OAuthlogin.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/mapping/SubMerchantInfo.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/merchant/mapping/SubMerchantUser.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/Database.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/WxMerchantInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/WxOrderInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/WxOrderInfoCollect.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/WxSubMerchantAct.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/WxSubMerchantInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/conf.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/mapping/MerchantInfo.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/mapping/OrderInfo.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/mapping/SubMerchantAct.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/database/weixin/mapping/SubMerchantInfo.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/merchant/action/MerchantAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/merchant/action/SubMerchantAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/merchant/action/SubMerchantUserAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/merchant/struts-merchant.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/action/CallbackAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/action/OrderAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/action/WebpagePayAction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/api/AccessToken.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/api/MicroPay.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/api/Refund.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/api/TemplateMessage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/api/UnifiedOrder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/api/UserInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/mui/resources_zh_CN.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pf/weixin/servlet/AccessTokenServlet.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pf/weixin/action/PayAction.java" afterPath="$PROJECT_DIR$/src/pf/weixin/action/PayAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/struts.xml" afterPath="$PROJECT_DIR$/src/struts.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/alipay/index.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/alipay/jspay.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/bestpay/index.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/bestpay/jspay.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/jdpay/index.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/jdpay/jsPayCallback.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/jdpay/jspay.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/merchant/bindSubMerchant.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/merchant/bindSubMerchantUser.jsp" afterPath="" />
     </list>
     <ignored path="RandomPay.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -149,8 +107,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0679157">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.4449649">
+              <caret line="11" column="77" selection-start-line="11" selection-start-column="77" selection-end-line="11" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -316,6 +274,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="RandomPay" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomPay" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomPay" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1043,16 +1015,16 @@
       <workItem from="1476342624618" duration="15344000" />
       <workItem from="1476428372121" duration="47000" />
       <workItem from="1476530540483" duration="9468000" />
-      <workItem from="1476621400267" duration="2053000" />
+      <workItem from="1476621400267" duration="2167000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83926000" />
+    <option name="totallyTimeSpent" value="84040000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-8" width="1870" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1066,7 +1038,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23591161" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23591161" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1552,8 +1524,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0679157">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.4449649">
+          <caret line="11" column="77" selection-start-line="11" selection-start-column="77" selection-end-line="11" selection-end-column="77" />
           <folding />
         </state>
       </provider>
