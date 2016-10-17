@@ -53,12 +53,14 @@
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
     <script>
         function paychoose() {
-            layer.msg("we234234dsfsdfsdf");
-            layer.confirm("请关注公众号等待审核消息<br><img style='width:200px;height:200px'>", {
-                btn: ['已经关注'] //按钮
-            }, function () {
-                window.close();
-            })
+            layer.open({
+            type: 2,
+            title: 'Pay',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['380px', '90%'],
+            content: 'choosepay.jsp' //iframe的url
+        });
         };
     </script>
 </head>
