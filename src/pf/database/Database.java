@@ -1,4 +1,4 @@
-package pf.database.weixin;
+package pf.database;
 
 import framework.database.DatabaseFramework;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,7 +9,7 @@ public class Database extends DatabaseFramework {
     }
 
     static {
-        String mybatisConfig = "pf/database/weixin/conf.xml";
+        String mybatisConfig = "pf/database/conf.xml";
         sqlSessionFactory_ = DatabaseFramework.buildSqlSessionFactory(mybatisConfig);
     }
 
