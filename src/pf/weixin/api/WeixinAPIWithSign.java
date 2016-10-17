@@ -16,6 +16,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import pf.ProjectLogger;
+import pf.ProjectSettings;
 import pf.weixin.api.RequestBean.RandomPayRequestData;
 import pf.weixin.api.RequestBean.RequestData;
 import pf.weixin.utils.Signature;
@@ -31,6 +32,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
         return responseResult_;
     }
 
+
     public boolean postRequest(String apiKey) throws Exception {
         if (!requestData_.checkParameter() || apiKey.isEmpty()) {
             ProjectLogger.error(this.getClass().getName() + " CheckParameter Failed!");
@@ -44,7 +46,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
             return false;
         }
         KeyStore keyStore  = KeyStore.getInstance("PKCS12");
-        FileInputStream instream = new FileInputStream(new File("C:\\Users\\hammer\\Downloads\\cert\\apiclient_cert.p12"));
+        FileInputStream instream = new FileInputStream(new File( ProjectSettings.getMapData("weixinserverinfo").get("p12path").toString()));
         keyStore.load(instream, "1342007801".toCharArray());
         instream.close();
         SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, "1342007801".toCharArray()).build();
