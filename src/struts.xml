@@ -33,48 +33,7 @@
             </result>
         </global-results>
 
-        <action name="File!*" class="pf.action.FileAction" method="{1}">
-        </action>
-
-        <!-- compatible api -->
-        <action name="getuseragent.*" class="pf.action.WebAction" method="judgeUserAgent">
-        </action>
-        <action name="shoppay.*" class="pf.action.WebAction" method="ChoogPayment">
-            <result name="WeixinJsPay" type="chain">
-                <param name="actionName">WebpagePayAction!prePay</param>
-                <param name="namespace">/</param>
-            </result>
-            <result name="JDJsPay" type="chain">
-                <param name="actionName">WebpagePayAction!prePay</param>
-                <param name="namespace">/jdpay</param>
-            </result>
-            <result name="AliJsPay" type="chain">
-                <param name="actionName">WebpagePayAction!prePay</param>
-                <param name="namespace">/alipay</param>
-            </result>
-            <result name="BestJsPay" type="chain">
-                <param name="actionName">WebpagePayAction!prePay</param>
-                <param name="namespace">/bestpay</param>
-            </result>
-            <result name="goto404">./weixin/404.jsp</result>
-        </action>
-
-        <action name="jjzzjjzz.*" class="pf.weixin.action.WebpagePayAction" method="scanPay">
-            <result name="scanPay">./weixin/scanpay.jsp</result>
-        </action>
-        <action name="WebpagePayAction!*" class="pf.weixin.action.WebpagePayAction" method="{1}">
-            <result name="scanPay">./weixin/scanpay.jsp</result>
-        </action>
-        <action name="downfile.*" class="pf.action.FileAction" method="DownLoadFile">
-        </action>
-        <action name="sign.*" class="pf.merchant.action.SubMerchantUserAction" method="oldBindMsg">
-        </action>
-        <action name="interface.*" class="pf.weixin.action.OrderAction" method="invalidQuery">
-        </action>
     </package>
 
-    <include file="pf/api/struts-api.xml" />
-    <include file="pf/merchant/struts-merchant.xml" />
-    <constant name="struts.custom.i18n.resources" value="pf/weixin/mui/resources"/>
     <include file="pf/weixin/struts-weixin.xml" />
 </struts>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pf.database.mapping.pendingOrder">
+    <select id="getPendingOrder" resultMap="orderInfoResult">
+        SELECT * FROM PendingOrder
+    </select>
+
+    <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
+        INSERT INTO PendingOrder(openid, amount)
+        VALUE (#{openid},#{amount})
+    </insert>
+
+    <resultMap type="pf.database.OrderInfo" id="orderInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="openid" column="openid" jdbcType="VARCHAR" />
+        <result property="amount" column="amount" jdbcType="NUMERIC" />
+    </resultMap>
+</mapper>
