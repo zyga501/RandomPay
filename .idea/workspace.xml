@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0de99435-4da5-4695-9ff2-c22f11f500e2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/image/hb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/image/top.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/laydate.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/laypage.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/layer.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pf/weixin/action/PayAction.java" afterPath="$PROJECT_DIR$/src/pf/weixin/action/PayAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pf/weixin/api/WeixinAPIWithSign.java" afterPath="$PROJECT_DIR$/src/pf/weixin/api/WeixinAPIWithSign.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/project.xml" afterPath="$PROJECT_DIR$/src/project.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/struts.xml" afterPath="$PROJECT_DIR$/src/struts.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/weixin/choosepay.jsp" afterPath="$PROJECT_DIR$/web/weixin/choosepay.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/weixin/randompay.jsp" afterPath="$PROJECT_DIR$/web/weixin/randompay.jsp" />
     </list>
     <ignored path="RandomPay.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="project.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/project.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5144404">
-              <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+            <state vertical-scroll-proportion="-3.392857">
+              <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -103,8 +95,8 @@
       <file leaf-file-name="scanpay.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/weixin/scanpay.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.464286">
-              <caret line="182" column="49" selection-start-line="182" selection-start-column="49" selection-end-line="182" selection-end-column="49" />
+            <state vertical-scroll-proportion="-5.035714">
+              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -113,23 +105,19 @@
       <file leaf-file-name="randompay.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/weixin/randompay.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="9.5">
-              <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
-              <folding>
-                <marker date="1476689486188" expanded="true" signature="1673:1697" placeholder="..." />
-              </folding>
+            <state vertical-scroll-proportion="-5.035714">
+              <caret line="54" column="30" selection-start-line="54" selection-start-column="30" selection-end-line="54" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="choosepay.jsp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="choosepay.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/weixin/choosepay.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.5357143">
-              <caret line="54" column="25" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
-              <folding>
-                <marker date="1476690987183" expanded="true" signature="1632:1656" placeholder="..." />
-              </folding>
+            <state vertical-scroll-proportion="0.73049647">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -176,8 +164,6 @@
         <option value="$PROJECT_DIR$/src/pf/database/OrderInfo.java" />
         <option value="$PROJECT_DIR$/src/pf/database/PendingOrder.java" />
         <option value="$PROJECT_DIR$/src/struts.xml" />
-        <option value="$PROJECT_DIR$/web/weixin/randompay.jsp" />
-        <option value="$PROJECT_DIR$/web/weixin/choosepay.jsp" />
         <option value="$PROJECT_DIR$/src/pf/weixin/api/RequestBean/UnifiedOrder.java" />
         <option value="$PROJECT_DIR$/src/pf/weixin/action/PayAction.java" />
         <option value="$PROJECT_DIR$/src/pf/weixin/api/TemplateMessage.java" />
@@ -186,6 +172,8 @@
         <option value="$PROJECT_DIR$/src/pf/weixin/action/CallbackAction.java" />
         <option value="$PROJECT_DIR$/src/pf/weixin/api/WeixinAPIWithSign.java" />
         <option value="$PROJECT_DIR$/src/project.xml" />
+        <option value="$PROJECT_DIR$/web/weixin/randompay.jsp" />
+        <option value="$PROJECT_DIR$/web/weixin/choosepay.jsp" />
       </list>
     </option>
   </component>
@@ -1120,12 +1108,12 @@
       <workItem from="1476530540483" duration="9468000" />
       <workItem from="1476621400267" duration="2053000" />
       <workItem from="1476667435378" duration="297000" />
-      <workItem from="1476667748007" duration="12816000" />
+      <workItem from="1476667748007" duration="13971000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97039000" />
+    <option name="totallyTimeSpent" value="98194000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1151,7 +1139,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21440262" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21440262" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1576,34 +1564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/weixin/scanpay.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.464286">
-          <caret line="182" column="49" selection-start-line="182" selection-start-column="49" selection-end-line="182" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/weixin/randompay.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="9.5">
-          <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
-          <folding>
-            <marker date="1476689486188" expanded="true" signature="1673:1697" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/weixin/choosepay.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5357143">
-          <caret line="54" column="25" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
-          <folding>
-            <marker date="1476690987183" expanded="true" signature="1632:1656" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pf/weixin/api/WxAPIWithSign.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18554688">
@@ -1680,8 +1640,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/project.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5144404">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+        <state vertical-scroll-proportion="-3.392857">
+          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/weixin/randompay.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.035714">
+          <caret line="54" column="30" selection-start-line="54" selection-start-column="30" selection-end-line="54" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/weixin/scanpay.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.035714">
+          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/weixin/choosepay.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73049647">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
