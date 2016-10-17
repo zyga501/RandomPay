@@ -39,7 +39,7 @@ public class PayAction extends AjaxActionSupport {
     public void jsPay() throws IOException {
         do {
             String appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-            String subMerchantUserId = getParameter("id").toString();
+            String subMerchantUserId = "0";// getParameter("id").toString();
             String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/jsPayCallback.jsp";
             String sessionId = getRequest().getSession().getId();
             String jspayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
@@ -48,11 +48,11 @@ public class PayAction extends AjaxActionSupport {
             // save session data, state is too short
             String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s','data':'%s'}",
                     subMerchantUserId,
-                    StringUtils.convertNullableString(getParameter("body")),
+                    StringUtils.convertNullableString(""),
                     StringUtils.convertNullableString(getParameter("total_fee")),
-                    StringUtils.convertNullableString(getParameter("out_trade_no")),
-                    StringUtils.convertNullableString(getParameter("redirect_uri")),
-                    StringUtils.convertNullableString(getParameter("data")));
+                    StringUtils.convertNullableString(""),//getParameter("out_trade_no")
+                    StringUtils.convertNullableString(null),
+                    StringUtils.convertNullableString(null));
             String zipData = Zip.zip(data);
             getRequest().getSession().setAttribute("data", zipData);
             SessionCache.setSessionData(sessionId, zipData);

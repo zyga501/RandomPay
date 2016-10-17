@@ -22,14 +22,23 @@
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
     <script>
         function pay(b){
-            alert(b)
+            $.ajax({
+                type: 'post',
+                url: '<%=request.getContextPath()%>/weixin/Pay!jsPay',
+                dataType:"json",
+                data:{total_fee:b},
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    alert(data);;
+                }
+            })
         }
     </script>
 </head>
 <body scroll="no">
-<input type="button" class="but"  value="支付10元"   onclick="pay(1000)" /><br><br>
-<input type="button" class="but"  value="支付20元"   onclick="pay(2000)" /><br><br>
-<input type="button"  class="but" value="支付50元"   onclick="pay(5000)" /><br><br>
-<input type="button"  class="but" value="支付100元"   onclick="pay(10000)" /><br>
+<input type="button" class="but"  value="支付10元"   onclick="pay(1000)" />奖金1~200<br><br>
+<input type="button" class="but"  value="支付20元"   onclick="pay(2000)" />奖金5~400<br><br>
+<input type="button"  class="but" value="支付50元"   onclick="pay(5000)" />奖金10~1000<br><br>
+<input type="button"  class="but" value="支付100元"   onclick="pay(10000)" />奖金10~2000<br>
 </body>
 </html>

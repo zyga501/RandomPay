@@ -35,4 +35,5 @@
 
     </package>
 
+    <include file="pf/weixin/struts-weixin.xml" />
 </struts>
