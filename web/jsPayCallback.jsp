@@ -26,7 +26,7 @@
             url: '<%=request.getContextPath()%>/weixin/Pay!brandWCPay',
             dataType:"json",
             data:$("form").serialize(),
-            success: function (data) {alert(data);
+            success: function (data) {
                 var json=eval("("+data+")");
                 WeixinJSBridge.invoke(
                         'getBrandWCPayRequest',
@@ -39,20 +39,7 @@
                             "paySign" : json.paySign       //微信签名
                         }
                         , function(result) {  alert(result.err_msg);
-                           /* var formRequest = document.createElement("form");
-                            formRequest.action = json.redirect_uri;
-                            formRequest.method = "post";
-                            formRequest.style.display = "none";
-                            var opt = document.createElement("textarea");
-                            opt.name = "result";
-                            opt.value = result.err_msg;
-                            formRequest.appendChild(opt);
-                            opt.name= "data";
-                            opt.value = json.data;
-                            formRequest.appendChild(opt);
-                            document.body.appendChild(formRequest);
-                            formRequest.submit();
-                            WeixinJSBridge.call('closeWindow');*/
+                            window.parent.location.href = json.redirect_uri;
                         });
             }
         })
