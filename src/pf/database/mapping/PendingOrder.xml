@@ -4,10 +4,10 @@
     <select id="getPendingOrder" resultMap="orderInfoResult">
         SELECT * FROM PendingOrder
     </select>
-    <select id="getPendingOrderByOpenid" parameterType="long" resultMap="orderInfoResult">
+    <select id="getPendingOrderByOpenid" parameterType="String" resultMap="orderInfoResult">
         SELECT * FROM PendingOrder where openid=#{openid}
     </select>
-    <select id="deletePendingOrderByOpenid" parameterType="long">
+    <select id="deletePendingOrderByOpenid" parameterType="String">
         DELETE PendingOrder WHERE openid=#{openid}
     </select>
 
@@ -16,7 +16,7 @@
         VALUE (#{openid},#{amount})
     </insert>
 
-    <resultMap type="pf.database.OrderInfo" id="orderInfoResult">
+    <resultMap type="pf.database.PendingOrder" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
         <result property="amount" column="amount" jdbcType="NUMERIC" />

@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
-
-
     public void fetchWxCode() throws IOException {
         String appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
         String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/Pay!fetchWxOpenid";
@@ -111,8 +109,6 @@ public class PayAction extends AjaxActionSupport {
         resultMap.put("package", "prepay_id=" + unifiedOrder.getResponseResult().get("prepay_id").toString());
         resultMap.put("signType", "MD5");
         resultMap.put("paySign", Signature.generateSign(resultMap,ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString()));
-        resultMap.put("redirect_uri", "<%=request.getContextPath()%>/weixin/Pay!mainPage");
-        resultMap.put("data", "");
         return AjaxActionComplete(resultMap);
     }
 
