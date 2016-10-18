@@ -62,6 +62,23 @@
             content: 'choosepay.jsp' //iframe的url
         });
         };
+        function randomPay(){
+            $.ajax({
+                type: 'post',
+                url: '<%=request.getContextPath()%>/weixin/Pay!randomPay',
+                dataType:"json",
+                data:$("form").serialize(),
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    if (json.State == "NoData") {
+                        alert("没有找到付款信息，请先付款，如果已经付款请稍等片刻再次点击！")
+                    }
+                    else {
+                        alert(json.State);
+                    }
+                }
+            })
+        }
     </script>
 </head>
 <body scroll="no">
@@ -72,9 +89,8 @@
                 <td colspan=5 align="center" valign="middle">
                     <button class="button" onclick="paychoose()">付     款</button></td>
             </tr>
-            <tr class = "bjtr">
-                <td  >
-    234元
+            <tr class = "bjtr" onclick="randomPay()">
+                <td onclick="">
                 </td>
                 <td>
                     
@@ -89,7 +105,7 @@
                     
                 </td>
             </tr>
-            <tr class = "bjtr">
+            <tr class = "bjtr" onclick="randomPay()">
                 <td>
                     
                 </td>
@@ -106,7 +122,7 @@
                     
                 </td>
             </tr>
-            <tr class = "bjtr">
+            <tr class = "bjtr" onclick="randomPay()">
                 <td>
                     
                 </td>

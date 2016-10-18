@@ -35,27 +35,18 @@ public class CallbackAction extends AjaxActionSupport {
         bufferedReader.close();
 
         String responseString = stringBuilder.toString();
-        Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);;
-        if (!Signature.checkSignValid(responseResult, ProjectSettings.getMapData("weixinserverinfo").get("appkey").toString())) {
-            ProjectLogger.warn(this.getClass().getName() + " CheckSignValid Failed!");
-            ProjectLogger.error(this.getClass().getName() + " " + responseString);
-            return;
-        }
-
+        Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);
         saveOrderToDb(responseResult);
     }
 
     private boolean saveOrderToDb(Map<String,Object> responseResult) {
-        try {
-            synchronized (syncObject) {
+        synchronized (syncObject) {
+            if (PendingOrder.getPendingOrderByOpenId(responseResult.get("openid").toString()) == null) {
                 PendingOrder pendingOrder = new PendingOrder();
-                pendingOrder.setOpenid(getParameter("openid").toString());
+                pendingOrder.setOpenid(responseResult.get("openid").toString());
                 pendingOrder.setAmount(Integer.parseInt(responseResult.get("total_fee").toString()));
                 PendingOrder.insertOrderInfo(pendingOrder);
             }
-        }
-        catch (Exception exception) {
-
         }
         return true;
     }
