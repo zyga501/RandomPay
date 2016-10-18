@@ -68,7 +68,10 @@ public class AjaxActionSupport extends ActionSupport {
     public void setParameter(Map<String, Object> parameters) {
         ActionContext.getContext().setParameters(parameters);
     }
-
+    public void setParameter(Object key, Object value) {
+        parameterMap_.put(key, value);
+        setParameter(parameterMap_);
+    }
     public String getAjaxActionResult() {
         return ajaxActionResult_;
     }
