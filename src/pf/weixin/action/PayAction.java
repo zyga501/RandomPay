@@ -58,6 +58,7 @@ public class PayAction extends AjaxActionSupport {
         PendingOrder pendingOrder = PendingOrder.getPendingOrderByOpenId(getAttribute("openid"));
         if (pendingOrder != null) {
             randomPayRequestData.amount = BonusPool.getBonus(pendingOrder.getAmount() / 100) * 100;
+            ProjectLogger.info("Bonus:" + randomPayRequestData.amount);
         }
         else {
             Map<String, String> resultMap = new HashMap<>();
@@ -80,7 +81,7 @@ public class PayAction extends AjaxActionSupport {
         OrderInfo.insertOrderInfo(orderInfo);
 
         Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount + "元红包！");
+        resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100 + "元红包！");
         return AjaxActionComplete(resultMap);
     }
 
