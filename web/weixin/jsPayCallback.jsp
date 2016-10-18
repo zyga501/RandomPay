@@ -20,13 +20,13 @@
 </body >
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
 <script>
-    function onBridgeReady(){ alert($("form").serialize());
+    function onBridgeReady(){
         $.ajax({
             type: 'post',
             url: '<%=request.getContextPath()%>/weixin/Pay!brandWCPay',
             dataType:"json",
             data:$("form").serialize(),
-            success: function (data) {
+            success: function (data) {alert(data);
                 var json=eval("("+data+")");
                 WeixinJSBridge.invoke(
                         'getBrandWCPayRequest',
@@ -38,8 +38,8 @@
                             "signType" : json.signType,    //微信签名方式
                             "paySign" : json.paySign       //微信签名
                         }
-                        , function(result) {
-                            var formRequest = document.createElement("form");
+                        , function(result) {  alert(result.err_msg);
+                           /* var formRequest = document.createElement("form");
                             formRequest.action = json.redirect_uri;
                             formRequest.method = "post";
                             formRequest.style.display = "none";
@@ -52,7 +52,7 @@
                             formRequest.appendChild(opt);
                             document.body.appendChild(formRequest);
                             formRequest.submit();
-                            WeixinJSBridge.call('closeWindow');
+                            WeixinJSBridge.call('closeWindow');*/
                         });
             }
         })
