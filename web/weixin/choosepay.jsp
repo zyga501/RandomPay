@@ -22,7 +22,7 @@
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
     <script>
         function pay(b){
-            window.parent.location.href = "jsPayCallback.jsp?total_fee="+b;
+            window.parent.location.href = "<%=request.getContextPath()%>/weixin/jsPayCallback.jsp?total_fee="+b;
         }
     </script>
 </head>
