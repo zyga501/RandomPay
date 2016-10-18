@@ -66,9 +66,7 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String brandWCPay() throws Exception {
-        System.out.println("234234");
-        System.out.println("openid="+ getAttribute("openid"));
-        System.out.println("total_fee="+ getAttribute("total_fee"));
+        System.out.println("total_fee="+ getParameter("total_fee"));
             UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
             unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
             unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
@@ -83,16 +81,22 @@ public class PayAction extends AjaxActionSupport {
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
                     + CallbackAction.BRANDWCPAYCALLBACK;
             unifiedOrderRequestData.notify_url = requestUrl;
-            if (null!=getParameter("out_trade_no")) {
-                unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
-            }
-
             UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
             if (!unifiedOrder.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
                 ProjectLogger.warn("BrandWCPay Failed!");
                 return AjaxActionComplete();
             }
-        return AjaxActionComplete(true);
+
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("appId", unifiedOrderRequestData.appid);
+        resultMap.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+        resultMap.put("nonceStr", StringUtils.generateRandomString(32));
+        resultMap.put("package", "prepay_id=" + unifiedOrder.getResponseResult().get("prepay_id").toString());
+        resultMap.put("signType", "MD5");
+        resultMap.put("paySign", Signature.generateSign(resultMap,ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString()));
+        resultMap.put("redirect_uri", "");
+        resultMap.put("data", "");
+        return AjaxActionComplete(resultMap);
     }
 
 }
