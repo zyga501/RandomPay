@@ -4,6 +4,9 @@
     <select id="getPendingOrder" resultMap="orderInfoResult">
         SELECT * FROM PendingOrder
     </select>
+    <select id="getPendingOrderByOpenid" resultMap="orderInfoResult">
+        SELECT * FROM PendingOrder where openid=#{openid}
+    </select>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
         INSERT INTO PendingOrder(openid, amount)
