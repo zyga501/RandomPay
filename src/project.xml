@@ -14,7 +14,7 @@
         <templateid>Sw7u_egCSixPsfOJB0lpSBdg0kz0tMAPujZhoqV41NM</templateid>
         <noticetemplate_id>XqOGqOHpGq437NxHRGmQBuDk0tntAwm_LfM0RCItL-Y</noticetemplate_id>
         <editer>CC客服</editer>
-        <p12path>D:\\cert\\\apiclient_cert.p12</p12path>
+        <p12path>D:\\cert\\apiclient_cert.p12</p12path>
         <p122path>C:\\Users\\hammer\\Downloads\\cert\\apiclient_cert.p12</p122path>
     </weixinserverinfo>
 </project>

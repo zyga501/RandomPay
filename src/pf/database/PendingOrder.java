@@ -17,7 +17,11 @@ public class PendingOrder extends OrderInfo {
 
     public static PendingOrder getPendingOrderByOpenId(String openid) {
         String statement = "pf.database.mapping.pendingOrder.getPendingOrderByOpenid";
-        return Database.Instance().selectOne(statement, openid);
+        List<PendingOrder> pendingOrders = Database.Instance().selectList(statement, openid);
+        if (pendingOrders != null && pendingOrders.size() > 0) {
+            return pendingOrders.get(0);
+        }
+        return null;
     }
 
     public static boolean deletePendingOrderByOpenId(String openid) {

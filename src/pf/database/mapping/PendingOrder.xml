@@ -8,7 +8,7 @@
         SELECT * FROM PendingOrder where openid=#{openid}
     </select>
     <select id="deletePendingOrderByOpenid" parameterType="String">
-        DELETE PendingOrder WHERE openid=#{openid}
+        DELETE FROM PendingOrder WHERE openid=#{openid}
     </select>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">

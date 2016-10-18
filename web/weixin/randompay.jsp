@@ -69,8 +69,13 @@
                 dataType:"json",
                 data:$("form").serialize(),
                 success: function (data) {
-                    var json=eval("("+data+")");
-                    alert(json);
+                    var json = eval("(" + data + ")");
+                    if (json.state == "NoData") {
+                        alert("没有找到付款信息，请先付款，如果已经付款请稍等片刻再次点击！")
+                    }
+                    else {
+                        alert(json.state);
+                    }
                 }
             })
         }

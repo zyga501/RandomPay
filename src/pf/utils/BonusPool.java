@@ -106,7 +106,7 @@ public class BonusPool {
 
         // fixed profit bonus
         int totalError = totalProfit - totalBonus;
-        int errorBase = totalError / profitList.size();
+        int errorBase = Math.max(totalError / profitList.size(), 1);
         while (totalError > 0) {
             if (profitList.size() <= 0) {
                 return false;

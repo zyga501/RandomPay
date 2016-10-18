@@ -53,17 +53,19 @@ public class PayAction extends AjaxActionSupport {
         RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
         randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
         randomPayRequestData.mchid =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
-        randomPayRequestData.openid = "o8Dbet8_qWwa7qCOJiBgAFswd9e4";
+        randomPayRequestData.openid = getAttribute("openid");
         randomPayRequestData.check_name = "NO_CHECK";
         PendingOrder pendingOrder = PendingOrder.getPendingOrderByOpenId(getAttribute("openid"));
         if (pendingOrder != null) {
-            randomPayRequestData.amount = BonusPool.getBonus(pendingOrder.getAmount());
+            randomPayRequestData.amount = BonusPool.getBonus(pendingOrder.getAmount() / 100) * 100;
         }
         else {
-            randomPayRequestData.amount = 0;
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("State", "NoData");
+            return AjaxActionComplete(resultMap);
         }
 
-        randomPayRequestData.desc = "零钱入账";
+        randomPayRequestData.desc = "红包入账";
         Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData,Long.parseLong("1234321"));
         if (!mmpaymkttransfers.postRequest( ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
             ProjectLogger.warn("randomPay Failed!");
@@ -77,7 +79,9 @@ public class PayAction extends AjaxActionSupport {
         orderInfo.setBonus(randomPayRequestData.amount);
         OrderInfo.insertOrderInfo(orderInfo);
 
-        return AjaxActionComplete(true);
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount + "元红包！");
+        return AjaxActionComplete(resultMap);
     }
 
     public String brandWCPay() throws Exception {
