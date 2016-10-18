@@ -35,21 +35,17 @@ public class CallbackAction extends AjaxActionSupport {
         bufferedReader.close();
 
         String responseString = stringBuilder.toString();
-        Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);;
+        ProjectLogger.error(responseString);
+        Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);
         saveOrderToDb(responseResult);
     }
 
     private boolean saveOrderToDb(Map<String,Object> responseResult) {
-        try {
-            synchronized (syncObject) {
-                PendingOrder pendingOrder = new PendingOrder();
-                pendingOrder.setOpenid(getParameter("openid").toString());
-                pendingOrder.setAmount(Integer.parseInt(responseResult.get("total_fee").toString()));
-                PendingOrder.insertOrderInfo(pendingOrder);
-            }
-        }
-        catch (Exception exception) {
-
+        synchronized (syncObject) {
+            PendingOrder pendingOrder = new PendingOrder();
+            pendingOrder.setOpenid(responseResult.get("openid").toString());
+            pendingOrder.setAmount(Integer.parseInt(responseResult.get("total_fee").toString()));
+            PendingOrder.insertOrderInfo(pendingOrder);
         }
         return true;
     }
