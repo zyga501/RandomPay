@@ -19,7 +19,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
-    public String randomPay() throws Exception { 
+
+
+    public void fetchWxCode() throws IOException {
+        String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
+        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/Pay!fetchWxOpenid";
+        String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                appid, redirect_uri, getParameter("redirect_url").toString());
+        getResponse().sendRedirect(fetchOpenidUri);
+    }
+
+    public void fetchWxOpenid() throws Exception {
+        String appid =  ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
+        String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
+        OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
+        if (weixinOpenId.getRequest()) {
+            getResponse().sendRedirect(getParameter("state").toString() + "&openid=" + weixinOpenId.getOpenId());
+        }
+    }
+
+    public String mainPage() {
+        setParameter("redirect_url","Pay!mainPage");
+        if (null == getAttribute("openid") || getAttribute("openid").equals(""))
+            return "fetchwxcode";
+        return "mainpage";
+    }
+
+    public String randomPay() throws Exception {
             RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
             randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
             randomPayRequestData.mchid =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();

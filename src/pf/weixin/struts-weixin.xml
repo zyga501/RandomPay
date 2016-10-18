@@ -13,6 +13,8 @@
         </global-results>
 
         <action name="Pay!*" class="pf.weixin.action.PayAction" method="{1}">
+            <result name="fetchwxcode" type="chain" >Pay!fetchWxCode</result>
+            <result name="mainpage">weixin/randompay.jsp</result>
         </action>
         <action name="Callback!*" class="pf.weixin.action.CallbackAction" method="{1}">
         </action>
