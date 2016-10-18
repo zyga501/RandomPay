@@ -11,7 +11,7 @@
         width:100%;height:100%;
         background-color:#c01116;
         background-position:center top;
-        background-image: url(/image/top.png)  ;
+        background-image: url(<%=request.getContextPath()%>/image/top.png)  ;
         background-repeat: no-repeat;
     }
     #dlgReply
@@ -35,7 +35,7 @@
         width:20%;
         height:23%;
         text-align:center;
-        background:url(/image/hb.png) no-repeat center center;
+        background:url(<%=request.getContextPath()%>/image/hb.png) no-repeat center center;
         background-size:cover;
     }
     img{

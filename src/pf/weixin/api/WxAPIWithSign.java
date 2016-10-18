@@ -28,6 +28,7 @@ public abstract class WxAPIWithSign extends WeixinAPI {
 
         requestData_.buildSign(apiKey);
 
+        System.out.println("apiKey:"+apiKey);
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
             return false;
@@ -35,7 +36,7 @@ public abstract class WxAPIWithSign extends WeixinAPI {
 
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-
+        System.out.println("postDataXML:"+postDataXML);
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");

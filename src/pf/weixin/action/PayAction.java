@@ -22,8 +22,8 @@ public class PayAction extends AjaxActionSupport {
 
 
     public void fetchWxCode() throws IOException {
-        String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/Pay!fetchWxOpenid";
+        String appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/Pay!fetchWxOpenid";
         String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
                 appid, redirect_uri, getParameter("redirect_url").toString());
@@ -31,8 +31,8 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public void fetchWxOpenid() throws Exception {
-        String appid =  ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
+        String appid =  ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+        String appsecret =  ProjectSettings.getMapData("weixinserverinfo").get("appsecret").toString();
         OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
         if (weixinOpenId.getRequest()) {
             getResponse().sendRedirect(getParameter("state").toString() + "&openid=" + weixinOpenId.getOpenId());
@@ -40,7 +40,9 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String mainPage() {
-        setParameter("redirect_url","Pay!mainPage");
+        setParameter("redirect_url","Pay!mainPage?id=1");
+        if (getParameter("openid")!=null)
+            setAttribute("openid",getParameter("openid"));
         if (null == getAttribute("openid") || getAttribute("openid").equals(""))
             return "fetchwxcode";
         return "mainpage";
@@ -63,94 +65,30 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete(true);
     }
 
-    public void jsPay() throws IOException {
-        do {
-            String appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-            String subMerchantUserId = "0";// getParameter("id").toString();
-            String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/jsPayCallback.jsp";
-            String sessionId = getRequest().getSession().getId();
-            String jspayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                            "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                    appid, redirect_uri, sessionId);
-            // save session data, state is too short
-            String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s','data':'%s'}",
-                    subMerchantUserId,
-                    StringUtils.convertNullableString(""),
-                    StringUtils.convertNullableString(getParameter("total_fee")),
-                    StringUtils.convertNullableString(""),//getParameter("out_trade_no")
-                    StringUtils.convertNullableString(null),
-                    StringUtils.convertNullableString(null));
-            String zipData = Zip.zip(data);
-            getRequest().getSession().setAttribute("data", zipData);
-            SessionCache.setSessionData(sessionId, zipData);
-            getResponse().sendRedirect(jspayUri);
-        } while (false);
-    }
-
     public String brandWCPay() throws Exception {
-        // get session data and remove data
-        JSONObject jsonObject = null;
-        if (!StringUtils.convertNullableString(getParameter("data")).isEmpty()) {
-            jsonObject = JSONObject.fromObject(Zip.unZip(getParameter("data").toString()));
-        }
-
-        String sessionId = StringUtils.convertNullableString(getParameter("state"));
-        if (jsonObject == null && !sessionId.isEmpty()) {
-            String sesseionData = SessionCache.getSessionData(sessionId).toString();
-            if (!sesseionData.isEmpty()) {
-                jsonObject = JSONObject.fromObject(Zip.unZip(sesseionData));
-            }
-        }
-
-        getRequest().getSession().removeAttribute("data");
-        if (!sessionId.isEmpty())
-            SessionCache.clearSessionData(sessionId);
-
-        if (jsonObject == null) {
-            ProjectLogger.warn("BrandWCPay Failed! Session Data Is Miss!");
-            return AjaxActionComplete(false);
-        }
-
-        String subMerchantUserId = jsonObject.get("id").toString();
-        String body = jsonObject.get("body").toString();
-        int total_fee = (int)Double.parseDouble(jsonObject.get("fee").toString());
-        String out_trade_no = jsonObject.get("no").toString();
-        String redirect_uri = jsonObject.get("url").toString();
-        String data = jsonObject.get("data").toString();
-        String code = getParameter("code").toString();
-
-        if (subMerchantUserId.isEmpty() || code.isEmpty()) {//1360239402
-            return AjaxActionComplete();
-        }
-
+        System.out.println("234234");
+        System.out.println("openid="+ getAttribute("openid"));
+        System.out.println("total_fee="+ getAttribute("total_fee"));
             UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
             unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
             unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
             unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
-            unifiedOrderRequestData.body = body;
-            unifiedOrderRequestData.attach = String.format("{'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
-                    subMerchantUserId, unifiedOrderRequestData.body, redirect_uri, data);
-            unifiedOrderRequestData.total_fee = total_fee;
+            unifiedOrderRequestData.body = "body";
+            unifiedOrderRequestData.attach = "none";
+            unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
             unifiedOrderRequestData.trade_type = "JSAPI";
-            OpenId openId = new OpenId(ProjectSettings.getMapData("weixinserverinfo").get("appid").toString(),
-                    ProjectSettings.getMapData("weixinserverinfo").get("secret").toString(), code);
-            if (openId.getRequest()) {
-                unifiedOrderRequestData.openid = openId.getOpenId();
-            }
-            else {
-                return AjaxActionComplete();
-            }
+            unifiedOrderRequestData.openid = getAttribute("openid");
             String requestUrl = getRequest().getRequestURL().toString();
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
                     + CallbackAction.BRANDWCPAYCALLBACK;
             unifiedOrderRequestData.notify_url = requestUrl;
-            if (!out_trade_no.isEmpty()) {
-                unifiedOrderRequestData.out_trade_no = out_trade_no;
+            if (null!=getParameter("out_trade_no")) {
+                unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
             }
 
             UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
-            if (!unifiedOrder.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("appid").toString())) {
+            if (!unifiedOrder.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
                 ProjectLogger.warn("BrandWCPay Failed!");
                 return AjaxActionComplete();
             }

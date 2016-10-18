@@ -22,16 +22,7 @@
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
     <script>
         function pay(b){
-            $.ajax({
-                type: 'post',
-                url: '<%=request.getContextPath()%>/weixin/Pay!jsPay',
-                dataType:"json",
-                data:{total_fee:b},
-                success: function (data) {
-                    var json = eval("(" + data + ")");
-                    alert(data);;
-                }
-            })
+            window.location.href = "jsPayCallback.jsp?total_fee="+b;
         }
     </script>
 </head>
