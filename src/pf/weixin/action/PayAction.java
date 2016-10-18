@@ -7,6 +7,9 @@ import framework.utils.Zip;
 import net.sf.json.JSONObject;
 import pf.ProjectLogger;
 import pf.ProjectSettings;
+import pf.database.OrderInfo;
+import pf.database.PendingOrder;
+import pf.utils.BonusPool;
 import pf.weixin.api.Mmpaymkttransfers;
 import pf.weixin.api.OpenId;
 import pf.weixin.api.RequestBean.RandomPayRequestData;
@@ -49,43 +52,57 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String randomPay() throws Exception {
-            RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
-            randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-            randomPayRequestData.mchid =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
-            randomPayRequestData.openid = "o8Dbet8_qWwa7qCOJiBgAFswd9e4";
-            randomPayRequestData.check_name = "NO_CHECK";
-            randomPayRequestData.amount = (int)Double.parseDouble(getParameter("total_fee").toString());
-            randomPayRequestData.desc = "零钱入账";
-            Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData,Long.parseLong("1234321"));
-            if (!mmpaymkttransfers.postRequest( ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
-                ProjectLogger.warn("randomPay Failed!");
-                return AjaxActionComplete();
-            }
+        RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
+        randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+        randomPayRequestData.mchid =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
+        randomPayRequestData.openid = "o8Dbet8_qWwa7qCOJiBgAFswd9e4";
+        randomPayRequestData.check_name = "NO_CHECK";
+        PendingOrder pendingOrder = PendingOrder.getPendingOrderByOpenId(getAttribute("openid"));
+        if (pendingOrder != null) {
+            randomPayRequestData.amount = BonusPool.getBonus(pendingOrder.getAmount());
+        }
+        else {
+            randomPayRequestData.amount = 0;
+        }
+
+        randomPayRequestData.desc = "零钱入账";
+        Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData,Long.parseLong("1234321"));
+        if (!mmpaymkttransfers.postRequest( ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
+            ProjectLogger.warn("randomPay Failed!");
+            return AjaxActionComplete();
+        }
+
+        PendingOrder.deletePendingOrderByOpenId(getAttribute("openid"));
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOpenid(getAttribute("openid"));
+        orderInfo.setAmount(pendingOrder.getAmount());
+        orderInfo.setBonus(randomPayRequestData.amount);
+        OrderInfo.insertOrderInfo(orderInfo);
 
         return AjaxActionComplete(true);
     }
 
     public String brandWCPay() throws Exception {
         System.out.println("total_fee="+ getParameter("total_fee"));
-            UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
-            unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-            unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
-            unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
-            unifiedOrderRequestData.body = "body";
-            unifiedOrderRequestData.attach = "none";
-            unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
-            unifiedOrderRequestData.trade_type = "JSAPI";
-            unifiedOrderRequestData.openid = getAttribute("openid");
-            String requestUrl = getRequest().getRequestURL().toString();
-            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
-            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
-                    + CallbackAction.BRANDWCPAYCALLBACK;
-            unifiedOrderRequestData.notify_url = requestUrl;
-            UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
-            if (!unifiedOrder.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
-                ProjectLogger.warn("BrandWCPay Failed!");
-                return AjaxActionComplete();
-            }
+        UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
+        unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+        unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
+        unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
+        unifiedOrderRequestData.body = "body";
+        unifiedOrderRequestData.attach = "none";
+        unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+        unifiedOrderRequestData.trade_type = "JSAPI";
+        unifiedOrderRequestData.openid = getAttribute("openid");
+        String requestUrl = getRequest().getRequestURL().toString();
+        requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+        requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
+                + CallbackAction.BRANDWCPAYCALLBACK;
+        unifiedOrderRequestData.notify_url = requestUrl;
+        UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
+        if (!unifiedOrder.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
+            ProjectLogger.warn("BrandWCPay Failed!");
+            return AjaxActionComplete();
+        }
 
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("appId", unifiedOrderRequestData.appid);

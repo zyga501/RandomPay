@@ -4,8 +4,11 @@
     <select id="getPendingOrder" resultMap="orderInfoResult">
         SELECT * FROM PendingOrder
     </select>
-    <select id="getPendingOrderByOpenid" resultMap="orderInfoResult">
+    <select id="getPendingOrderByOpenid" parameterType="long" resultMap="orderInfoResult">
         SELECT * FROM PendingOrder where openid=#{openid}
+    </select>
+    <select id="deletePendingOrderByOpenid" parameterType="long">
+        DELETE PendingOrder WHERE openid=#{openid}
     </select>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">

@@ -1,6 +1,7 @@
 package pf.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -27,6 +28,20 @@ public class BonusPool {
             System.out.println("Bonus " + (index + 1) + " : " + mapping.get(index));
         }
         System.out.println();
+    }
+
+    public static int getBonus(int amount) {
+        synchronized (bonusPoolMap) {
+            return bonusPoolMap.get(amount).popBonus();
+        }
+    }
+
+    private static HashMap<Integer, BonusPool> bonusPoolMap = new HashMap<>();
+    static {
+        bonusPoolMap.put(10, new BonusPool(10, 200, 0.9));
+        bonusPoolMap.put(20, new BonusPool(10, 600, 0.9));
+        bonusPoolMap.put(50, new BonusPool(10, 800, 0.9));
+        bonusPoolMap.put(100, new BonusPool(10, 1800, 0.9));
     }
 
     public BonusPool(Integer bonusBase, Integer bonusMax, double lossRate) {
