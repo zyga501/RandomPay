@@ -38,7 +38,7 @@
                             "signType" : json.signType,    //微信签名方式
                             "paySign" : json.paySign       //微信签名
                         }
-                        , function(result) {  alert(result.err_msg);
+                        , function(result) {
                             window.parent.location.href = json.redirect_uri;
                         });
             }

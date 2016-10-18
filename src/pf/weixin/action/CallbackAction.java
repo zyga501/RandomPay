@@ -36,12 +36,6 @@ public class CallbackAction extends AjaxActionSupport {
 
         String responseString = stringBuilder.toString();
         Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);;
-        if (!Signature.checkSignValid(responseResult, ProjectSettings.getMapData("weixinserverinfo").get("appkey").toString())) {
-            ProjectLogger.warn(this.getClass().getName() + " CheckSignValid Failed!");
-            ProjectLogger.error(this.getClass().getName() + " " + responseString);
-            return;
-        }
-
         saveOrderToDb(responseResult);
     }
 
