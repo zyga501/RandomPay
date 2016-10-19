@@ -90,8 +90,8 @@ public class PayAction extends AjaxActionSupport {
             maxv = 800;
         if (pendingOrder.getAmount()==10000)
             maxv = 1800;
-        int[] aryint = BonusPool.getRandomArarray(Integer.parseInt(getParameter("itempos").toString())-1,randomPayRequestData.amount / 100,maxv);
-        List<Integer> hbList = new ArrayList<>();
+        float[] aryint = BonusPool.getRandomArarray(Integer.parseInt(getParameter("itempos").toString())-1,randomPayRequestData.amount / 100,200);
+        List<Float> hbList = new ArrayList<>();
         for (int i=0;i<aryint.length;i++)
             hbList.add(i,aryint[i]);
         resultMap.put("hblist",hbList);

@@ -4,11 +4,6 @@ import java.util.*;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
-        int[] ay = getRandomArarray(9,9,200);
-        for (int i=0 ;i<ay.length;i++)
-            System.out.println(ay[i]);
-        if (1==1)
-        return;
         ArrayList<Integer> mapping = new ArrayList<>();
         for (int index = 0; index < 200; ++index) {
             mapping.add(0);
@@ -137,17 +132,17 @@ public class BonusPool {
         return true;
     }
 
-    public static int[] getRandomArarray(int bonusIndex,int bonus,int maxval){
+    public static float[] getRandomArarray(int bonusIndex,float bonus,int maxval){
         Random indexRand = new Random();
         int rd =indexRand.nextInt(3)+1;
-        int[] intArray =new int[15];
+        float[] intArray =new float[15];
         for (int i=0;i<rd;i++) {
-            intArray[i] = indexRand.nextInt(bonus);
+            intArray[i] = (float) ((indexRand.nextInt((int) (bonus*100))+100)/100.00);
         }
         for (int i=rd;i<14;i++) {
-            intArray[i] =indexRand.nextInt(maxval);
+            intArray[i] = (float) ((indexRand.nextInt(maxval*100)+100)/100.00);
         }
-        int tmpint;
+        float tmpint;
         for (int i=0;i<14;i++){
             int index = indexRand.nextInt(14);
             tmpint  =  intArray[i];
