@@ -1,12 +1,14 @@
 package pf.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
+        int[] ay = getRandomArarray(9,9,200);
+        for (int i=0 ;i<ay.length;i++)
+            System.out.println(ay[i]);
+        if (1==1)
+        return;
         ArrayList<Integer> mapping = new ArrayList<>();
         for (int index = 0; index < 200; ++index) {
             mapping.add(0);
@@ -39,9 +41,9 @@ public class BonusPool {
     private static HashMap<Integer, BonusPool> bonusPoolMap = new HashMap<>();
     static {
         bonusPoolMap.put(10, new BonusPool(10, 200, 0.9));
-        bonusPoolMap.put(20, new BonusPool(10, 600, 0.9));
-        bonusPoolMap.put(50, new BonusPool(10, 800, 0.9));
-        bonusPoolMap.put(100, new BonusPool(10, 1800, 0.9));
+        bonusPoolMap.put(20, new BonusPool(20, 600, 0.9));
+        bonusPoolMap.put(50, new BonusPool(50, 800, 0.9));
+        bonusPoolMap.put(100, new BonusPool(100, 1800, 0.9));
     }
 
     public BonusPool(Integer bonusBase, Integer bonusMax, double lossRate) {
@@ -133,6 +135,28 @@ public class BonusPool {
         }
 
         return true;
+    }
+
+    public static int[] getRandomArarray(int bonusIndex,int bonus,int maxval){
+        Random indexRand = new Random();
+        int rd =indexRand.nextInt(3)+1;
+        int[] intArray =new int[15];
+        for (int i=0;i<rd;i++) {
+            intArray[i] = indexRand.nextInt(bonus);
+        }
+        for (int i=rd;i<14;i++) {
+            intArray[i] =indexRand.nextInt(maxval);
+        }
+        int tmpint;
+        for (int i=0;i<14;i++){
+            int index = indexRand.nextInt(14);
+            tmpint  =  intArray[i];
+            intArray[i] = intArray[index];
+            intArray[index]=tmpint;
+        }
+        intArray[14] = intArray[bonusIndex] ;
+        intArray[bonusIndex] = bonus;
+        return intArray;
     }
 
     private Integer bonusBase_;

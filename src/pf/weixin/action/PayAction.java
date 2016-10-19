@@ -18,8 +18,7 @@ import pf.weixin.api.UnifiedOrder;
 import pf.weixin.utils.Signature;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PayAction extends AjaxActionSupport {
     public void fetchWxCode() throws IOException {
@@ -80,18 +79,31 @@ public class PayAction extends AjaxActionSupport {
         orderInfo.setBonus(randomPayRequestData.amount);
         OrderInfo.insertOrderInfo(orderInfo);
 
-        Map<String, String> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100 + "元红包！");
+        int maxv = 0;
+        if (pendingOrder.getAmount()==1000)
+            maxv = 200;
+        if (pendingOrder.getAmount()==2000)
+            maxv = 600;
+        if (pendingOrder.getAmount()==5000)
+            maxv = 800;
+        if (pendingOrder.getAmount()==10000)
+            maxv = 1800;
+        int[] aryint = BonusPool.getRandomArarray(Integer.parseInt(getParameter("itempos").toString())-1,randomPayRequestData.amount / 100,maxv);
+        List<Integer> hbList = new ArrayList<>();
+        for (int i=0;i<aryint.length;i++)
+            hbList.add(i,aryint[i]);
+        resultMap.put("hblist",hbList);
         return AjaxActionComplete(resultMap);
     }
 
     public String brandWCPay() throws Exception {
-        System.out.println("total_fee="+ getParameter("total_fee"));
         UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
         unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
         unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
         unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
-        unifiedOrderRequestData.body = "body";
+        unifiedOrderRequestData.body = "购物消费";
         unifiedOrderRequestData.attach = "none";
         unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
         unifiedOrderRequestData.trade_type = "JSAPI";

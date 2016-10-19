@@ -18,5 +18,7 @@
         </action>
         <action name="Callback!*" class="pf.weixin.action.CallbackAction" method="{1}">
         </action>
+        <action name="a!*" class="pf.weixin.action.test" method="{1}">
+        </action>
     </package>
 </struts>

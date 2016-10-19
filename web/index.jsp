@@ -5,6 +5,20 @@
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
   <script type="text/javascript">
+    function aa() {
+      alert("t82".substring(1,"t12".length));return;
+      $.ajax({
+        type: 'post',
+        url: 'weixin/a!aa',
+        dataType:"json",
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json.hblist.length);
+          alert(json.hblist[1]);
+        }
+      })
+    }
+
     function microPay() {
       $.ajax({
         type: 'post',
@@ -242,7 +256,7 @@
       <input type="button" onclick="updateSubMerchantWeixinIdById()" value="更新商户微信号"/>
     </td>
     <td>
-      <input type="button" onclick="updateStoreNameById()" value="更新店名"/>
+      <input type="button" onclick="aa()" value="更新店名"/>
     </td>
   </tr>
   </table>
