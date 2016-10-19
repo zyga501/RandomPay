@@ -6,6 +6,7 @@
     <link href="<%=request.getContextPath()%>/css/laydate.css" rel="stylesheet" type="text/css"/>
     <link href="<%=request.getContextPath()%>/css/layer.css" rel="stylesheet" type="text/css"/>
 <style>
+    html,body { margin:0 auto; }
     #divparent
     {
         width:100%;height:100%;
@@ -13,6 +14,9 @@
         background-position:center top;
         background-image: url(<%=request.getContextPath()%>/image/top.png)  ;
         background-repeat: no-repeat;
+        filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+        -moz-background-size:100% ;
+        background-size:100% ;
     }
     #dlgReply
     {
@@ -42,38 +46,51 @@
         width:100%;
         vertical-align:middle;
     }
-    .button{
-        width:80%;
-        color:#f20903;
-        background-color:#9ad336;
-        font-size:32px;
+    .button{        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #06af3f;
+        color: #FEFEFE;
+        border: none;
+        font-size: 18px;
+        width: 100%;
+        padding: 10px 6px;
     }
 </style>
     <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
     <script>
+        $().ready(function(){
+            $('.bjtr td').on('click', function(){
+                randomPay($(this).attr("id"));
+            });
+        });
+
         function paychoose() {
             layer.open({
             type: 2,
-            title: 'Pay',
+            title: '选择支付种类',
             shadeClose: true,
             shade: 0.8,
-            area: ['380px', '90%'],
+            area: ['380px', '400px'],
             content: 'choosepay.jsp' //iframe的url
         });
         };
-        function randomPay(){
+
+        function randomPay(v){
             $.ajax({
                 type: 'post',
                 url: '<%=request.getContextPath()%>/weixin/Pay!randomPay',
                 dataType:"json",
-                data:$("form").serialize(),
+                data:{itempos: v.substring(1, v.length)},
                 success: function (data) {
                     var json = eval("(" + data + ")");
                     if (json.State == "NoData") {
                         alert("没有找到付款信息，请先付款，如果已经付款请稍等片刻再次点击！")
                     }
                     else {
+                        for(var i=1;i<=json.hblist.length;i++){
+                            $('.bjtr td#t'+i).text(json.hblist[i-1]);
+                        }
                         alert(json.State);
                     }
                 }
@@ -81,7 +98,7 @@
         }
     </script>
 </head>
-<body scroll="no">
+<body >
 <div id="divparent">
     <div id="dlgReply">
         <table >
@@ -89,55 +106,26 @@
                 <td colspan=5 align="center" valign="middle">
                     <button class="button" onclick="paychoose()">付     款</button></td>
             </tr>
-            <tr class = "bjtr" onclick="randomPay()">
-                <td onclick="">
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
+            <tr class = "bjtr">
+                <td id="t1"></td>
+                <td id="t2"></td>
+                <td id="t3"></td>
+                <td id="t4"></td>
+                <td id="t5"></td>
             </tr>
-            <tr class = "bjtr" onclick="randomPay()">
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
+            <tr class = "bjtr" >
+                <td id="t6"></td>
+                <td id="t7"></td>
+                <td id="t8"></td>
+                <td id="t9"></td>
+                <td id="t10"></td>
             </tr>
-            <tr class = "bjtr" onclick="randomPay()">
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-
-                </td>
+            <tr class = "bjtr">
+                <td id="t11"></td>
+                <td id="t12"></td>
+                <td id="t13"></td>
+                <td id="t14"></td>
+                <td id="t15"></td>
             </tr>
         </table>
     </div>

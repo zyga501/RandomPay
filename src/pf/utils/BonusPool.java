@@ -1,9 +1,6 @@
 package pf.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
@@ -133,6 +130,28 @@ public class BonusPool {
         }
 
         return true;
+    }
+
+    public static float[] getRandomArarray(int bonusIndex,float bonus,int maxval){
+        Random indexRand = new Random();
+        int rd =indexRand.nextInt(3)+1;
+        float[] intArray =new float[15];
+        for (int i=0;i<rd;i++) {
+            intArray[i] = (float) ((indexRand.nextInt((int) (bonus*100))+100)/100.00);
+        }
+        for (int i=rd;i<14;i++) {
+            intArray[i] = (float) ((indexRand.nextInt(maxval*100)+100)/100.00);
+        }
+        float tmpint;
+        for (int i=0;i<14;i++){
+            int index = indexRand.nextInt(14);
+            tmpint  =  intArray[i];
+            intArray[i] = intArray[index];
+            intArray[index]=tmpint;
+        }
+        intArray[14] = intArray[bonusIndex] ;
+        intArray[bonusIndex] = bonus;
+        return intArray;
     }
 
     private Integer bonusBase_;
