@@ -30,14 +30,14 @@
     table
     {
         width:92%;
-        height:99%;
+        height:90%;
         margin-left: auto;
         margin-right: auto;
         border-spacing:0px;
     }
     .bjtr >td{
         width:20%;
-        height:23%;
+        height:20%;
         text-align:center;
         background:url(<%=request.getContextPath()%>/image/hb.png) no-repeat center center;
         background-size:cover;
@@ -46,7 +46,8 @@
         width:100%;
         vertical-align:middle;
     }
-    .button{        -webkit-border-radius: 5px;
+    .button{
+        -webkit-border-radius: 5px;
         border-radius: 5px;
         background-color: #06af3f;
         color: #FEFEFE;
@@ -55,11 +56,28 @@
         width: 100%;
         padding: 10px 6px;
     }
+    button{
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        background-color: #666666;
+        color: #06af3f;
+        border: none;
+        font-size: 18px;
+        width: 33%;
+        padding: 10px 6px;
+    }
+    .nav_list{width:100%;height:38px;background:#2E2D3C;position:absolute; bottom:0px;}
+    .msgpanel {  height:60px;
+        filter:alpha(Opacity=80);/*支持 IE 浏览器*/
+        -moz-opacity:0.5;/*支持 FireFox 浏览器*/
+        opacity: 0.5;/*支持 Chrome, Opera, Safari 等浏览器*/
+        z-index:100;
+        background-color:#ffffff;  }
 </style>
     <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
     <script>
-        $().ready(function(){
+        $().ready(function(){GetRandomNum();
             $('.bjtr td').on('click', function(){
                 randomPay($(this).attr("id"));
             });
@@ -96,6 +114,21 @@
                 }
             })
         }
+
+        function GetRandomNum()
+        {
+            var Range = 1000;
+            var rt="恭喜:<br>";
+            for (i=1;i<10;i++) {
+                var Rand = Math.random();
+                var Rand2 = Math.random();
+                var Rand3= Math.random();
+                var Rand4 = Math.random();
+                var v= parseFloat(Math.round(Rand2.toFixed(4) * Rand3.toFixed(4)* Rand4.toFixed(4)*Rand.toFixed(4) * 1800))+parseFloat(Rand2.toFixed(2));
+                rt += "&nbsp &nbsp wx" + "****" + (Math.round(Rand.toFixed(3) * Range)) + "：获得" + v.toFixed(2) + "元<br>";
+            }
+            $("#msg").html(rt);
+        }
     </script>
 </head>
 <body >
@@ -104,7 +137,9 @@
         <table >
             <tr style="height: 15px;">
                 <td colspan=5 align="center" valign="middle">
-                    <button class="button" onclick="paychoose()">付     款</button></td>
+                    <!--button class="button" onclick="paychoose()">付     款</button-->
+                <div class="msgpanel"><marquee direction="up" scrolldelay="2" scrollamount="1" height="100%"><div id="msg"></div></marquee></div>
+                </td>
             </tr>
             <tr class = "bjtr">
                 <td id="t1"></td>
@@ -130,5 +165,6 @@
         </table>
     </div>
 </div>
+<div class="nav_list"><button >我要消费</button><button  >生成推广码</button><button >我的佣金</button></div>
 </body>
 </html>

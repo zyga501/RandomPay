@@ -49,6 +49,7 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String randomPay() throws Exception {
+        //增加 判断如果已经支付 还没领取文字提示红包 返回
         RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
         randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
         randomPayRequestData.mchid =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
