@@ -130,4 +130,9 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete(resultMap);
     }
 
+    public String  makeQcode(){
+        setAttribute("wxid",getAttribute("openid"));
+        setAttribute("wxid",("openid"));
+        return "promopage";
+    }
 }
