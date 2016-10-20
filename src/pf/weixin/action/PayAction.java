@@ -1,10 +1,7 @@
 package pf.weixin.action;
 
 import framework.action.AjaxActionSupport;
-import framework.utils.SessionCache;
 import framework.utils.StringUtils;
-import framework.utils.Zip;
-import net.sf.json.JSONObject;
 import pf.ProjectLogger;
 import pf.ProjectSettings;
 import pf.database.OrderInfo;
@@ -18,7 +15,10 @@ import pf.weixin.api.UnifiedOrder;
 import pf.weixin.utils.Signature;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
     public void fetchWxCode() throws IOException {
@@ -57,8 +57,7 @@ public class PayAction extends AjaxActionSupport {
         randomPayRequestData.check_name = "NO_CHECK";
         PendingOrder pendingOrder = PendingOrder.getPendingOrderByOpenId(getAttribute("openid"));
         if (pendingOrder != null) {
-            randomPayRequestData.amount = BonusPool.getBonus(pendingOrder.getAmount() / 100) * 100;
-            ProjectLogger.info("Bonus:" + randomPayRequestData.amount);
+            randomPayRequestData.amount = BonusPool.getBonus(pendingOrder.getAmount());
         }
         else {
             Map<String, String> resultMap = new HashMap<>();
@@ -82,16 +81,7 @@ public class PayAction extends AjaxActionSupport {
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100 + "元红包！");
-        int maxv = 0;
-        if (pendingOrder.getAmount()==1000)
-            maxv = 200;
-        if (pendingOrder.getAmount()==2000)
-            maxv = 600;
-        if (pendingOrder.getAmount()==5000)
-            maxv = 800;
-        if (pendingOrder.getAmount()==10000)
-            maxv = 1800;
-        float[] aryint = BonusPool.getRandomArarray(Integer.parseInt(getParameter("itempos").toString())-1,randomPayRequestData.amount / 100,200);
+        float[] aryint = BonusPool.generateVirtualBonus(Integer.parseInt(getParameter("itempos").toString())-1,randomPayRequestData.amount / 100,200);
         List<Float> hbList = new ArrayList<>();
         for (int i=0;i<aryint.length;i++)
             hbList.add(i,aryint[i]);
