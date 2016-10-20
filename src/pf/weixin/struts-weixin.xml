@@ -15,6 +15,7 @@
         <action name="Pay!*" class="pf.weixin.action.PayAction" method="{1}">
             <result name="fetchwxcode" type="chain" >Pay!fetchWxCode</result>
             <result name="mainpage">randompay.jsp</result>
+            <result name="promopage">promopage.jsp</result>
         </action>
         <action name="Callback!*" class="pf.weixin.action.CallbackAction" method="{1}">
         </action>

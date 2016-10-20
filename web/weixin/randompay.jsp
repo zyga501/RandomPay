@@ -94,6 +94,16 @@
         });
         };
 
+        function makeQcode() {
+            layer.open({
+                type: 2,
+                title: '微信支付，赢红包',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['380px', '400px'],
+                content: 'Pay!makeQcode' //iframe的url
+            });
+        };
         function randomPay(v){
             $.ajax({
                 type: 'post',
@@ -165,6 +175,6 @@
         </table>
     </div>
 </div>
-<div class="nav_list"><button >我要消费</button><button  >生成推广码</button><button >我的佣金</button></div>
+<div class="nav_list"><button onclick="paychoose()">我要消费</button><button onclick="makeQcode()" >生成推广码</button><button >我的佣金</button></div>
 </body>
 </html>
