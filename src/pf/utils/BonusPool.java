@@ -10,7 +10,7 @@ public class BonusPool {
         }
 
         int totalBonus = 0;
-        BonusPool bonusPool = new BonusPool(10, 200, 0.9);
+        BonusPool bonusPool = new BonusPool(1000, 100, 20000, 0.9);
         do {
             int bonus = bonusPool.popBonus();
             totalBonus += bonus;
@@ -35,14 +35,15 @@ public class BonusPool {
 
     private static HashMap<Integer, BonusPool> bonusPoolMap = new HashMap<>();
     static {
-        bonusPoolMap.put(10, new BonusPool(10, 200, 0.9));
-        bonusPoolMap.put(20, new BonusPool(20, 600, 0.9));
-        bonusPoolMap.put(50, new BonusPool(50, 800, 0.9));
-        bonusPoolMap.put(100, new BonusPool(100, 1800, 0.9));
+        bonusPoolMap.put(1000, new BonusPool(1000, 100, 20000, 0.9));
+        bonusPoolMap.put(2000, new BonusPool(2000, 100, 60000, 0.9));
+        bonusPoolMap.put(5000, new BonusPool(5000, 100, 80000, 0.9));
+        bonusPoolMap.put(10000, new BonusPool(10000, 100, 180000, 0.9));
     }
 
-    public BonusPool(Integer bonusBase, Integer bonusMax, double lossRate) {
+    public BonusPool(Integer bonusBase, Integer bonusMin,Integer bonusMax, double lossRate) {
         bonusBase_ = bonusBase;
+        bonusMin_ = bonusMin;
         bonusMax_ = bonusMax;
         lossRate_ = lossRate;
         poolSize_ = 200;
@@ -50,8 +51,9 @@ public class BonusPool {
         bonusList_ = new ArrayList<>(poolSize_);
     }
 
-    public BonusPool(Integer bonusBase, Integer bonusMax, double lossRate, Integer poolSize, Double poolLossRate) {
+    public BonusPool(Integer bonusBase, Integer bonusMin, Integer bonusMax, double lossRate, Integer poolSize, Double poolLossRate) {
         bonusBase_ = bonusBase;
+        bonusMin_ = bonusMin;
         bonusMax_ = bonusMax;
         lossRate_ = lossRate;
         poolSize_ = poolSize;
@@ -84,7 +86,7 @@ public class BonusPool {
 
         // generate loss bonus
         while (poolLossSize-- != 0) {
-            int bonus = (int)(bonusRandom_.nextDouble() * bonusBase_);
+            int bonus = (int)(bonusRandom_.nextDouble() * bonusBase_) + bonusMin_;
             if (bonus == 0) {
                 bonus++;
             }
@@ -132,7 +134,7 @@ public class BonusPool {
         return true;
     }
 
-    public static float[] getRandomArarray(int bonusIndex,float bonus,int maxval){
+    public static float[] generateVirtualBonus(int bonusIndex, float bonus,int maxval){
         Random indexRand = new Random();
         int rd =indexRand.nextInt(3)+1;
         float[] intArray =new float[15];
@@ -155,6 +157,7 @@ public class BonusPool {
     }
 
     private Integer bonusBase_;
+    private Integer bonusMin_;
     private Integer bonusMax_;
     private double lossRate_;
     private Integer poolSize_ = 1000;
