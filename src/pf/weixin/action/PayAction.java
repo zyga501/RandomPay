@@ -121,8 +121,9 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String  makeQcode(){
+//        System.out.println(StringUtils.saltDecode("Bb2hFYktzMkNnNlprMWx5VW5PSE9fS003eXREY3c"));
+//        setAttribute("wxid",StringUtils.saltEncode("ohEbKs2Cg6Zk1lyUnOHO_KM7ytDc"));
         setAttribute("wxid",getAttribute("openid"));
-        setAttribute("wxid",("openid"));
         return "promopage";
     }
 }

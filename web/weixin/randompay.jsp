@@ -6,7 +6,8 @@
     <link href="<%=request.getContextPath()%>/css/laydate.css" rel="stylesheet" type="text/css"/>
     <link href="<%=request.getContextPath()%>/css/layer.css" rel="stylesheet" type="text/css"/>
 <style>
-    html,body { margin:0 auto; }
+    html,body { margin:0 auto;
+        text-align: center; }
     #divparent
     {
         width:100%;height:100%;
@@ -46,10 +47,10 @@
         width:100%;
         vertical-align:middle;
     }
-    .button{
+    .commpanel{
         -webkit-border-radius: 5px;
         border-radius: 5px;
-        background-color: #06af3f;
+        background-color: #7b7b81;
         color: #FEFEFE;
         border: none;
         font-size: 18px;
@@ -94,7 +95,7 @@
         });
         };
 
-        function makeQcode() {
+        function makeqcode() {
             layer.open({
                 type: 2,
                 title: '微信支付，赢红包',
@@ -104,6 +105,25 @@
                 content: 'Pay!makeQcode' //iframe的url
             });
         };
+
+        function showcomm(){
+            $.ajax({
+                type: 'post',
+                url: '<%=request.getContextPath()%>/weixin/Pay!getCommission',
+                dataType:"json",
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    layer.open({
+                        type: 1,
+                        title:"我的佣金",
+                        shade: 0.8, //遮罩透明度
+                        area: ['380px', '100px'],
+                        content: '<div style="position: absolute;width:100%;top: 30%"><span class="commpanel">累计未结算佣金:'+json.comm+'元</span></div>'
+                    });
+                }
+            })
+        }
+
         function randomPay(v){
             $.ajax({
                 type: 'post',
@@ -175,6 +195,6 @@
         </table>
     </div>
 </div>
-<div class="nav_list"><button onclick="paychoose()">我要消费</button><button onclick="makeQcode()" >生成推广码</button><button >我的佣金</button></div>
+<div class="nav_list"><button onclick="paychoose()">我要消费</button><button onclick="makeqcode()" >生成推广码</button><button onclick="showcomm()">我的佣金</button></div>
 </body>
 </html>
