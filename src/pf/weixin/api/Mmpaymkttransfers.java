@@ -1,16 +1,14 @@
 package pf.weixin.api;
 
-import framework.utils.HttpClient;
 import org.xml.sax.SAXException;
 import pf.ProjectLogger;
-import pf.weixin.api.RequestBean.MicroPayRequestData;
 import pf.weixin.api.RequestBean.RandomPayRequestData;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.Map;
 
-public class Mmpaymkttransfers extends WeixinAPIWithSign {
+public class Mmpaymkttransfers extends WeixinAPIWithSignEx {
     public final static String TRANSFERS_API = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 
     public Mmpaymkttransfers(RandomPayRequestData randomPayRequestData, long createUser) {

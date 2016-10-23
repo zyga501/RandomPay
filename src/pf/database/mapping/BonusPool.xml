@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pf.database.mapping.bonusPool">
+    <select id="getBonusByAmount" parameterType="int" resultMap="bonusPoolResult">
+        SELECT * FROM BonusPool WHERE amount=#{amount}
+    </select>
+    <select id="deleteBonusByAmountAndBouns" parameterType="pf.database.BonusPool">
+        DELETE FROM BonusPool WHERE amount=#{amount} and bonus=#{bonus}
+    </select>
+
+    <insert id="insertBonus" parameterType="java.util.List">
+        INSERT INTO BonusPool(amount, bonus)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.amount},#{item.bonus})
+        </foreach>
+    </insert>
+
+    <resultMap type="pf.database.BonusPool" id="bonusPoolResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="amount" column="amount" jdbcType="NUMERIC" />
+        <result property="bonus" column="bonus" jdbcType="NUMERIC" />
+    </resultMap>
+</mapper>

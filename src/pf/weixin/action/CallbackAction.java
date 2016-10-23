@@ -2,10 +2,7 @@ package pf.weixin.action;
 
 import framework.action.AjaxActionSupport;
 import framework.utils.XMLParser;
-import pf.ProjectLogger;
-import pf.ProjectSettings;
 import pf.database.PendingOrder;
-import pf.weixin.utils.Signature;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

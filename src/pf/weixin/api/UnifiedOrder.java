@@ -4,7 +4,7 @@ import pf.weixin.api.RequestBean.UnifiedOrderRequestData;
 
 import java.util.Map;
 
-public class UnifiedOrder extends WxAPIWithSign {
+public class UnifiedOrder extends WeixinAPIWithSign {
     public final static String UNIFIEDORDER_API = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
     public UnifiedOrder(UnifiedOrderRequestData unifiedOrderRequestData) {

@@ -4,32 +4,27 @@ import java.util.*;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
-        ArrayList<Integer> mapping = new ArrayList<>();
-        for (int index = 0; index < 200; ++index) {
-            mapping.add(0);
-        }
-
         int totalBonus = 0;
-        BonusPool bonusPool = new BonusPool(1000, 100, 20000, 0.9);
         do {
-            int bonus = bonusPool.popBonus();
+            int bonus = BonusPool.getBonus(1000);
             totalBonus += bonus;
-            mapping.set(bonus - 1, mapping.get(bonus - 1) + 1);
-        } while (bonusPool.PoolSize() != 0);
+            pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(1000, bonus));
+        } while (BonusPool.getBonusSize(1000) != 0);
 
         System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + 200);
         System.out.println("Total Bonus:" + totalBonus);
-        System.out.println("Bonus Distributed:");
-        for (int index = 0; index < mapping.size(); ++index) {
-            totalBonus += mapping.get(index);
-            System.out.println("Bonus " + (index + 1) + " : " + mapping.get(index));
-        }
         System.out.println();
     }
 
     public static int getBonus(int amount) {
         synchronized (bonusPoolMap) {
             return bonusPoolMap.get(amount).popBonus();
+        }
+    }
+
+    public static int getBonusSize(int amount) {
+        synchronized (bonusPoolMap) {
+            return bonusPoolMap.get(amount).PoolSize();
         }
     }
 
@@ -64,7 +59,19 @@ public class BonusPool {
     public Integer popBonus() {
         synchronized (bonusList_) {
             if (bonusList_.size() == 0) {
-                while (!generateBonus());
+                List<pf.database.BonusPool> bonusPoolList = pf.database.BonusPool.getBonusByAmount(bonusBase_);
+                if (bonusPoolList.size() == 0) {
+                    while (!generateBonus());
+                    for (int bonus : bonusList_) {
+                        bonusPoolList.add(new pf.database.BonusPool(bonusBase_, bonus));
+                    }
+                    pf.database.BonusPool.insertBonus(bonusPoolList);
+                }
+                else {
+                    for (pf.database.BonusPool bonusPool : bonusPoolList) {
+                        bonusList_.add(bonusPool.getBonus());
+                    }
+                }
             }
 
             int index = indexRandom_.nextInt(bonusList_.size());
