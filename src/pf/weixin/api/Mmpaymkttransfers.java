@@ -1,9 +1,7 @@
 package pf.weixin.api;
 
-import framework.utils.HttpClient;
 import org.xml.sax.SAXException;
 import pf.ProjectLogger;
-import pf.weixin.api.RequestBean.MicroPayRequestData;
 import pf.weixin.api.RequestBean.RandomPayRequestData;
 
 import javax.xml.parsers.ParserConfigurationException;
