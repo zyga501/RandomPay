@@ -78,6 +78,7 @@ public class PayAction extends AjaxActionSupport {
         orderInfo.setAmount(pendingOrder.getAmount());
         orderInfo.setBonus(randomPayRequestData.amount);
         OrderInfo.insertOrderInfo(orderInfo);
+        pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(pendingOrder.getAmount(), randomPayRequestData.amount));
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100 + "元红包！");

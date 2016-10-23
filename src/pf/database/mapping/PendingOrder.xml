@@ -16,7 +16,7 @@
         VALUE (#{openid},#{amount})
     </insert>
 
-    <resultMap type="pf.database.PendingOrder" id="orderInfoResult">
+    <resultMap type="pf.database.BonusPool" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
         <result property="amount" column="amount" jdbcType="NUMERIC" />

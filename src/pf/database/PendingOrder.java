@@ -29,7 +29,7 @@ public class PendingOrder extends OrderInfo {
         return Database.Instance().delete(statement, openid) == 1;
     }
 
-    public static boolean insertOrderInfo(PendingOrder pendingOrder) {
+    public static boolean insertOrderInfo(BonusPool pendingOrder) {
         String statement = "pf.database.mapping.pendingOrder.insertOrderInfo";
         return Database.Instance().insert(statement, pendingOrder) == 1;
     }

@@ -26,5 +26,6 @@
     <mappers>
         <mapper resource="pf/database/mapping/OrderInfo.xml" />
         <mapper resource="pf/database/mapping/PendingOrder.xml" />
+        <mapper resource="pf/database/mapping/BonusPool.xml" />
     </mappers>
 </configuration>
