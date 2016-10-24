@@ -91,6 +91,35 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete(resultMap);
     }
 
+    public String commPay() throws Exception {
+        if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        Map<String, Object> resultMap = new HashMap<>();
+        OrderInfo oipara = new OrderInfo();
+        oipara.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
+        List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(oipara);
+        if (oList.size() < 1) return AjaxActionComplete(true);
+        for (OrderInfo oi_ : oList) {
+            RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
+            randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+            randomPayRequestData.mchid = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
+            randomPayRequestData.openid = oi_.getCommopenid();
+            randomPayRequestData.check_name = "NO_CHECK";
+            randomPayRequestData.amount =oi_.getComm();
+
+            randomPayRequestData.desc = "分红入账";
+            Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
+            if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
+                ProjectLogger.warn("randomPay Failed!");
+                return AjaxActionComplete(false);
+            }
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setCommopenid(oi_.getCommopenid());
+            orderInfo.setStatus(oi_.getStatus());
+            OrderInfo.updateOrderInfoDone(orderInfo);
+        }
+        return AjaxActionComplete(true);
+    }
+
     public String brandWCPay() throws Exception {
         UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
         unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
@@ -128,7 +157,7 @@ public class PayAction extends AjaxActionSupport {
         setAttribute("wxid",getAttribute("openid"));
         return "promopage";
     }
-    
+
     private String getRemortIP(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -157,6 +186,7 @@ public class PayAction extends AjaxActionSupport {
             return AjaxActionComplete(false);
         }
     }
+
     public String getOrderInfoGroup(){
         if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();

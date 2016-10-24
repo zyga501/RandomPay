@@ -32,6 +32,7 @@
       //给class为stripe的表格的偶数行添加class值为alt
       //www.divcss5.com 整理特效
     };
+
     function getinfo() {
       $.ajax({
         type: 'post',
@@ -58,6 +59,19 @@
             $("#conetntdiv").html(htmlstr);
             tbactive();
           }
+        }
+      })
+    }
+    function sendpaymsg() {
+      $.ajax({
+        type: 'post',
+        url: '<%=request.getContextPath()%>/weixin/Pay!commPay',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+            alert(json.resultCode);
+          getinfo();
         }
       })
     }
