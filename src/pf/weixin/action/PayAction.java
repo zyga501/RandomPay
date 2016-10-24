@@ -127,4 +127,31 @@ public class PayAction extends AjaxActionSupport {
         setAttribute("wxid",getAttribute("openid"));
         return "promopage";
     }
+
+    public String getOrderInfo(){
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            OrderInfo oi = new OrderInfo();
+            oi.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
+            List<OrderInfo> oList = OrderInfo.getOrderInfo(oi);
+            resultMap.put("olist", oList);
+            return AjaxActionComplete(true,resultMap);
+        }
+        catch (Exception e){
+            return AjaxActionComplete(false);
+        }
+    }
+    public String getOrderInfoGroup(){
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            OrderInfo oi = new OrderInfo();
+            oi.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
+            List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(oi);
+            resultMap.put("olist", oList);
+            return AjaxActionComplete(true,resultMap);
+        }
+        catch (Exception e){
+            return AjaxActionComplete(false);
+        }
+    }
 }
