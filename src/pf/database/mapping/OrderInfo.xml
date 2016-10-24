@@ -14,6 +14,8 @@
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
         <result property="amount" column="amount" jdbcType="NUMERIC" />
-        <result property="bonus" column="bonus" jdbcType="NUMERIC" />
+        <result property="bonus" column="bonus" jdbcType="FLOAT" />
+        <result property="comm" column="comm" jdbcType="FLOAT" />
+        <result property="status" column="status" jdbcType="NUMERIC" />
     </resultMap>
 </mapper>

@@ -45,16 +45,34 @@ public class OrderInfo {
         this.amount_ = amount;
     }
 
-    public int getBonus() {
+    public float getBonus() {
         return bonus_;
     }
 
-    public void setBonus(int bonus) {
+    public void setBonus(float bonus) {
         this.bonus_ = bonus;
+    }
+
+    public float getComm() {
+        return comm_;
+    }
+
+    public void setComm(float comm_) {
+        this.comm_ = comm_;
+    }
+
+    public int getStatus() {
+        return status_;
+    }
+
+    public void setStatus(int status_) {
+        this.status_ = status_;
     }
 
     private long id_;
     private String openid_;
     private int amount_;
-    private int bonus_;
+    private float bonus_;
+    private float comm_;
+    private int status_;
 }
