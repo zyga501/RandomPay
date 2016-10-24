@@ -16,6 +16,16 @@ public class OrderInfo {
         return Database.Instance().selectList(statement);
     }
 
+    public static List<OrderInfo> getOrderInfo(pf.database.OrderInfo rtstatus) {
+        String statement = "pf.database.mapping.orderInfo.getOrderInfoByStatus";
+        return Database.Instance().selectList(statement,rtstatus);
+    }
+
+    public static List<OrderInfo> getOrderInfoGroup(pf.database.OrderInfo rtstatus) {
+        String statement = "pf.database.mapping.orderInfo.getOrderInfoGroupByStatus";
+        return Database.Instance().selectList(statement,rtstatus);
+    }
+
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
         String statement = "pf.database.mapping.orderInfo.insertOrderInfo";
         return Database.Instance().insert(statement, orderInfo) == 1;
@@ -69,10 +79,19 @@ public class OrderInfo {
         this.status_ = status_;
     }
 
+    public String getCommopenid() {
+        return commopenid_;
+    }
+
+    public void setCommopenid(String commopenid) {
+        this.commopenid_ = commopenid;
+    }
+
     private long id_;
     private String openid_;
     private int amount_;
     private float bonus_;
     private float comm_;
     private int status_;
+    private String commopenid_;
 }

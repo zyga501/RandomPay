@@ -5,6 +5,14 @@
         SELECT * FROM OrderInfo
     </select>
 
+    <select id="getOrderInfoByStatus" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo where status=${status}  ORDER  by id desc
+    </select>
+
+    <select id="getOrderInfoGroupByStatus" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
+        SELECT commopenid,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM OrderInfo where status=${status} group by commopenid  ORDER  by openid desc
+    </select>
+
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
         INSERT INTO OrderInfo(openid, amount, bonus)
         VALUE (#{openid},#{amount},#{bonus})
@@ -17,5 +25,6 @@
         <result property="bonus" column="bonus" jdbcType="FLOAT" />
         <result property="comm" column="comm" jdbcType="FLOAT" />
         <result property="status" column="status" jdbcType="NUMERIC" />
+        <result property="commopenid" column="commopenid" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>
