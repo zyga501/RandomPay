@@ -26,6 +26,11 @@ public class OrderInfo {
         return Database.Instance().selectList(statement,rtstatus);
     }
 
+    public static boolean updateOrderInfoDone(OrderInfo orderInfo) {
+        String statement = "pf.database.mapping.orderInfo.updateOrderInfoDone";
+        return Database.Instance().insert(statement, orderInfo) > 0;
+    }
+
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
         String statement = "pf.database.mapping.orderInfo.insertOrderInfo";
         return Database.Instance().insert(statement, orderInfo) == 1;
@@ -59,15 +64,15 @@ public class OrderInfo {
         return bonus_;
     }
 
-    public void setBonus(float bonus) {
+    public void setBonus(int bonus) {
         this.bonus_ = bonus;
     }
 
-    public float getComm() {
+    public int getComm() {
         return comm_;
     }
 
-    public void setComm(float comm_) {
+    public void setComm(int comm_) {
         this.comm_ = comm_;
     }
 
@@ -90,8 +95,8 @@ public class OrderInfo {
     private long id_;
     private String openid_;
     private int amount_;
-    private float bonus_;
-    private float comm_;
+    private int bonus_;
+    private int comm_;
     private int status_;
     private String commopenid_;
 }
