@@ -10,6 +10,10 @@ import java.util.Random;
 import java.util.TimeZone;
 
 public class StringUtils {
+    public static void main(String[] arg){
+        System.out.println(StringUtils.saltEncode("o8Dbet8_qWwa7qCOJiBgAFswd9e4"));
+        System.out.println(StringUtils.saltDecode("COERiZXQ4X3FXd2E3cUNPSmlCZ0FGc3dkOWU0bw=="));
+    }
     public static String convertNullableString(Object object) {
         if (object == null) {
             return new String();
@@ -48,8 +52,8 @@ public class StringUtils {
         String s = null;
         String chars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         try {
-
-            b = sourcestring.substring(0,sourcestring.length()-1).concat(String.valueOf(sourcestring.charAt(sourcestring.length()-1)^3)).getBytes("utf-8");
+            //首位移动最后
+            b = sourcestring.substring(1,sourcestring.length()).concat(sourcestring.substring(0,1)).getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -71,6 +75,6 @@ public class StringUtils {
                 e.printStackTrace();
             }
         }
-        return result.substring(0,result.length()-1);
+        return result.substring(result.length()-1,result.length()).concat(result.substring(0,result.length()-1));
     }
 }
