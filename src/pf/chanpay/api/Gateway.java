@@ -159,7 +159,7 @@ public class Gateway {
 
     public void gatewayPost(Map<String, String> origMap, String charset, String MERCHANT_PRIVATE_KEY) {
         try {
-            String urlStr = "https://tpay.chanpay.com/mag/gateway/receiveOrder.do?";
+            String urlStr = "https://pay.chanpay.com/mag/gateway/receiveOrder.do?";
             String resultString = this.buildRequest(origMap, "RSA", MERCHANT_PRIVATE_KEY, charset, urlStr);
             System.out.println(resultString);
         } catch (Exception e) {
@@ -178,7 +178,7 @@ public class Gateway {
         origMap.put("partner_id", "200000660194"); // 畅捷支付分配的商户号
         origMap.put("_input_charset", charset);
         origMap.put("is_anonymous", "Y");
-        origMap.put("bank_code", "TESTBANK");// 含义看文档
+        origMap.put("bank_code", "WXPAY");// 含义看文档
         origMap.put("out_trade_no", (UUID.randomUUID().toString()).replace("-", ""));
         origMap.put("pay_method", "1");// 含义看文档
         origMap.put("pay_type", "C,DC");// 含义看文档

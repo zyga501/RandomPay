@@ -2,6 +2,7 @@ package pf.weixin.action;
 
 import framework.action.AjaxActionSupport;
 import framework.utils.XMLParser;
+import pf.ProjectSettings;
 import pf.database.PendingOrder;
 
 import java.io.BufferedReader;
@@ -42,6 +43,8 @@ public class CallbackAction extends AjaxActionSupport {
                 PendingOrder pendingOrder = new PendingOrder();
                 pendingOrder.setOpenid(responseResult.get("openid").toString());
                 pendingOrder.setAmount(Integer.parseInt(responseResult.get("total_fee").toString()));
+                pendingOrder.setCommopenid(responseResult.get("attach").toString());
+                pendingOrder.setComm((int)(pendingOrder.getAmount()* (Float.parseFloat(ProjectSettings.getData("commrate").toString()))));
                 PendingOrder.insertOrderInfo(pendingOrder);
             }
         }
