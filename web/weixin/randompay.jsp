@@ -113,12 +113,15 @@
                 dataType:"json",
                 success: function (data) {
                     var json = eval("(" + data + ")");
+                    var v = 0;
+                    if (json.comm!=undefined)
+                      v=json.comm;
                     layer.open({
                         type: 1,
                         title:"我的佣金",
                         shade: 0.8, //遮罩透明度
                         area: ['380px', '100px'],
-                        content: '<div style="position: absolute;width:100%;top: 30%"><span class="commpanel">累计未结算佣金:'+json.comm+'元</span></div>'
+                        content: '<div style="position: absolute;width:100%;top: 30%"><span class="commpanel">累计未结算佣金:'+v+'元</span></div>'
                     });
                 }
             })

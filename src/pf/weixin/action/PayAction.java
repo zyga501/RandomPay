@@ -41,6 +41,10 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String mainPage() {
+        if (null!=getParameter("tid")) {
+            setAttribute("commopenid", StringUtils.saltDecode(getParameter("tid").toString()));
+            setParameter("redirect_url","Pay!mainPage?id=1");
+        }
         setParameter("redirect_url","Pay!mainPage?id=1");
         if (getParameter("openid")!=null)
             setAttribute("openid",getParameter("openid"));
@@ -150,7 +154,7 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
         unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
         unifiedOrderRequestData.body = "购物消费";
-        unifiedOrderRequestData.attach = "none";
+        unifiedOrderRequestData.attach = (getAttribute("commopenid"));
         unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
         unifiedOrderRequestData.trade_type = "JSAPI";
         unifiedOrderRequestData.openid = getAttribute("openid");
@@ -178,7 +182,7 @@ public class PayAction extends AjaxActionSupport {
     public String  makeQcode(){
 //        System.out.println(StringUtils.saltDecode("Bb2hFYktzMkNnNlprMWx5VW5PSE9fS003eXREY3c"));
 //        setAttribute("wxid",StringUtils.saltEncode("ohEbKs2Cg6Zk1lyUnOHO_KM7ytDc"));
-        setAttribute("wxid",getAttribute("openid"));
+        setAttribute("wxid",StringUtils.saltEncode(getAttribute("openid")));
         return "promopage";
     }
 
@@ -217,6 +221,21 @@ public class PayAction extends AjaxActionSupport {
         try {
             List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(Integer.valueOf(getParameter("paystatus").toString()));
             resultMap.put("olist", oList);
+            return AjaxActionComplete(true,resultMap);
+        }
+        catch (Exception e){
+            return AjaxActionComplete(false);
+        }
+    }
+    public String getCommission(){
+        if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            OrderInfo oi = new OrderInfo();
+            oi.setStatus(0);
+            oi.setCommopenid(getAttribute("openid"));
+            List<OrderInfo> oList = OrderInfo.getOrderInfoGroupByStatusAndCommopenid(oi);
+            resultMap.put("comm", oList.get(0).getComm());
             return AjaxActionComplete(true,resultMap);
         }
         catch (Exception e){

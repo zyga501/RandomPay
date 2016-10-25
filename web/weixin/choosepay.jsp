@@ -35,12 +35,12 @@
 </head>
 <body scroll="no">
 <input type="button" class="but"  value="支付10元"   onclick="pay(1000)" />
-<img src="/image/rmb.png"><span>奖金1..200</span><br><br>
+<img src="<%=request.getContextPath()%>/image/rmb.png"><span>奖金1..200</span><br><br>
 <input type="button" class="but"  value="支付20元"   onclick="pay(2000)" />
-<img src="/image/rmb.png"><span>奖金1..600</span><br><br>
+<img src="<%=request.getContextPath()%>/image/rmb.png"><span>奖金1..600</span><br><br>
 <input type="button"  class="but" value="支付50元"   onclick="pay(5000)" />
-<img src="/image/rmb.png"><span>奖金1..800</span><br><br>
+<img src="<%=request.getContextPath()%>/image/rmb.png"><span>奖金1..800</span><br><br>
 <input type="button"  class="but" value="支付100元"   onclick="pay(10000)" />
-<img src="/image/rmb.png"><span>奖金1..1800</span><br>
+<img src="<%=request.getContextPath()%>/image/rmb.png"><span>奖金1..1800</span><br>
 </body>
 </html>

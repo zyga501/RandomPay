@@ -26,6 +26,10 @@ public class OrderInfo {
         return Database.Instance().selectList(statement, status);
     }
 
+    public static List<OrderInfo> getOrderInfoGroupByStatusAndCommopenid(OrderInfo orderInfo) {
+        String statement = "pf.database.mapping.orderInfo.getOrderInfoGroupByStatusAndCommopenid";
+        return Database.Instance().selectList(statement, orderInfo);
+    }
     public static boolean updateOrderInfoDone(String commopenid) {
         String statement = "pf.database.mapping.orderInfo.updateOrderInfoDone";
         return Database.Instance().update(statement, commopenid) > 0;
