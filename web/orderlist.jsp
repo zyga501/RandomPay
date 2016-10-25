@@ -30,7 +30,6 @@
         $(this).removeClass("over");}) //移除该行的class
       $(".stripe tr:even").addClass("alt");
       //给class为stripe的表格的偶数行添加class值为alt
-      //www.divcss5.com 整理特效
     };
     function getinfo() {
       $.ajax({

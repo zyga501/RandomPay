@@ -60,7 +60,7 @@ public class OrderInfo {
         this.amount_ = amount;
     }
 
-    public float getBonus() {
+    public int getBonus() {
         return bonus_;
     }
 
