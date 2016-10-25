@@ -11,6 +11,7 @@ import java.util.TimeZone;
 
 public class StringUtils {
     public static void main(String[] arg){
+        System.out.println((1-0.2+Math.random()*0.4));
         System.out.println(StringUtils.saltEncode("o8Dbet8_qWwa7qCOJiBgAFswd9e4"));
         System.out.println(StringUtils.saltDecode("COERiZXQ4X3FXd2E3cUNPSmlCZ0FGc3dkOWU0bw=="));
     }

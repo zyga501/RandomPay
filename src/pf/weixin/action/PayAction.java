@@ -16,10 +16,7 @@ import pf.weixin.utils.Signature;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PayAction extends AjaxActionSupport {
     public void fetchWxCode() throws IOException {
@@ -92,8 +89,8 @@ public class PayAction extends AjaxActionSupport {
         pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(pendingOrder.getAmount(), randomPayRequestData.amount));
 
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100 + "元红包！");
-        float[] aryint = BonusPool.generateVirtualBonus(Integer.parseInt(getParameter("itempos").toString())-1,randomPayRequestData.amount / 100,200);
+        resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100.00 + "元红包！");
+        float[] aryint = BonusPool.generateVirtualBonus(Integer.parseInt(getParameter("itempos").toString())-1, (float) (randomPayRequestData.amount / 100.00),200);
         List<Float> hbList = new ArrayList<>();
         for (int i=0;i<aryint.length;i++)
             hbList.add(i,aryint[i]);
@@ -104,9 +101,11 @@ public class PayAction extends AjaxActionSupport {
     public String commPay() throws Exception {
         synchronized (syncObject) {
             if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
-            PendingOrder pendingOrder = new PendingOrder();
+            /*PendingOrder pendingOrder = new PendingOrder();
             pendingOrder.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
-            List<PendingOrder> pendingOrderList = PendingOrder.getPendingOrderGroup(Integer.valueOf(getParameter("paystatus").toString()));
+            OrderInfo orderInfo =new OrderInfo();
+            orderInfo.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
+            List<OrderInfo> pendingOrderList = OrderInfo.getOrderInfoGroup(orderInfo);
             for (OrderInfo oi_ : pendingOrderList) {
                 RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
                 randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
@@ -123,9 +122,11 @@ public class PayAction extends AjaxActionSupport {
                 }
 
                 PendingOrder.updatePendingOrderDone(oi_.getCommopenid());
-            }
+            }*/
 
-            List<OrderInfo> orderInfoList = OrderInfo.getOrderInfoGroup(Integer.valueOf(getParameter("paystatus").toString()));
+            OrderInfo orderInfo =new OrderInfo();
+            orderInfo.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
+            List<OrderInfo> orderInfoList = OrderInfo.getOrderInfoGroup(orderInfo);
             for (OrderInfo oi_ : orderInfoList) {
                 RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
                 randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
@@ -148,6 +149,11 @@ public class PayAction extends AjaxActionSupport {
         }
     }
 
+    public String checkBonus(){
+        PendingOrder pendingOrder = PendingOrder.getPendingOrderByOpenId(getAttribute("openid"));
+        return   AjaxActionComplete(pendingOrder!=null);
+    }
+
     public String brandWCPay() throws Exception {
         UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
         unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
@@ -155,7 +161,7 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
         unifiedOrderRequestData.body = "购物消费";
         unifiedOrderRequestData.attach = (getAttribute("commopenid"));
-        unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+        unifiedOrderRequestData.total_fee = (int)(Integer.parseInt(getParameter("total_fee").toString())*(1-0.2+Math.random()*0.4));
         unifiedOrderRequestData.trade_type = "JSAPI";
         unifiedOrderRequestData.openid = getAttribute("openid");
         String requestUrl = getRequest().getRequestURL().toString();
@@ -197,6 +203,7 @@ public class PayAction extends AjaxActionSupport {
         if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
+        System.out.print(ip);
         return ip;
     }
 
@@ -219,26 +226,30 @@ public class PayAction extends AjaxActionSupport {
         if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(Integer.valueOf(getParameter("paystatus").toString()));
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
+            List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(orderInfo);
             resultMap.put("olist", oList);
             return AjaxActionComplete(true,resultMap);
         }
         catch (Exception e){
+            e.printStackTrace();
             return AjaxActionComplete(false);
         }
     }
     public String getCommission(){
-        if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+       // if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();
         try {
             OrderInfo oi = new OrderInfo();
             oi.setStatus(0);
             oi.setCommopenid(getAttribute("openid"));
             List<OrderInfo> oList = OrderInfo.getOrderInfoGroupByStatusAndCommopenid(oi);
-            resultMap.put("comm", oList.get(0).getComm());
+            resultMap.put("comm", oList.get(0).getComm()/100.00);
             return AjaxActionComplete(true,resultMap);
         }
         catch (Exception e){
+            e.printStackTrace();
             return AjaxActionComplete(false);
         }
     }
