@@ -10,15 +10,25 @@
     <select id="deletePendingOrderByOpenid" parameterType="String">
         DELETE FROM PendingOrder WHERE openid=#{openid}
     </select>
+    <select id="getOrderInfoGroupByStatus" parameterType="int" resultMap="orderInfoResult">
+        SELECT commopenid,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM PendingOrder where status=${status} group by commopenid  ORDER  by openid desc
+    </select>
+
+    <update id="updateOrderInfoDone" parameterType="String">
+        update PendingOrder set status=1 where  commopenid=#{commopenid} and status=0
+    </update>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
-        INSERT INTO PendingOrder(openid, amount)
-        VALUE (#{openid},#{amount})
+        INSERT INTO PendingOrder(openid, amount,commopenid,comm)
+        VALUE (#{openid},#{amount},#{commopenid},#{comm})
     </insert>
 
-    <resultMap type="pf.database.BonusPool" id="orderInfoResult">
+    <resultMap type="pf.database.PendingOrder" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
         <result property="amount" column="amount" jdbcType="NUMERIC" />
+        <result property="commopenid" column="commopenid" jdbcType="VARCHAR" />
+        <result property="comm" column="comm" jdbcType="NUMERIC" />
+        <result property="status" column="status" jdbcType="NUMERIC" />
     </resultMap>
 </mapper>

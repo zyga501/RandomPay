@@ -73,12 +73,18 @@ public class PayAction extends AjaxActionSupport {
             return AjaxActionComplete();
         }
 
-        PendingOrder.deletePendingOrderByOpenId(getAttribute("openid"));
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setOpenid(getAttribute("openid"));
-        orderInfo.setAmount(pendingOrder.getAmount());
-        orderInfo.setBonus(randomPayRequestData.amount);
-        OrderInfo.insertOrderInfo(orderInfo);
+        synchronized (syncObject) {
+            PendingOrder.deletePendingOrderByOpenId(getAttribute("openid"));
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setOpenid(getAttribute("openid"));
+            orderInfo.setAmount(pendingOrder.getAmount());
+            orderInfo.setBonus(randomPayRequestData.amount);
+            orderInfo.setCommopenid(pendingOrder.getCommopenid());
+            orderInfo.setComm(pendingOrder.getComm());
+            orderInfo.setStatus(pendingOrder.getStatus());
+            OrderInfo.insertOrderInfo(orderInfo);
+        }
+
         pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(pendingOrder.getAmount(), randomPayRequestData.amount));
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -92,32 +98,50 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String commPay() throws Exception {
-        if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
-        Map<String, Object> resultMap = new HashMap<>();
-        OrderInfo oipara = new OrderInfo();
-        oipara.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
-        List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(oipara);
-        if (oList.size() < 1) return AjaxActionComplete(true);
-        for (OrderInfo oi_ : oList) {
-            RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
-            randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-            randomPayRequestData.mchid = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
-            randomPayRequestData.openid = oi_.getCommopenid();
-            randomPayRequestData.check_name = "NO_CHECK";
-            randomPayRequestData.amount =oi_.getComm();
+        synchronized (syncObject) {
+            if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+            PendingOrder pendingOrder = new PendingOrder();
+            pendingOrder.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
+            List<PendingOrder> pendingOrderList = PendingOrder.getPendingOrderGroup(Integer.valueOf(getParameter("paystatus").toString()));
+            for (OrderInfo oi_ : pendingOrderList) {
+                RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
+                randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+                randomPayRequestData.mchid = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
+                randomPayRequestData.openid = oi_.getCommopenid();
+                randomPayRequestData.check_name = "NO_CHECK";
+                randomPayRequestData.amount =oi_.getComm();
 
-            randomPayRequestData.desc = "分红入账";
-            Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
-            if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
-                ProjectLogger.warn("randomPay Failed!");
-                return AjaxActionComplete(false);
+                randomPayRequestData.desc = "分红入账";
+                Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
+                if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
+                    ProjectLogger.warn("randomPay Failed!");
+                    return AjaxActionComplete(false);
+                }
+
+                PendingOrder.updatePendingOrderDone(oi_.getCommopenid());
             }
-            OrderInfo orderInfo = new OrderInfo();
-            orderInfo.setCommopenid(oi_.getCommopenid());
-            orderInfo.setStatus(oi_.getStatus());
-            OrderInfo.updateOrderInfoDone(orderInfo);
+
+            List<OrderInfo> orderInfoList = OrderInfo.getOrderInfoGroup(Integer.valueOf(getParameter("paystatus").toString()));
+            for (OrderInfo oi_ : orderInfoList) {
+                RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
+                randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+                randomPayRequestData.mchid = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
+                randomPayRequestData.openid = oi_.getCommopenid();
+                randomPayRequestData.check_name = "NO_CHECK";
+                randomPayRequestData.amount =oi_.getComm();
+
+                randomPayRequestData.desc = "分红入账";
+                Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
+                if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
+                    ProjectLogger.warn("randomPay Failed!");
+                    return AjaxActionComplete(false);
+                }
+
+                OrderInfo.updateOrderInfoDone(oi_.getCommopenid());
+            }
+
+            return AjaxActionComplete(true);
         }
-        return AjaxActionComplete(true);
     }
 
     public String brandWCPay() throws Exception {
@@ -191,9 +215,7 @@ public class PayAction extends AjaxActionSupport {
         if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            OrderInfo oi = new OrderInfo();
-            oi.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
-            List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(oi);
+            List<OrderInfo> oList = OrderInfo.getOrderInfoGroup(Integer.valueOf(getParameter("paystatus").toString()));
             resultMap.put("olist", oList);
             return AjaxActionComplete(true,resultMap);
         }
@@ -201,4 +223,6 @@ public class PayAction extends AjaxActionSupport {
             return AjaxActionComplete(false);
         }
     }
+
+    public final static Object syncObject = new Object();
 }

@@ -29,8 +29,18 @@ public class PendingOrder extends OrderInfo {
         return Database.Instance().delete(statement, openid) == 1;
     }
 
-    public static boolean insertOrderInfo(BonusPool pendingOrder) {
+    public static boolean insertOrderInfo(PendingOrder pendingOrder) {
         String statement = "pf.database.mapping.pendingOrder.insertOrderInfo";
         return Database.Instance().insert(statement, pendingOrder) == 1;
+    }
+
+    public static List<PendingOrder> getPendingOrderGroup(int status) {
+        String statement = "pf.database.mapping.pendingOrder.getOrderInfoGroupByStatus";
+        return Database.Instance().selectList(statement, status);
+    }
+
+    public static boolean updatePendingOrderDone(String commopenid) {
+        String statement = "pf.database.mapping.pendingOrder.updateOrderInfoDone";
+        return Database.Instance().update(statement, commopenid) > 0;
     }
 }

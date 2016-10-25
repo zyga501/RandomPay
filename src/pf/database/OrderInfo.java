@@ -21,14 +21,14 @@ public class OrderInfo {
         return Database.Instance().selectList(statement,rtstatus);
     }
 
-    public static List<OrderInfo> getOrderInfoGroup(pf.database.OrderInfo rtstatus) {
+    public static List<OrderInfo> getOrderInfoGroup(int status) {
         String statement = "pf.database.mapping.orderInfo.getOrderInfoGroupByStatus";
-        return Database.Instance().selectList(statement,rtstatus);
+        return Database.Instance().selectList(statement, status);
     }
 
-    public static boolean updateOrderInfoDone(OrderInfo orderInfo) {
+    public static boolean updateOrderInfoDone(String commopenid) {
         String statement = "pf.database.mapping.orderInfo.updateOrderInfoDone";
-        return Database.Instance().insert(statement, orderInfo) > 0;
+        return Database.Instance().update(statement, commopenid) > 0;
     }
 
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
@@ -60,7 +60,7 @@ public class OrderInfo {
         this.amount_ = amount;
     }
 
-    public float getBonus() {
+    public int getBonus() {
         return bonus_;
     }
 
