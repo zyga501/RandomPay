@@ -74,7 +74,11 @@ public class PayAction extends AjaxActionSupport {
         }
 
         PendingOrder.deletePendingOrderByOpenId(getAttribute("openid"));
-
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOpenid(getAttribute("openid"));
+        orderInfo.setAmount(pendingOrder.getAmount());
+        orderInfo.setBonus(randomPayRequestData.amount);
+        OrderInfo.insertOrderInfo(orderInfo);
         pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(pendingOrder.getAmount(), randomPayRequestData.amount));
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -122,7 +126,7 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
         unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
         unifiedOrderRequestData.body = "购物消费";
-        unifiedOrderRequestData.attach = getParameter("tid").toString();//推广者id
+        unifiedOrderRequestData.attach = "none";
         unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
         unifiedOrderRequestData.trade_type = "JSAPI";
         unifiedOrderRequestData.openid = getAttribute("openid");
