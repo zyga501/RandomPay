@@ -85,14 +85,24 @@
         });
 
         function paychoose() {
-            layer.open({
-            type: 2,
-            title: '选择支付种类',
-            shadeClose: true,
-            shade: 0.8,
-            area: ['380px', '400px'],
-            content: 'choosepay.jsp' //iframe的url
-        });
+            $.ajax({
+            type: 'post',
+            url: '<%=request.getContextPath()%>/weixin/Pay!checkBonus',
+            dataType:"json",
+            success: function (data) {
+                var json = eval("(" + data + ")");
+                if (json.resultCode == "Failed") {
+                    layer.open({
+                        type: 2,
+                        title: '选择支付种类',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['380px', '400px'],
+                        content: 'choosepay.jsp' //iframe的url
+                    });
+                }
+            }
+            })
         };
 
         function makeqcode() {
@@ -127,7 +137,11 @@
             })
         }
 
+        var boolclick = false;
         function randomPay(v){
+            if (boolclick)
+            return;
+            boolclick = true;
             $.ajax({
                 type: 'post',
                 url: '<%=request.getContextPath()%>/weixin/Pay!randomPay',
@@ -143,7 +157,13 @@
                             $('.bjtr td#t'+i).text(json.hblist[i-1]);
                         }
                         alert(json.State);
+                        for(var i=1;i<=15;i++){
+                            $('.bjtr td#t'+i).text("");
+                        }
                     }
+                    boolclick = false;
+                },error: function(){
+                    boolclick = false;
                 }
             })
         }

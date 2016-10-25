@@ -21,9 +21,9 @@ public class OrderInfo {
         return Database.Instance().selectList(statement,rtstatus);
     }
 
-    public static List<OrderInfo> getOrderInfoGroup(int status) {
+    public static List<OrderInfo> getOrderInfoGroup(OrderInfo orderInfos) {
         String statement = "pf.database.mapping.orderInfo.getOrderInfoGroupByStatus";
-        return Database.Instance().selectList(statement, status);
+        return Database.Instance().selectList(statement, orderInfos);
     }
 
     public static List<OrderInfo> getOrderInfoGroupByStatusAndCommopenid(OrderInfo orderInfo) {

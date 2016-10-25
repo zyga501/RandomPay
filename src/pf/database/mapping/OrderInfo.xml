@@ -9,12 +9,12 @@
         SELECT * FROM OrderInfo where status=${status}  ORDER  by id desc
     </select>
 
-    <select id="getOrderInfoGroupByStatus" parameterType="int" resultMap="orderInfoResult">
+    <select id="getOrderInfoGroupByStatus" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
         SELECT commopenid,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM OrderInfo where status=${status} group by commopenid  ORDER  by openid desc
     </select>
 
     <select id="getOrderInfoGroupByStatusAndCommopenid" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
-        SELECT commopenid,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM PendingOrder
+        SELECT commopenid,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM OrderInfo
         where status=${status} and commopenid=#{commopenid} group by commopenid
     </select>
 

@@ -33,6 +33,7 @@ public class CallbackAction extends AjaxActionSupport {
         bufferedReader.close();
 
         String responseString = stringBuilder.toString();
+        System.out.println(responseString);
         Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);
         saveOrderToDb(responseResult);
     }
