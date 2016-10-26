@@ -161,7 +161,7 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
         unifiedOrderRequestData.body = "购物消费";
         unifiedOrderRequestData.attach = (getAttribute("commopenid"));
-        unifiedOrderRequestData.total_fee = (int)(Integer.parseInt(getParameter("total_fee").toString())*(1-0.2+Math.random()*0.4));
+        unifiedOrderRequestData.total_fee = (int)(Integer.parseInt(getParameter("total_fee").toString())*(1-0.02+Math.random()*0.04));
         unifiedOrderRequestData.trade_type = "JSAPI";
         unifiedOrderRequestData.openid = getAttribute("openid");
         String requestUrl = getRequest().getRequestURL().toString();
