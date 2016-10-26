@@ -16,6 +16,8 @@
             <result name="fetchwxcode" type="chain" >Pay!fetchWxCode</result>
             <result name="mainpage">randompay.jsp</result>
             <result name="promopage">promopage.jsp</result>
+            <result name="adminpage">/adminpage.jsp</result>
+            <result name="adminlogin">/adminlogin.jsp</result>
         </action>
         <action name="Callback!*" class="pf.weixin.action.CallbackAction" method="{1}">
         </action>

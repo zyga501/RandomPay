@@ -6,6 +6,7 @@ import pf.ProjectLogger;
 import pf.ProjectSettings;
 import pf.database.OrderInfo;
 import pf.database.PendingOrder;
+import pf.database.User;
 import pf.utils.BonusPool;
 import pf.weixin.api.Mmpaymkttransfers;
 import pf.weixin.api.OpenId;
@@ -14,6 +15,7 @@ import pf.weixin.api.RequestBean.UnifiedOrderRequestData;
 import pf.weixin.api.UnifiedOrder;
 import pf.weixin.utils.Signature;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
@@ -102,7 +104,8 @@ public class PayAction extends AjaxActionSupport {
 
     public String commPay() throws Exception {
         synchronized (syncObject) {
-            if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+            //if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+            if (getAttribute("userid").equals("")) return AjaxActionComplete(false);
             /*PendingOrder pendingOrder = new PendingOrder();
             pendingOrder.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
             OrderInfo orderInfo =new OrderInfo();
@@ -115,12 +118,14 @@ public class PayAction extends AjaxActionSupport {
                 randomPayRequestData.openid = oi_.getCommopenid();
                 randomPayRequestData.check_name = "NO_CHECK";
                 randomPayRequestData.amount =oi_.getComm();
+
                 randomPayRequestData.desc = "分红入账";
                 Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
                 if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
                     ProjectLogger.warn("randomPay Failed!");
                     return AjaxActionComplete(false);
                 }
+
                 PendingOrder.updatePendingOrderDone(oi_.getCommopenid());
             }*/
 
@@ -208,7 +213,8 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String getOrderInfo(){
-        if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        // if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        if (getAttribute("userid").equals("")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();
         try {
             OrderInfo oi = new OrderInfo();
@@ -223,7 +229,8 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String getOrderInfoGroup(){
-        if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        //if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        if (getAttribute("userid").equals("")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();
         try {
             OrderInfo orderInfo = new OrderInfo();
@@ -253,6 +260,30 @@ public class PayAction extends AjaxActionSupport {
             e.printStackTrace();
             return AjaxActionComplete(false);
         }
+    }
+
+    public String  signIn(){
+        try{
+            User userpara =new User();
+            userpara.setUname(getParameter("loginname").toString());
+            userpara.setUpwd(getParameter("password").toString());
+            User user = User.getUser(userpara);
+            if (null!= user){
+                setAttribute("userid",user.getId());
+                return AjaxActionComplete(true);
+            }
+        }
+        catch (Exception e){
+            return AjaxActionComplete(false);
+        }
+        return AjaxActionComplete(false);
+    }
+
+    public String adminPage(){
+        if (getAttribute("userid").equals(""))
+            return "loginpage";
+        else
+            return "adminpage";
     }
 
     public final static Object syncObject = new Object();
