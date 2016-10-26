@@ -71,8 +71,9 @@ public class PayAction extends AjaxActionSupport {
         randomPayRequestData.desc = "红包入账";
         Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData,Long.parseLong("1234321"));
         if (!mmpaymkttransfers.postRequest( ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
-            ProjectLogger.warn("randomPay Failed!");
-            return AjaxActionComplete();
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("State", "NoData");
+            return AjaxActionComplete(resultMap);
         }
 
         synchronized (syncObject) {
