@@ -15,6 +15,7 @@ public class StringUtils {
         System.out.println(StringUtils.saltEncode("o8Dbet8_qWwa7qCOJiBgAFswd9e4"));
         System.out.println(StringUtils.saltDecode("COERiZXQ4X3FXd2E3cUNPSmlCZ0FGc3dkOWU0bw=="));
     }
+
     public static String convertNullableString(Object object) {
         if (object == null) {
             return new String();
