@@ -71,8 +71,9 @@ public class PayAction extends AjaxActionSupport {
         randomPayRequestData.desc = "红包入账";
         Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData,Long.parseLong("1234321"));
         if (!mmpaymkttransfers.postRequest( ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
-            ProjectLogger.warn("randomPay Failed!");
-            return AjaxActionComplete();
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("State", "NoData");
+            return AjaxActionComplete(resultMap);
         }
 
         synchronized (syncObject) {
@@ -114,14 +115,12 @@ public class PayAction extends AjaxActionSupport {
                 randomPayRequestData.openid = oi_.getCommopenid();
                 randomPayRequestData.check_name = "NO_CHECK";
                 randomPayRequestData.amount =oi_.getComm();
-
                 randomPayRequestData.desc = "分红入账";
                 Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
                 if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
                     ProjectLogger.warn("randomPay Failed!");
                     return AjaxActionComplete(false);
                 }
-
                 PendingOrder.updatePendingOrderDone(oi_.getCommopenid());
             }*/
 
@@ -239,7 +238,7 @@ public class PayAction extends AjaxActionSupport {
         }
     }
     public String getCommission(){
-       // if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        // if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();
         try {
             OrderInfo oi = new OrderInfo();
@@ -247,7 +246,7 @@ public class PayAction extends AjaxActionSupport {
             oi.setCommopenid(getAttribute("openid"));
             List<OrderInfo> oList = OrderInfo.getOrderInfoGroupByStatusAndCommopenid(oi);
             if (null!=oList && oList.size()>0)
-            resultMap.put("comm", oList.get(0).getComm()/100.00);
+                resultMap.put("comm", oList.get(0).getComm()/100.00);
             return AjaxActionComplete(true,resultMap);
         }
         catch (Exception e){
