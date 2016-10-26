@@ -33,7 +33,8 @@ public class PayAction extends AjaxActionSupport {
         String appsecret =  ProjectSettings.getMapData("weixinserverinfo").get("appsecret").toString();
         OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
         if (weixinOpenId.getRequest()) {
-            getResponse().sendRedirect(getParameter("state").toString() + "&openid=" + weixinOpenId.getOpenId());
+            setAttribute("openid",weixinOpenId.getOpenId());
+            getResponse().sendRedirect(getParameter("state").toString());
         }
     }
 
@@ -245,6 +246,7 @@ public class PayAction extends AjaxActionSupport {
             oi.setStatus(0);
             oi.setCommopenid(getAttribute("openid"));
             List<OrderInfo> oList = OrderInfo.getOrderInfoGroupByStatusAndCommopenid(oi);
+            if (null!=oList && oList.size()>0)
             resultMap.put("comm", oList.get(0).getComm()/100.00);
             return AjaxActionComplete(true,resultMap);
         }
