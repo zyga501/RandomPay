@@ -66,13 +66,21 @@ public abstract class WeixinAPIWithSignEx extends WeixinAPI {
         String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
         EntityUtils.consume(entity);
 
-        boolean ret = responseString.contains("SUCCESS");
-        if (!ret) {
-            ProjectLogger.error("Request Url:\r\n" + apiUri);
-            ProjectLogger.error("Response Data:\r\n" + responseString);
+        try
+        {
+            responseResult_ = XMLParser.convertMapFromXml(responseString);
+            boolean ret = responseResult_.get("return_code").toString().compareTo("SUCCESS") == 0 && responseResult_.get("result_code").toString().compareTo("SUCCESS") == 0;
+            if (!ret) {
+                ProjectLogger.error("Request Url:\r\n" + apiUri);
+                ProjectLogger.error("Response Data:\r\n" + responseString);
+            }
+
+            return ret;
+        }
+        catch (Exception exception) {
+            return false;
         }
 
-        return ret;
     }
 
     protected boolean parseResponse(String ...args) throws Exception {
