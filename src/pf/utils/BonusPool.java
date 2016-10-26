@@ -4,6 +4,17 @@ import java.util.*;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
+        int amount = 1900;
+        int amountArray[] = {1000, 2000, 5000, 10000};
+        int minIndex = 0;
+        int minValue = 100000;
+        for (int index = 0; index < amountArray.length; index++) {
+            if (Math.abs(amount - amountArray[index]) < minValue) {
+                minIndex = index;
+                minValue = Math.abs(amount - amountArray[index]);
+            }
+        }
+
         int totalBonus = 0;
         do {
             int bonus = BonusPool.getBonus(1000);
@@ -18,7 +29,17 @@ public class BonusPool {
 
     public static int getBonus(int amount) {
         synchronized (bonusPoolMap) {
-            return bonusPoolMap.get(amount).popBonus();
+            int amountArray[] = {1000, 2000, 5000, 10000};
+            int minIndex = 0;
+            int minValue = 100000;
+            for (int index = 0; index < amountArray.length; index++) {
+                if (Math.abs(amount - amountArray[index]) < minValue) {
+                    minIndex = index;
+                    minValue = Math.abs(amount - amountArray[index]);
+                }
+            }
+
+            return bonusPoolMap.get(amountArray[minIndex]).popBonus();
         }
     }
 
