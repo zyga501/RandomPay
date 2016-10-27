@@ -161,7 +161,7 @@
   });
 
   function exportexcel(){
-    window.location.href="<%=request.getContextPath()%>/weixin/wx!Exportdetail?"
+    window.location.href="<%=request.getContextPath()%>/web!Exportdetail?"
             + encodeURI(encodeURI(decodeURIComponent($("#searchform").serialize(),true)));
   }
 

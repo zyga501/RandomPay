@@ -9,6 +9,7 @@ public class ProjectSettings {
     static {
         try {
             String projectSettingsPath = PathUtils.getProjectPath() + "project.xml";
+            projectSettingsPath_ = projectSettingsPath;
             projectSettings_ = XMLParser.convertMapFromXmlFile(projectSettingsPath);
         }
         catch (Exception exception) {
@@ -85,9 +86,15 @@ public class ProjectSettings {
         return  null;
     }
 
+    public static void setData(String key,String value){
+        XMLParser.write(projectSettingsPath_,key,value);
+    }
+
     public static Map<String, Object> getMapData(String key) {
         return (Map<String, Object>)getData(key);
     }
 
     private static Map<String, Object> projectSettings_;
+
+    private static String  projectSettingsPath_;
 }
