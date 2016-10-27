@@ -15,10 +15,12 @@ import pf.weixin.api.RequestBean.UnifiedOrderRequestData;
 import pf.weixin.api.UnifiedOrder;
 import pf.weixin.utils.Signature;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
     public void fetchWxCode() throws IOException {

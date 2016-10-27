@@ -9,10 +9,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,21 +62,5 @@ public class XMLParser {
             i++;
         }
         return map;
-    }
-
-    public static void write(String xmlpath, String key, String value) {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder builder = dbf.newDocumentBuilder();
-            Document doc = builder.parse(new File(xmlpath));
-            Element root = doc.getDocumentElement();
-            if (root == null) return;
-            root.getElementsByTagName(key).item(0).setTextContent(value);
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer former = factory.newTransformer();
-            former.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(xmlpath)));
-        } catch (Exception e) {
-
-        }
     }
 }

@@ -1,14 +1,16 @@
 package pf.database;
 
-import java.util.List;
-
 public class User {
     public static void main(String[] args) throws Exception {
+        User user = new User();
+        user.setUname("admin");
+        user.setUpwd("123");
+        user = User.getUser(user);
     }
 
     public static User getUser(User user) {
         String statement = "pf.database.mapping.user.getUser";
-        return Database.Instance().selectOne(statement,user);
+        return Database.Instance().selectOne(statement, user);
     }
 
     public long getId() {

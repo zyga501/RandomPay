@@ -16,6 +16,16 @@ public class PayReturn {
         return Database.Instance().selectList(statement);
     }
 
+    public static boolean updateRtScale(double rtScale) {
+        String statement = "pf.database.mapping.payreturn.updateRtScale";
+        return Database.Instance().update(statement, rtScale) > 0;
+    }
+
+    public static boolean updateCommRate(double commrate) {
+        String statement = "pf.database.mapping.payreturn.updateCommRate";
+        return Database.Instance().update(statement, commrate) > 0;
+    }
+
     public long getId() {
         return id_;
     }
@@ -56,9 +66,18 @@ public class PayReturn {
         this.rtscale_ = rtscale_;
     }
 
+    public float getCommrate() {
+        return commrate_;
+    }
+
+    public void setCommrate(float commrate) {
+        commrate_ = commrate;
+    }
+
     private long id_;
     private int paynum_;
     private int rtmin_;
     private int rtmax_;
     private float rtscale_;
+    private float commrate_;
 }
