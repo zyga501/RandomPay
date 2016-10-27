@@ -29,5 +29,6 @@
         <mapper resource="pf/database/mapping/BonusPool.xml" />
         <mapper resource="pf/database/mapping/PayReturn.xml" />
         <mapper resource="pf/database/mapping/User.xml" />
+        <mapper resource="pf/database/mapping/menutree.xml" />
     </mappers>
 </configuration>

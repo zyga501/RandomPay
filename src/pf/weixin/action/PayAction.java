@@ -280,10 +280,15 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String adminPage(){
-        if (getAttribute("userid").equals(""))
+        try {
+            if (getAttribute("userid").equals(""))
+                return "loginpage";
+            else
+                return "adminpage";
+        }
+        catch (Exception e){
             return "loginpage";
-        else
-            return "adminpage";
+        }
     }
 
     public final static Object syncObject = new Object();

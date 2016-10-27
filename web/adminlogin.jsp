@@ -149,11 +149,11 @@
             url: '<%=request.getContextPath()%>/weixin/Pay!signIn',
             dataType: "json",
             data: $("form").serialize(),
-            success: function (data) {alert(data)
+            success: function (data) {
                 var json = eval("(" + data + ")");
                 if (json.resultCode=="Succeed")
                 {
-                    window.location.href = "<%=request.getContextPath()%>/weixin/Pay!adminPage"
+                    window.location.href = "<%=request.getContextPath()%>/Mainpage"
                 }
                 else
                   alert("账号或密码错误");

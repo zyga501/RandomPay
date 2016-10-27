@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pf.database.mapping.menutree">
+    <select id="getAllMenuNode"  resultMap="menuTreeResult">
+        SELECT * FROM menutree
+    </select>
+    <select id="getMenuNode" parameterType="Integer"  resultMap="menuTreeResult">
+        SELECT * FROM menutree where preid=#{0}
+    </select>
+    <resultMap type="pf.database.MenuTree" id="menuTreeResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="preid" column="preid" jdbcType="BIGINT"/>
+        <result property="menuname" column="menuname" jdbcType="VARCHAR"/>
+        <result property="webpath" column="webpath" jdbcType="VARCHAR"/>
+        <result property="labelico" column="labelico" jdbcType="VARCHAR"/>
+        <result property="menuorder" column="menuorder" jdbcType="BIGINT"/>
+    </resultMap>
+</mapper>
