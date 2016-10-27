@@ -5,11 +5,20 @@
         SELECT * FROM PayReturn
     </select>
 
+    <update id="updateRtScale" parameterType="double">
+        UPDATE PayReturn SET rtScale=#{rtScale}
+    </update>
+
+    <update id="updateCommRate" parameterType="double">
+        UPDATE PayReturn SET commRate=#{commRate}
+    </update>
+
     <resultMap type="pf.database.PayReturn" id="payReturnResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="paynum" column="paynum" jdbcType="NUMERIC" />
         <result property="rtmin" column="rtmin" jdbcType="NUMERIC" />
         <result property="rtmax" column="rtmax" jdbcType="NUMERIC" />
         <result property="rtscale" column="rtscale" jdbcType="FLOAT" />
+        <result property="commrate" column="commrate" jdbcType="FLOAT" />
     </resultMap>
 </mapper>

@@ -3,10 +3,12 @@ package pf.weixin.action;
 import framework.action.AjaxActionSupport;
 import framework.utils.XMLParser;
 import pf.ProjectSettings;
+import pf.database.PayReturn;
 import pf.database.PendingOrder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 
 public class CallbackAction extends AjaxActionSupport {
@@ -45,7 +47,10 @@ public class CallbackAction extends AjaxActionSupport {
                 pendingOrder.setOpenid(responseResult.get("openid").toString());
                 pendingOrder.setAmount(Integer.parseInt(responseResult.get("total_fee").toString()));
                 pendingOrder.setCommopenid(responseResult.get("attach").toString());
-                pendingOrder.setComm((int)(pendingOrder.getAmount()* (Float.parseFloat(ProjectSettings.getData("commrate").toString()))));
+                List<PayReturn> payReturnList = PayReturn.getPayReturn();
+                if (payReturnList.size() > 0) {
+                    pendingOrder.setComm((int)(pendingOrder.getAmount()* (Float.parseFloat(ProjectSettings.getData("commrate").toString()))));
+                }
                 pendingOrder.setTimeEnd(responseResult.get("time_end").toString());
                 PendingOrder.insertOrderInfo(pendingOrder);
             }

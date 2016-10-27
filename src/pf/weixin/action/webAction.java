@@ -1,19 +1,14 @@
 package pf.weixin.action;
 
 import framework.action.AjaxActionSupport;
-import jxl.Workbook;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import pf.ProjectSettings;
 import pf.database.MenuTree;
-import pf.database.OrderInfo;
+import pf.database.PayReturn;
 import pf.database.User;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class webAction extends AjaxActionSupport {
 
@@ -28,22 +23,15 @@ public class webAction extends AjaxActionSupport {
     }
 
     public String  signIn(){
-        System.out.println(ProjectSettings.getData("commrate").toString());
-        ProjectSettings.setData("commrate","0.08");
-        System.out.println(ProjectSettings.getData("commrate").toString());
-        try{
-            User userpara =new User();
-            userpara.setUname(getParameter("loginname").toString());
-            userpara.setUpwd(getParameter("password").toString());
-            User user = User.getUser(userpara);
-            if (null!= user){
-                setAttribute("userid",user.getId());
-                return AjaxActionComplete(true);
-            }
+        User userpara =new User();
+        userpara.setUname(getParameter("loginname").toString());
+        userpara.setUpwd(getParameter("password").toString());
+        User user = User.getUser(userpara);
+        if (null!= user){
+            setAttribute("userid",user.getId());
+            return AjaxActionComplete(true);
         }
-        catch (Exception e){
-            return AjaxActionComplete(false);
-        }
+
         return AjaxActionComplete(false);
     }
 
@@ -66,6 +54,17 @@ public class webAction extends AjaxActionSupport {
         return "loginjsp";
     }
 
+    public String updateRtScale() {
+        if (PayReturn.updateRtScale(Double.parseDouble(getParameter("rtScale").toString())))
+            return AjaxActionComplete(true);
+        return AjaxActionComplete(false);
+    }
+
+    public String updateCommRate() {
+        if (PayReturn.updateCommRate(Double.parseDouble(getParameter("commRate").toString())))
+            return AjaxActionComplete(true);
+        return AjaxActionComplete(false);
+    }
 
     public void Exportdetail() throws Exception {
         /*Map<Object, Object> param= new HashMap<>();
@@ -107,5 +106,4 @@ public class webAction extends AjaxActionSupport {
         os.flush();
         os.close();*/
     }
-
 }

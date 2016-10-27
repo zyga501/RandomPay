@@ -86,10 +86,6 @@ public class ProjectSettings {
         return  null;
     }
 
-    public static void setData(String key,String value){
-        XMLParser.write(projectSettingsPath_,key,value);
-    }
-
     public static Map<String, Object> getMapData(String key) {
         return (Map<String, Object>)getData(key);
     }

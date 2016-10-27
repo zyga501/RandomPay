@@ -21,17 +21,34 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/layer.css" id="layui_layer_skinlayercss">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/layer.ext.css" id="layui_layer_skinlayerextcss">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css" id="layui_layer_skinmoonstylecss">
-    <style>
-     </style>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function updateCommRate() {
+            $.ajax({
+                type: 'post',
+                url: '<%=request.getContextPath()%>/web!updateCommRate',
+                dataType: "json",
+                data: $("form").serialize(),
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    if (json.resultCode == "Succeed") {
+                        alert("设置成功!");
+                    }
+                    else
+                        alert("设置失败，请确认输入是否正确!");
+                }
+            })
+        }
+    </script>
 </head>
 
 <body ><br><br><br><form class="form-horizontal" role="form">
 <div id="ooo" class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">佣金比例：</label>
+    <label for="commRate" class="col-sm-2 control-label">佣金比例：</label>
     <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputPassword"
+        <input type="text" class="form-control" id="commRate" name="commRate"
                placeholder="大于0，小于1">
-    </div><button class="col-sm-3 btn btn-danger">确定</button>
+    </div><button class="col-sm-3 btn btn-danger" onclick="updateCommRate()">确定</button>
 </div></form>
 </body>
 </html>
