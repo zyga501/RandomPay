@@ -2,7 +2,6 @@ package pf.weixin.action;
 
 import framework.action.AjaxActionSupport;
 import framework.utils.XMLParser;
-import pf.ProjectSettings;
 import pf.database.PayReturn;
 import pf.database.PendingOrder;
 
@@ -49,7 +48,16 @@ public class CallbackAction extends AjaxActionSupport {
                 pendingOrder.setCommopenid(responseResult.get("attach").toString());
                 List<PayReturn> payReturnList = PayReturn.getPayReturn();
                 if (payReturnList.size() > 0) {
-                    pendingOrder.setComm((int)(pendingOrder.getAmount()* (Float.parseFloat(ProjectSettings.getData("commrate").toString()))));
+                    int amountArray[] = {1000, 2000, 5000, 10000};
+                    int minIndex = 0;
+                    int minValue = 100000;
+                    for (int index = 0; index < amountArray.length; index++) {
+                        if (Math.abs(pendingOrder.getAmount() - amountArray[index]) < minValue) {
+                            minIndex = index;
+                            minValue = Math.abs(pendingOrder.getAmount() - amountArray[index]);
+                        }
+                    }
+                    pendingOrder.setComm((int)(pendingOrder.getAmount()* payReturnList.get(minIndex).getCommrate()));
                 }
                 pendingOrder.setTimeEnd(responseResult.get("time_end").toString());
                 PendingOrder.insertOrderInfo(pendingOrder);
