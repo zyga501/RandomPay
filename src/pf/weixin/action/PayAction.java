@@ -84,6 +84,7 @@ public class PayAction extends AjaxActionSupport {
             orderInfo.setBonus(randomPayRequestData.amount);
             orderInfo.setCommopenid(pendingOrder.getCommopenid());
             orderInfo.setComm(pendingOrder.getComm());
+            orderInfo.setTimeEnd(pendingOrder.getTimeEnd());
             orderInfo.setStatus(pendingOrder.getStatus());
             OrderInfo.insertOrderInfo(orderInfo);
         }

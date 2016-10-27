@@ -19,8 +19,8 @@
     </update>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
-        INSERT INTO PendingOrder(openid, amount,commopenid,comm)
-        VALUE (#{openid},#{amount},#{commopenid},#{comm})
+        INSERT INTO PendingOrder(openid, amount,commopenid,comm,timeEnd)
+        VALUE (#{openid},#{amount},#{commopenid},#{comm},#{timeEnd})
     </insert>
 
     <resultMap type="pf.database.PendingOrder" id="orderInfoResult">
@@ -30,5 +30,6 @@
         <result property="commopenid" column="commopenid" jdbcType="VARCHAR" />
         <result property="comm" column="comm" jdbcType="NUMERIC" />
         <result property="status" column="status" jdbcType="NUMERIC" />
+        <result property="timeEnd" column="timeEnd" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>
