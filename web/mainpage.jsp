@@ -56,7 +56,7 @@
                                        data-index="1">个人资料</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="/User!Logout">安全退出</a>
+                                <li><a href="<%=request.getContextPath()%>/web!Logout">安全退出</a>
                                 </li>
                             </ul>
                         </div>
@@ -116,7 +116,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="User!Logout" class="roll-nav roll-right J_tabExit"><i
+            <a href="<%=request.getContextPath()%>/web!Logout" class="roll-nav roll-right J_tabExit"><i
                     class="fa fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">

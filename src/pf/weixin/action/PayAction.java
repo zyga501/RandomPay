@@ -133,21 +133,21 @@ public class PayAction extends AjaxActionSupport {
             orderInfo.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
             List<OrderInfo> orderInfoList = OrderInfo.getOrderInfoGroup(orderInfo);
             for (OrderInfo oi_ : orderInfoList) {
-                RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
-                randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-                randomPayRequestData.mchid = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
-                randomPayRequestData.openid = oi_.getCommopenid();
-                randomPayRequestData.check_name = "NO_CHECK";
-                randomPayRequestData.amount =oi_.getComm();
-
-                randomPayRequestData.desc = "分红入账";
-                Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
-                if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
-                    ProjectLogger.warn("randomPay Failed!");
-                    return AjaxActionComplete(false);
+                if (oi_.getComm()>=100) {
+                    RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
+                    randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+                    randomPayRequestData.mchid = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
+                    randomPayRequestData.openid = oi_.getCommopenid();
+                    randomPayRequestData.check_name = "NO_CHECK";
+                    randomPayRequestData.amount = oi_.getComm();
+                    randomPayRequestData.desc = "分红入账";
+                    Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
+                    if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
+                        ProjectLogger.warn("randomPay Failed!");
+                        return AjaxActionComplete(false);
+                    }
+                    OrderInfo.updateOrderInfoDone(oi_.getCommopenid());
                 }
-
-                OrderInfo.updateOrderInfoDone(oi_.getCommopenid());
             }
 
             return AjaxActionComplete(true);

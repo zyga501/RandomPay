@@ -32,8 +32,9 @@
                 <param name="root">ajaxActionResult</param>
             </result>
         </global-results>
-        <action name="Mainpage" class="pf.weixin.action.webAction" method="Initmainpage">
+        <action name="web!*" class="pf.weixin.action.webAction" method="{1}">
             <result name="mainpagejsp">mainpage.jsp</result>
+            <result name="loginjsp">adminlogin.jsp</result>
         </action>
     </package>
 

@@ -153,7 +153,7 @@
                 var json = eval("(" + data + ")");
                 if (json.resultCode=="Succeed")
                 {
-                    window.location.href = "<%=request.getContextPath()%>/Mainpage"
+                    window.location.href = "<%=request.getContextPath()%>/web!Mainpage"
                 }
                 else
                   alert("账号或密码错误");

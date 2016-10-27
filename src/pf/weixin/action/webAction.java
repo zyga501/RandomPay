@@ -35,7 +35,7 @@ public class webAction extends AjaxActionSupport {
         return AjaxActionComplete(false);
     }
 
-    public String Initmainpage() {
+    public String Mainpage() {
         if (getAttribute("userid").equals("")) return "";
        // menulist = MenuTree.getAllMenuNode();
         List<MenuTree> menutreelist = MenuTree.getMenuNode(0);
@@ -47,6 +47,11 @@ public class webAction extends AjaxActionSupport {
             menulist.add(mapitem);
         }
         return "mainpagejsp";
+    }
+
+    public  String Logout(){
+        getRequest().getSession().invalidate();
+        return "loginjsp";
     }
 
 }
