@@ -23,6 +23,19 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css" id="layui_layer_skinmoonstylecss">
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript">
+        $(function(){
+            $.ajax({
+                type: 'post',
+                url: '<%=request.getContextPath()%>/web!getPayReturn',
+                dataType: "json",
+                data: $("form").serialize(),
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    document.getElementById("commRate").value=json.commRate;
+                }
+            })
+        });
+
         function updateCommRate() {
             $.ajax({
                 type: 'post',

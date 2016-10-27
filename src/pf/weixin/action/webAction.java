@@ -13,13 +13,27 @@ import java.util.Map;
 public class webAction extends AjaxActionSupport {
 
     private List<Object> menulist = new ArrayList<>();
-
     public List<Object> getMenulist() {
         return menulist;
     }
 
     public void setMenulist(List<Object> menulist) {
         this.menulist = menulist;
+    }
+
+    public String getPayReturn() {
+        Map<String, String> resuleMap = new HashMap<>();
+        List<PayReturn> payReturnList = PayReturn.getPayReturn();
+        if (payReturnList.size() > 0) {
+            resuleMap.put("rtScale", String.valueOf(payReturnList.get(0).getRtscale()));
+            resuleMap.put("commRate", String.valueOf(payReturnList.get(0).getCommrate()));
+            return AjaxActionComplete(resuleMap);
+        }
+        else {
+            resuleMap.put("rtScale", "0.0");
+            resuleMap.put("commRate", "0.0");
+        }
+        return  AjaxActionComplete(resuleMap);
     }
 
     public String  signIn(){
