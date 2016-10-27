@@ -46,6 +46,7 @@ public class CallbackAction extends AjaxActionSupport {
                 pendingOrder.setAmount(Integer.parseInt(responseResult.get("total_fee").toString()));
                 pendingOrder.setCommopenid(responseResult.get("attach").toString());
                 pendingOrder.setComm((int)(pendingOrder.getAmount()* (Float.parseFloat(ProjectSettings.getData("commrate").toString()))));
+                pendingOrder.setTimeEnd(responseResult.get("time_end").toString());
                 PendingOrder.insertOrderInfo(pendingOrder);
             }
         }

@@ -34,8 +34,8 @@
     </update>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
-        INSERT INTO OrderInfo(openid, amount, bonus,commopenid,comm)
-        VALUE (#{openid},#{amount},#{bonus},#{commopenid},#{comm})
+        INSERT INTO OrderInfo(openid, amount, bonus,commopenid,comm,timeEnd)
+        VALUE (#{openid},#{amount},#{bonus},#{commopenid},#{comm},#{timeEnd})
     </insert>
 
     <resultMap type="pf.database.OrderInfo" id="orderInfoResult">
@@ -46,5 +46,6 @@
         <result property="comm" column="comm" jdbcType="NUMERIC" />
         <result property="status" column="status" jdbcType="NUMERIC" />
         <result property="commopenid" column="commopenid" jdbcType="VARCHAR" />
+        <result property="timeEnd" column="timeEnd" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>

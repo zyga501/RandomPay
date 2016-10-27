@@ -98,6 +98,14 @@ public class OrderInfo {
         this.commopenid_ = commopenid;
     }
 
+    public String getTimeEnd() {
+        return timeEnd_;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd_ = timeEnd;
+    }
+
     private long id_;
     private String openid_;
     private int amount_;
@@ -105,4 +113,5 @@ public class OrderInfo {
     private int comm_;
     private int status_;
     private String commopenid_;
+    private String timeEnd_;
 }
