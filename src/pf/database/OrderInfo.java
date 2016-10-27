@@ -1,6 +1,8 @@
 package pf.database;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderInfo {
     public static void main(String[] args) throws Exception {
@@ -16,9 +18,9 @@ public class OrderInfo {
         return Database.Instance().selectList(statement);
     }
 
-    public static List<OrderInfo> getOrderInfo(pf.database.OrderInfo rtstatus) {
-        String statement = "pf.database.mapping.orderInfo.getOrderInfoByStatus";
-        return Database.Instance().selectList(statement,rtstatus);
+    public static List<OrderInfo> getOrderInfoByPara(Map paramap) {
+        String statement = "pf.database.mapping.orderInfo.getOrderInfoByPara";
+        return Database.Instance().selectList(statement,paramap);
     }
 
     public static List<OrderInfo> getOrderInfoGroup(OrderInfo orderInfos) {

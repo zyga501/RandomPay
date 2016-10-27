@@ -218,9 +218,9 @@ public class PayAction extends AjaxActionSupport {
         if (getAttribute("userid").equals("")) return AjaxActionComplete(false);
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            OrderInfo oi = new OrderInfo();
-            oi.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
-            List<OrderInfo> oList = OrderInfo.getOrderInfo(oi);
+            Map oi = new HashMap<>();
+            oi.put("Status",(Integer.valueOf(getParameter("paystatus").toString())));
+            List<OrderInfo> oList = OrderInfo.getOrderInfoByPara(oi);
             resultMap.put("olist", oList);
             return AjaxActionComplete(true,resultMap);
         }
@@ -263,7 +263,7 @@ public class PayAction extends AjaxActionSupport {
         }
     }
 
-    public String  signIn(){
+    public String  signIn___(){
         try{
             User userpara =new User();
             userpara.setUname(getParameter("loginname").toString());

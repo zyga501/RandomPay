@@ -146,7 +146,7 @@
     function login(){
         $.ajax({
             type: 'post',
-            url: '<%=request.getContextPath()%>/weixin/Pay!signIn',
+            url: '<%=request.getContextPath()%>/web!signIn',
             dataType: "json",
             data: $("form").serialize(),
             success: function (data) {
@@ -179,9 +179,9 @@
     </P>
     <DIV style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
         <P style="margin: 0px 35px 20px 45px;"><SPAN style="float: left;"><A style="color: rgb(204, 204, 204);"
-                                                                             href="#">忘记密码?</A></SPAN> 
+                                                                             href="#" onclick="alert('联系技术人员')">忘记密码?</A></SPAN>
            <SPAN style="float: right;"><A style="color: rgb(204, 204, 204); margin-right: 10px;"
-                                          href="#">注册</A>  
+                                          href="#" onclick="alert('联系技术人员')">注册</A>
               <A style="background: rgb(0, 142, 173); padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
                  href="#" onclick="login()">登录</A>
            </SPAN>         </P></DIV></DIV>

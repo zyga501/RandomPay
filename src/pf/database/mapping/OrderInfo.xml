@@ -5,8 +5,15 @@
         SELECT * FROM OrderInfo
     </select>
 
-    <select id="getOrderInfoByStatus" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
-        SELECT * FROM OrderInfo where status=${status}  ORDER  by id desc
+    <select id="getOrderInfoByPara" parameterMap="java.util.HashMap" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo <where>
+        <if test="status !=null ">
+            status=${status}</if>
+        <if test="openid !=null ">
+            openid=${openid}</if>
+        <if test="commopenid !=null ">
+            commopenid=${commopenid}</if>
+    </where>ORDER  by id desc
     </select>
 
     <select id="getOrderInfoGroupByStatus" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
