@@ -32,7 +32,10 @@
                 <param name="root">ajaxActionResult</param>
             </result>
         </global-results>
-
+        <action name="web!*" class="pf.weixin.action.webAction" method="{1}">
+            <result name="mainpagejsp">mainpage.jsp</result>
+            <result name="loginjsp">adminlogin.jsp</result>
+        </action>
     </package>
 
     <include file="pf/weixin/struts-weixin.xml" />
