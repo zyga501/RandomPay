@@ -1,5 +1,7 @@
 package pf.utils;
 
+import pf.database.PayReturn;
+
 import java.util.*;
 
 public class BonusPool {
@@ -51,27 +53,25 @@ public class BonusPool {
 
     private static HashMap<Integer, BonusPool> bonusPoolMap = new HashMap<>();
     static {
-        bonusPoolMap.put(1000, new BonusPool(1000, 100, 20000, 0.9));
-        bonusPoolMap.put(2000, new BonusPool(2000, 100, 60000, 0.9));
-        bonusPoolMap.put(5000, new BonusPool(5000, 100, 80000, 0.9));
-        bonusPoolMap.put(10000, new BonusPool(10000, 100, 180000, 0.9));
+        bonusPoolMap.put(1000, new BonusPool(1000, 100, 20000));
+        bonusPoolMap.put(2000, new BonusPool(2000, 100, 60000));
+        bonusPoolMap.put(5000, new BonusPool(5000, 100, 80000));
+        bonusPoolMap.put(10000, new BonusPool(10000, 100, 180000));
     }
 
-    public BonusPool(Integer bonusBase, Integer bonusMin,Integer bonusMax, double lossRate) {
+    public BonusPool(Integer bonusBase, Integer bonusMin,Integer bonusMax) {
         bonusBase_ = bonusBase;
         bonusMin_ = bonusMin;
         bonusMax_ = bonusMax;
-        lossRate_ = lossRate;
         poolSize_ = 200;
         poolLossRate_ = 0.95;
         bonusList_ = new ArrayList<>(poolSize_);
     }
 
-    public BonusPool(Integer bonusBase, Integer bonusMin, Integer bonusMax, double lossRate, Integer poolSize, Double poolLossRate) {
+    public BonusPool(Integer bonusBase, Integer bonusMin, Integer bonusMax, Integer poolSize, Double poolLossRate) {
         bonusBase_ = bonusBase;
         bonusMin_ = bonusMin;
         bonusMax_ = bonusMax;
-        lossRate_ = lossRate;
         poolSize_ = poolSize;
         poolLossRate_ = poolLossRate;
         bonusList_ = new ArrayList<>(poolSize);
@@ -82,11 +82,17 @@ public class BonusPool {
             if (bonusList_.size() == 0) {
                 List<pf.database.BonusPool> bonusPoolList = pf.database.BonusPool.getBonusByAmount(bonusBase_);
                 if (bonusPoolList.size() == 0) {
-                    while (!generateBonus());
-                    for (int bonus : bonusList_) {
-                        bonusPoolList.add(new pf.database.BonusPool(bonusBase_, bonus));
+                    List<PayReturn> payReturnList = PayReturn.getPayReturn();
+                    for (PayReturn payReturn : payReturnList) {
+                        if (payReturn.getPaynum() * 100 == bonusBase_) {
+                            while (!generateBonus(payReturn.getRtscale()));
+                            for (int bonus : bonusList_) {
+                                bonusPoolList.add(new pf.database.BonusPool(bonusBase_, bonus));
+                            }
+                            pf.database.BonusPool.insertBonus(bonusPoolList);
+                            break;
+                        }
                     }
-                    pf.database.BonusPool.insertBonus(bonusPoolList);
                 }
                 else {
                     for (pf.database.BonusPool bonusPool : bonusPoolList) {
@@ -106,9 +112,9 @@ public class BonusPool {
         return bonusList_.size();
     }
 
-    private boolean generateBonus() {
+    private boolean generateBonus(double lossRate) {
         bonusList_.clear();
-        int totalBonus = (int)(bonusBase_ * poolSize_ * lossRate_);
+        int totalBonus = (int)(bonusBase_ * poolSize_ * lossRate);
         int poolLossSize = (int)(poolSize_ * poolLossRate_);
         int profitSize = poolSize_ - poolLossSize;
 
@@ -187,7 +193,6 @@ public class BonusPool {
     private Integer bonusBase_;
     private Integer bonusMin_;
     private Integer bonusMax_;
-    private double lossRate_;
     private Integer poolSize_ = 1000;
     private Double poolLossRate_ = 0.95;
     private List<Integer> bonusList_;
