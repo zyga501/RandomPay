@@ -23,6 +23,10 @@ public class OrderInfo {
         return Database.Instance().selectList(statement,paramap);
     }
 
+    public static List<OrderInfo> getOrderInfoStatistics(Map paramap) {
+        String statement = "pf.database.mapping.orderInfo.getOrderInfoStatistics";
+        return Database.Instance().selectList(statement,paramap);
+    }
     public static List<OrderInfo> getOrderInfoGroup(OrderInfo orderInfos) {
         String statement = "pf.database.mapping.orderInfo.getOrderInfoGroupByStatus";
         return Database.Instance().selectList(statement, orderInfos);
@@ -99,11 +103,11 @@ public class OrderInfo {
     }
 
     public String getTimeEnd() {
-        return timeEnd_;
+        return timeend_;
     }
 
-    public void setTimeEnd(String timeEnd) {
-        this.timeEnd_ = timeEnd;
+    public void setTimeEnd(String timeend) {
+        this.timeend_ = timeend;
     }
 
     private long id_;
@@ -113,5 +117,5 @@ public class OrderInfo {
     private int comm_;
     private int status_;
     private String commopenid_;
-    private String timeEnd_;
+    private String timeend_;
 }

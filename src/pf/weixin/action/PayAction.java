@@ -221,9 +221,27 @@ public class PayAction extends AjaxActionSupport {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             Map oi = new HashMap<>();
-            oi.put("Status",(Integer.valueOf(getParameter("paystatus").toString())));
+            oi.put("status",(Integer.valueOf(getParameter("paystatus").toString())));
+            if (null!= getParameter("startdate"))
+                oi.put("timestart",(getParameter("startdate").toString()));
+            if (null!= getParameter("enddate"))
+                oi.put("timeend",(getParameter("enddate").toString()));
+            if (null!= getParameter("openid"))
+                oi.put("openid",(getParameter("openid").toString()));
+            if (null!= getParameter("commopenid"))
+                oi.put("commopenid",(getParameter("commopenid").toString()));
             List<OrderInfo> oList = OrderInfo.getOrderInfoByPara(oi);
             resultMap.put("olist", oList);
+            List<OrderInfo> lstatistics = OrderInfo.getOrderInfoStatistics(oi);
+            long totalnum =  lstatistics.get(0).getId();
+            long bonus =  lstatistics.get(0).getBonus();
+            long comm =  lstatistics.get(0).getComm();
+            long amount =  lstatistics.get(0).getAmount();
+            long income =  amount-bonus-comm;
+            resultMap.put("totalnum", totalnum);
+            resultMap.put("income", income);
+            resultMap.put("comm", comm);
+            resultMap.put("bonus", bonus);
             return AjaxActionComplete(true,resultMap);
         }
         catch (Exception e){
@@ -263,23 +281,6 @@ public class PayAction extends AjaxActionSupport {
             e.printStackTrace();
             return AjaxActionComplete(false);
         }
-    }
-
-    public String  signIn___(){
-        try{
-            User userpara =new User();
-            userpara.setUname(getParameter("loginname").toString());
-            userpara.setUpwd(getParameter("password").toString());
-            User user = User.getUser(userpara);
-            if (null!= user){
-                setAttribute("userid",user.getId());
-                return AjaxActionComplete(true);
-            }
-        }
-        catch (Exception e){
-            return AjaxActionComplete(false);
-        }
-        return AjaxActionComplete(false);
     }
 
     public String adminPage(){

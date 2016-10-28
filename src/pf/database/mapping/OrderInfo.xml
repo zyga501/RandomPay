@@ -5,17 +5,37 @@
         SELECT * FROM OrderInfo
     </select>
 
-    <select id="getOrderInfoByPara" parameterType="java.util.HashMap" resultMap="orderInfoResult">
+    <select id="getOrderInfoByPara" parameterMap="java.util.HashMap" resultMap="orderInfoResult">
         SELECT * FROM OrderInfo
         <where>
-        <if test="status !=null ">
-            status=${status}</if>
-        <if test="openid !=null ">
-            openid=${openid}</if>
-        <if test="commopenid !=null ">
-            commopenid=${commopenid}</if>
+            <if test="status !=null ">
+                AND status=${status}</if>
+            <if test="openid !=null ">
+                AND openid=${openid}</if>
+            <if test="commopenid !=null ">
+                AND commopenid=${commopenid}</if>
+            <if test="timestart !=null ">
+                AND timeend > #{timestart}</if>
+            <if test="timeend !=null ">
+                AND timeend > #{timeend}</if>
         </where>
         ORDER  by id desc
+    </select>
+
+    <select id="getOrderInfoStatistics" parameterMap="java.util.HashMap" resultMap="orderInfoResult">
+        SELECT count(id) as  id,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM OrderInfo
+        <where>
+            <if test="status !=null ">
+                AND status=${status}</if>
+            <if test="openid !=null ">
+                AND openid=${openid}</if>
+            <if test="commopenid !=null ">
+                AND commopenid=${commopenid}</if>
+            <if test="timestart !=null ">
+                AND timeend > #{timestart}</if>
+            <if test="timeend !=null ">
+                AND timeend > #{timeend}</if>
+        </where>  ORDER  by openid desc
     </select>
 
     <select id="getOrderInfoGroupByStatus" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
@@ -36,8 +56,8 @@
     </update>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
-        INSERT INTO OrderInfo(openid, amount, bonus,commopenid,comm,timeEnd)
-        VALUE (#{openid},#{amount},#{bonus},#{commopenid},#{comm},#{timeEnd})
+        INSERT INTO OrderInfo(openid, amount, bonus,commopenid,comm,timeend)
+        VALUE (#{openid},#{amount},#{bonus},#{commopenid},#{comm},#{timeend})
     </insert>
 
     <resultMap type="pf.database.OrderInfo" id="orderInfoResult">
@@ -48,6 +68,6 @@
         <result property="comm" column="comm" jdbcType="NUMERIC" />
         <result property="status" column="status" jdbcType="NUMERIC" />
         <result property="commopenid" column="commopenid" jdbcType="VARCHAR" />
-        <result property="timeEnd" column="timeEnd" jdbcType="VARCHAR" />
+        <result property="timeend" column="timeend" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>
