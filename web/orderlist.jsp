@@ -15,12 +15,6 @@
   <link href="<%=request.getContextPath()%>/css/danlanlaydate.css" rel="stylesheet" type="text/css"/>
   <style>
     body{ margin:0 auto; text-align:center}
-    table{margin:0 auto; width:410px}
-    table{ border:1px solid #7b7b81  }
-    table tr th{ height:28px; line-height:28px; background:#999}
-    table.stripe tr td{ height:28px; line-height:28px; text-align:center;background:#FFF;vertical-align:middle;}
-    table.stripe tr.alt td { background:#F2F2F2;}
-    table.stripe tr.over td {background: #2789dc;}
     .but {
       -webkit-border-radius: 3px;
       border-radius: 3px;
@@ -59,21 +53,12 @@
           }else{
             rdlist= json.olist;
             nowindex = 1;
+            $("#pagecountdiv").html("<span class='label label-success'>" +
+                    "总共数据<span class='badge'>" + json.totalnum + " </span>"+
+                    "奖金<span class='badge'>￥" + json.bonus + " </span>"+
+                    "返佣<span class='badge'>￥" + json.comm + " </span>"+
+                    "利润<span class='badge'>￥" + json.income + " </span></span>");
             gopage("pre");
-            /*var htmlstr = "总纪录："+Math.ceil(json.olist.length/20)+"页<br><table class='stripe'>";
-            htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>返佣状态</th></tr>";
-            for (var j=0;j<json.olist.length;j++){
-              htmlstr +="<tr>";
-              htmlstr +="<td>****"+(json.olist[j].openid).substr(20,4)+"****</td>";
-              htmlstr +="<td>"+(json.olist[j].amount)+"</td>";
-              htmlstr +="<td>"+(json.olist[j].bonus)+"</td>";
-              htmlstr +="<td>"+(json.olist[j].comm)+"</td>";
-              var v = json.olist[j].status==0?"未支付":(json.olist[j].status==1?"已支付":"已作废");
-              htmlstr +="<td>"+v+"</td>";
-              htmlstr +="</tr>";
-            } htmlstr +="</table>";
-            $("#conetntdiv").html(htmlstr);
-            tbactive();*/
           }
         }
       })
@@ -87,7 +72,7 @@
       else if (objv =="next") {
         if (nowindex < Math.ceil(rdlist.length / 20)) nowindex = nowindex + 1; else nowindex = Math.ceil(rdlist.length / 20);
       }
-        htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='stripe'>";
+        htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='table table-striped table-bordered table-hover'>";
         htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>返佣状态</th></tr>";
         for (var j=(nowindex-1)*20;j<Math.min((nowindex)*20, rdlist.length);j++){
           htmlstr +="<tr>";
@@ -125,19 +110,18 @@
       <div class="col-md-4">
         <input name="enddate" id="enddate" class="form-control layer-date" placeholder="结束日期"
                onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></div>
-      <div class="col-md-2"><label>返佣状态：</label><select name="paystatus" >
+      <div class="col-md-4"><label>返佣状态：</label><select name="paystatus" >
         <option value="0">未返佣</option>
         <option value="1">已返佣</option>
         <option value="2">已作废</option>
       </select></div>
-      <div class="col-md-1"><input  type="reset" class=" btn btn-danger" value="重置"></div>
-      <div class="col-md-1">
-        <input type="button" class="btn btn-primary" onclick="getinfo()" value="检 索"></div>
-      </div>
     <div class="row">
-      <div class="col-md-4"><input name="submchid" type="text" class="form-control" placeholder="消费号"></div>
-      <div class="col-md-4"><input name="amount" type="text" class="form-control" placeholder="金额(如=10 >10 <10)"></div>
-      <div class="col-md-4"><input name="uname" type="text" class="form-control" placeholder="代理/销售编号"></div>
+      <div class="col-md-4"><input name="openid" type="text" class="form-control" placeholder="消费号"></div>
+      <div class="col-md-4"><input name="comopenid" type="text" class="form-control" placeholder="代理/销售编号"></div>
+      <div class="col-md-2"><input  type="reset" class=" btn btn-danger" value="重置"></div>
+      <div class="col-md-2">
+        <input type="button" class="btn btn-primary" onclick="getinfo()" value="检 索"></div>
+    </div>
   </div>
   </div>
 
@@ -146,6 +130,8 @@
   <li><a href="#" onclick="gopage('pre')">前一页</a></li>
   <li><a href="#" onclick="gopage('next')">后一页</a></li>
 </ul></div>
+<div id="pagecountdiv">
+</div>
 <div id="conetntdiv">
 </div>
 </body>

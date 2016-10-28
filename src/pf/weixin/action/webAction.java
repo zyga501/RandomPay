@@ -45,7 +45,6 @@ public class webAction extends AjaxActionSupport {
             setAttribute("userid",user.getId());
             return AjaxActionComplete(true);
         }
-
         return AjaxActionComplete(false);
     }
 
