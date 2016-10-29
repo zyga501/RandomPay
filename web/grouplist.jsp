@@ -57,7 +57,7 @@
             nowindex = 1;
             gopage("pre");
            /* var htmlstr = "总纪录："+json.olist.length+"条<br><table class='stripe'>";
-            htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>返佣状态</th></tr>";
+            htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>支付金额</th><th>支付状态</th></tr>";
             for (var j=0;j<json.olist.length;j++){
               htmlstr +="<tr>";
               htmlstr +="<td>****"+(json.olist[j].commopenid).substr(20,4)+"****</td>";
@@ -84,7 +84,7 @@
         if (nowindex < Math.ceil(rdlist.length / 20)) nowindex = nowindex + 1; else nowindex = Math.ceil(rdlist.length / 20);
       }
       htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='stripe'>";
-      htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>返佣状态</th></tr>";
+      htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>支付金额</th><th>支付状态</th></tr>";
       for (var j=(nowindex-1)*20;j<Math.min((nowindex)*20, rdlist.length);j++){
         htmlstr +="<tr>";
         htmlstr +="<td>****"+(rdlist[j].commopenid).substr(20,4)+"****</td>";
@@ -116,9 +116,9 @@
 </head>
 <body>
 <form>
-  <label>返佣状态：</label><select name="paystatus" >
-  <option value="0">未返佣</option>
-  <option value="1">已返佣</option>
+  <label>支付状态：</label><select name="paystatus" >
+  <option value="0">未支付</option>
+  <option value="1">已支付</option>
   <option value="2">已作废</option>
   </select>
   <input type="button" class="btn btn-primary" onclick="getinfo()" value="检 索">

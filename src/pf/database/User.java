@@ -6,6 +6,7 @@ public class User {
         user.setUname("admin");
         user.setUpwd("123");
         user = User.getUser(user);
+        user.getId();
     }
 
     public static User getUser(User user) {
@@ -14,30 +15,30 @@ public class User {
     }
 
     public long getId() {
-        return id_;
+        return id;
     }
 
     public void setId(long id_) {
-        this.id_ = id_;
+        this.id = id_;
     }
 
     public String getUname() {
-        return uname_;
+        return uname;
     }
 
     public void setUname(String uname_) {
-        this.uname_ = uname_;
+        this.uname = uname_;
     }
 
     public String getUpwd() {
-        return upwd_;
+        return upwd;
     }
 
     public void setUpwd(String upwd_) {
-        this.upwd_ = upwd_;
+        this.upwd = upwd_;
     }
 
-    private long id_;
-    private String uname_;
-    private String upwd_;
+    private long id;
+    private String uname;
+    private String upwd;
 }
