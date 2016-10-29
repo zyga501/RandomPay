@@ -5,7 +5,7 @@
         SELECT * FROM OrderInfo
     </select>
 
-    <select id="getOrderInfoByPara" parameterMap="java.util.HashMap" resultMap="orderInfoResult">
+    <select id="getOrderInfoByPara" parameterType="java.util.HashMap" resultMap="orderInfoResult">
         SELECT * FROM OrderInfo
         <where>
             <if test="status !=null ">
@@ -22,7 +22,7 @@
         ORDER  by id desc
     </select>
 
-    <select id="getOrderInfoStatistics" parameterMap="java.util.HashMap" resultMap="orderInfoResult">
+    <select id="getOrderInfoStatistics" parameterType="java.util.HashMap" resultMap="orderInfoResult">
         SELECT count(id) as  id,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM OrderInfo
         <where>
             <if test="status !=null ">
