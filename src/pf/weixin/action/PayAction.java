@@ -6,7 +6,6 @@ import pf.ProjectLogger;
 import pf.ProjectSettings;
 import pf.database.OrderInfo;
 import pf.database.PendingOrder;
-import pf.database.User;
 import pf.utils.BonusPool;
 import pf.weixin.api.Mmpaymkttransfers;
 import pf.weixin.api.OpenId;
@@ -93,7 +92,7 @@ public class PayAction extends AjaxActionSupport {
             OrderInfo.insertOrderInfo(orderInfo);
         }
 
-        pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(pendingOrder.getAmount(), randomPayRequestData.amount));
+        BonusPool.deleteBonus(pendingOrder.getAmount(), randomPayRequestData.amount);
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100.00 + "元红包！");
