@@ -75,6 +75,9 @@ public class AjaxActionSupport extends ActionSupport {
     public String getAjaxActionResult() {
         return ajaxActionResult_;
     }
+    public String AjaxActionError() {
+        return "404page";
+    }
     public String AjaxActionComplete() {
         return AJAXACTIONCOMPLETED;
     }

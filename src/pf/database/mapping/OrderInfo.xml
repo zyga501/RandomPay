@@ -17,7 +17,7 @@
             <if test="timestart !=null ">
                 AND timeend > #{timestart}</if>
             <if test="timeend !=null ">
-                AND timeend > #{timeend}</if>
+                <![CDATA[  AND timeend < #{timeend} ]]></if>
         </where>
         ORDER  by id desc
     </select>
@@ -34,7 +34,7 @@
             <if test="timestart !=null ">
                 AND timeend > #{timestart}</if>
             <if test="timeend !=null ">
-                AND timeend > #{timeend}</if>
+                <![CDATA[  AND timeend < #{timeend} ]]></if>
         </where>  ORDER  by openid desc
     </select>
 
@@ -43,8 +43,8 @@
     </select>
 
     <select id="getOrderInfoGroupByStatusAndCommopenid" parameterType="pf.database.OrderInfo" resultMap="orderInfoResult">
-        SELECT commopenid,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm FROM OrderInfo
-        where status=${status} and commopenid=#{commopenid} group by commopenid
+        SELECT commopenid,sum(amount) as amount,sum(bonus) as bonus,sum(comm) as comm,status FROM OrderInfo
+        where  commopenid=#{commopenid} group by commopenid,status
     </select>
 
     <update id="updateOrderInfoDone" parameterType="String">

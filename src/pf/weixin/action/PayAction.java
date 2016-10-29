@@ -88,7 +88,7 @@ public class PayAction extends AjaxActionSupport {
             orderInfo.setBonus(randomPayRequestData.amount);
             orderInfo.setCommopenid(pendingOrder.getCommopenid());
             orderInfo.setComm(pendingOrder.getComm());
-            orderInfo.setTimeEnd(pendingOrder.getTimeEnd());
+            orderInfo.setTimeend(pendingOrder.getTimeend());
             orderInfo.setStatus(pendingOrder.getStatus());
             OrderInfo.insertOrderInfo(orderInfo);
         }
@@ -222,13 +222,13 @@ public class PayAction extends AjaxActionSupport {
         try {
             Map oi = new HashMap<>();
             oi.put("status",(Integer.valueOf(getParameter("paystatus").toString())));
-            if (null!= getParameter("startdate"))
+            if (null!= getParameter("startdate") && (!getParameter("startdate").toString().equals("")) )
                 oi.put("timestart",(getParameter("startdate").toString()));
-            if (null!= getParameter("enddate"))
-                oi.put("timeend",(getParameter("enddate").toString()));
-            if (null!= getParameter("openid"))
+            if (null!= getParameter("enddate")  && (!getParameter("enddate").toString().equals("")) )
+                oi.put("timeend",(getParameter("enddate").toString().concat(" 23:59:59")));
+            if (null!= getParameter("openid")  && (!getParameter("openid").toString().equals("")) )
                 oi.put("openid",(getParameter("openid").toString()));
-            if (null!= getParameter("commopenid"))
+            if (null!= getParameter("commopenid")  && (!getParameter("commopenid").toString().equals("")) )
                 oi.put("commopenid",(getParameter("commopenid").toString()));
             List<OrderInfo> oList = OrderInfo.getOrderInfoByPara(oi);
             resultMap.put("olist", oList);
@@ -239,9 +239,9 @@ public class PayAction extends AjaxActionSupport {
             long amount =  lstatistics.get(0).getAmount();
             long income =  amount-bonus-comm;
             resultMap.put("totalnum", totalnum);
-            resultMap.put("income", income);
-            resultMap.put("comm", comm);
-            resultMap.put("bonus", bonus);
+            resultMap.put("income", income/100.00);
+            resultMap.put("comm", comm/100.00);
+            resultMap.put("bonus", bonus/100.00);
             return AjaxActionComplete(true,resultMap);
         }
         catch (Exception e){
@@ -267,19 +267,27 @@ public class PayAction extends AjaxActionSupport {
     }
     public String getCommission(){
         // if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
+        setAttribute("comm", 0);
+        setAttribute("paidcomm", 0);
         Map<String, Object> resultMap = new HashMap<>();
         try {
             OrderInfo oi = new OrderInfo();
-            oi.setStatus(0);
+            int paidcomm =0;
+            //oi.setStatus(0);
             oi.setCommopenid(getAttribute("openid"));
             List<OrderInfo> oList = OrderInfo.getOrderInfoGroupByStatusAndCommopenid(oi);
             if (null!=oList && oList.size()>0)
-                resultMap.put("comm", oList.get(0).getComm()/100.00);
-            return AjaxActionComplete(true,resultMap);
+            for (OrderInfo od:oList){
+                if (od.getStatus()==0)
+                    setAttribute("comm", od.getComm()/100.00);
+                paidcomm +=od.getComm();
+            }
+            setAttribute("paidcomm",paidcomm/100.00);
+            return "infocenterjsp";
         }
         catch (Exception e){
             e.printStackTrace();
-            return AjaxActionComplete(false);
+            return AjaxActionError();
         }
     }
 

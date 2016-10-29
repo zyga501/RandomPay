@@ -59,7 +59,7 @@ public class CallbackAction extends AjaxActionSupport {
                     }
                     pendingOrder.setComm((int)(pendingOrder.getAmount()* payReturnList.get(minIndex).getCommrate()));
                 }
-                pendingOrder.setTimeEnd(responseResult.get("time_end").toString());
+                pendingOrder.setTimeend(responseResult.get("time_end").toString());
                 PendingOrder.insertOrderInfo(pendingOrder);
             }
         }

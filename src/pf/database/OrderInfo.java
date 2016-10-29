@@ -102,11 +102,11 @@ public class OrderInfo {
         this.commopenid_ = commopenid;
     }
 
-    public String getTimeEnd() {
+    public String getTimeend() {
         return timeend_;
     }
 
-    public void setTimeEnd(String timeend) {
+    public void setTimeend(String timeend) {
         this.timeend_ = timeend;
     }
 

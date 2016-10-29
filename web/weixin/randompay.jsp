@@ -92,13 +92,15 @@
             success: function (data) {
                 var json = eval("(" + data + ")");
                 if (json.resultCode == "Failed") {
+                    <%--window.location.href = "<%=request.getContextPath()%>/weixin/choosepay.jsp";--%>
+                    <%--return;--%>
                     layer.open({
                         type: 2,
                         title: '选择支付种类',
                         shadeClose: true,
                         shade: 0.8,
                         area: ['380px', '400px'],
-                        content: 'choosepay.jsp' //iframe的url
+                        content: '<%=request.getContextPath()%>/weixin/choosepay.jsp' //iframe的url
                     });
                 }
             }
@@ -111,30 +113,21 @@
                 title: '微信支付，赢红包',
                 shadeClose: true,
                 shade: 0.8,
-                area: ['380px', '400px'],
+                area: ["100%"," 100%"],
                 content: 'Pay!makeQcode' //iframe的url
             });
         };
 
         function showcomm(){
-            $.ajax({
-                type: 'post',
-                url: '<%=request.getContextPath()%>/weixin/Pay!getCommission',
-                dataType:"json",
-                success: function (data) {
-                    var json = eval("(" + data + ")");
-                    var v = 0;
-                    if (json.comm!=undefined)
-                      v=json.comm;
-                    layer.open({
-                        type: 1,
-                        title:"我的佣金",
-                        shade: 0.8, //遮罩透明度
-                        area: ['380px', '100px'],
-                        content: '<div style="position: absolute;width:100%;top: 30%"><span class="commpanel">累计未结算佣金:'+v+'元</span></div>'
-                    });
-                }
-            })
+            layer.open({
+                type: 2,
+                title: '个人中心',
+                shadeClose: true,
+                shade: 0.8,
+                area: ["100%"," 100%"],
+                content: 'Pay!getCommission' //iframe的url
+            });
+            return;
         }
 
         var boolclick = false;

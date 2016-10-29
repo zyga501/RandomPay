@@ -17,6 +17,7 @@
             <result name="mainpage">randompay.jsp</result>
             <result name="promopage">promopage.jsp</result>
             <result name="adminpage">/adminpage.jsp</result>
+            <result name="infocenterjsp" >infocenter.jsp</result>
             <result name="loginpage" type="redirect">/adminlogin.jsp</result>
             <result name="gomainpage" type="redirectAction">Mainpage</result>
         </action>
