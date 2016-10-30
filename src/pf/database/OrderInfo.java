@@ -1,6 +1,6 @@
 package pf.database;
 
-import java.util.HashMap;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -110,6 +110,14 @@ public class OrderInfo {
         this.timeend_ = timeend;
     }
 
+    public Timestamp getCreateTime() {
+        return createTime_;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime_ = createTime;
+    }
+
     private long id_;
     private String openid_;
     private int amount_;
@@ -118,4 +126,5 @@ public class OrderInfo {
     private int status_;
     private String commopenid_;
     private String timeend_;
+    private Timestamp createTime_;
 }

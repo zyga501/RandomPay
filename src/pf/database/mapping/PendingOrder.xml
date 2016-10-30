@@ -31,5 +31,6 @@
         <result property="comm" column="comm" jdbcType="NUMERIC" />
         <result property="status" column="status" jdbcType="NUMERIC" />
         <result property="timeend" column="timeend" jdbcType="VARCHAR" />
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 </mapper>
