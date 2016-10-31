@@ -10,9 +10,9 @@ public class RequestData {
 
     public boolean checkParameter() {
         try {
-            return !appid.isEmpty()
-                    && !mch_id.isEmpty()
-                    && !sub_mch_id.isEmpty()
+                return !appid.isEmpty()
+                        && !mch_id.isEmpty()
+                        && !sub_mch_id.isEmpty()
                     && !nonce_str.isEmpty();
         }
         catch (Exception exception) {
