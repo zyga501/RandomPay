@@ -6,23 +6,12 @@ import java.util.*;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
-        int amount = 1900;
-        int amountArray[] = {1000, 2000, 5000, 10000};
-        int minIndex = 0;
-        int minValue = 100000;
-        for (int index = 0; index < amountArray.length; index++) {
-            if (Math.abs(amount - amountArray[index]) < minValue) {
-                minIndex = index;
-                minValue = Math.abs(amount - amountArray[index]);
-            }
-        }
-
         int totalBonus = 0;
         do {
-            int bonus = BonusPool.getBonus(1000);
+            int bonus = BonusPool.getBonus(2000);
             totalBonus += bonus;
-            pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(1000, bonus));
-        } while (BonusPool.getBonusSize(1000) != 0);
+            pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(2000, bonus));
+        } while (BonusPool.getBonusSize(2000) != 0);
 
         System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + 200);
         System.out.println("Total Bonus:" + totalBonus);
@@ -45,6 +34,20 @@ public class BonusPool {
         }
     }
 
+    public static void deleteBonus(int amount, int bonus) {
+        int amountArray[] = {1000, 2000, 5000, 10000};
+        int minIndex = 0;
+        int minValue = 100000;
+        for (int index = 0; index < amountArray.length; index++) {
+            if (Math.abs(amount - amountArray[index]) < minValue) {
+                minIndex = index;
+                minValue = Math.abs(amount - amountArray[index]);
+            }
+        }
+
+        pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(amountArray[minIndex], bonus));
+    }
+
     public static int getBonusSize(int amount) {
         synchronized (bonusPoolMap) {
             return bonusPoolMap.get(amount).PoolSize();
@@ -53,16 +56,14 @@ public class BonusPool {
 
     private static HashMap<Integer, BonusPool> bonusPoolMap = new HashMap<>();
     static {
-        bonusPoolMap.put(1000, new BonusPool(1000, 100, 20000));
-        bonusPoolMap.put(2000, new BonusPool(2000, 100, 60000));
-        bonusPoolMap.put(5000, new BonusPool(5000, 100, 80000));
-        bonusPoolMap.put(10000, new BonusPool(10000, 100, 180000));
+        bonusPoolMap.put(1000, new BonusPool(1000));
+        bonusPoolMap.put(2000, new BonusPool(2000));
+        bonusPoolMap.put(5000, new BonusPool(5000));
+        bonusPoolMap.put(10000, new BonusPool(10000));
     }
 
-    public BonusPool(Integer bonusBase, Integer bonusMin,Integer bonusMax) {
+    public BonusPool(Integer bonusBase) {
         bonusBase_ = bonusBase;
-        bonusMin_ = bonusMin;
-        bonusMax_ = bonusMax;
         poolSize_ = 200;
         poolLossRate_ = 0.95;
         bonusList_ = new ArrayList<>(poolSize_);
@@ -70,8 +71,6 @@ public class BonusPool {
 
     public BonusPool(Integer bonusBase, Integer bonusMin, Integer bonusMax, Integer poolSize, Double poolLossRate) {
         bonusBase_ = bonusBase;
-        bonusMin_ = bonusMin;
-        bonusMax_ = bonusMax;
         poolSize_ = poolSize;
         poolLossRate_ = poolLossRate;
         bonusList_ = new ArrayList<>(poolSize);
@@ -85,7 +84,7 @@ public class BonusPool {
                     List<PayReturn> payReturnList = PayReturn.getPayReturn();
                     for (PayReturn payReturn : payReturnList) {
                         if (payReturn.getPaynum() * 100 == bonusBase_) {
-                            while (!generateBonus(payReturn.getRtscale()));
+                            while (!generateBonus(payReturn.getRtmin() * 100, payReturn.getRtmax() * 100, payReturn.getRtscale()));
                             for (int bonus : bonusList_) {
                                 bonusPoolList.add(new pf.database.BonusPool(bonusBase_, bonus));
                             }
@@ -112,7 +111,7 @@ public class BonusPool {
         return bonusList_.size();
     }
 
-    private boolean generateBonus(double lossRate) {
+    private boolean generateBonus(Integer bonusMin,Integer bonusMax, double lossRate) {
         bonusList_.clear();
         int totalBonus = (int)(bonusBase_ * poolSize_ * lossRate);
         int poolLossSize = (int)(poolSize_ * poolLossRate_);
@@ -120,7 +119,7 @@ public class BonusPool {
 
         // generate loss bonus
         while (poolLossSize-- != 0) {
-            int bonus = (int)(bonusRandom_.nextDouble() * bonusBase_) + bonusMin_;
+            int bonus = (int)(bonusRandom_.nextDouble() * bonusBase_) + bonusMin;
             if (bonus == 0) {
                 bonus++;
             }
@@ -128,18 +127,21 @@ public class BonusPool {
             bonusList_.add(bonus);
         }
 
+        if (profitSize * bonusMax < totalBonus)
+            throw new IllegalArgumentException("根据当前参数无法生成有效的奖金池!");
+
         // generate profit bonus
         int totalProfit = 0;
         List<Integer> profitList = new ArrayList<>();
         while (profitSize-- != 0) {
-            int bonus = bonusRandom_.nextInt(bonusMax_ - bonusBase_) + bonusBase_;
+            int bonus = bonusRandom_.nextInt(bonusMax - bonusBase_) + bonusBase_;
             totalProfit += bonus;
             profitList.add(bonus);
         }
 
         // fixed profit bonus
         int totalError = totalProfit - totalBonus;
-        int errorBase = Math.max(totalError / profitList.size(), 1);
+        int errorBase = Math.max(totalError / (profitList.size() * 10), 1);
         while (totalError > 0) {
             if (profitList.size() <= 0) {
                 return false;
@@ -147,10 +149,10 @@ public class BonusPool {
 
             int bonus = Math.min(bonusRandom_.nextInt(errorBase) + errorBase, totalError);
             int index = indexRandom_.nextInt(profitList.size());
-            if ((profitList.get(index) - bonus) > bonusMax_) {
-                bonus = bonusMax_ - profitList.get(index);
+            if ((profitList.get(index) - bonus) > bonusMax) {
+                bonus = bonusMax - profitList.get(index);
                 profitList.remove(index);
-                bonusList_.add(bonusMax_);
+                bonusList_.add(bonusMax);
             }
             else if ((profitList.get(index) - bonus) < bonusBase_) {
                 continue;
@@ -191,8 +193,6 @@ public class BonusPool {
     }
 
     private Integer bonusBase_;
-    private Integer bonusMin_;
-    private Integer bonusMax_;
     private Integer poolSize_ = 1000;
     private Double poolLossRate_ = 0.95;
     private List<Integer> bonusList_;
