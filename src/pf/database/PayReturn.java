@@ -16,9 +16,9 @@ public class PayReturn {
         return Database.Instance().selectList(statement);
     }
 
-    public static boolean updateRtScale(double rtScale) {
+    public static boolean updateRtScale(PayReturn pr) {
         String statement = "pf.database.mapping.payreturn.updateRtScale";
-        return Database.Instance().update(statement, rtScale) > 0;
+        return Database.Instance().update(statement, pr) > 0;
     }
 
     public static boolean updateCommRate(double commrate) {

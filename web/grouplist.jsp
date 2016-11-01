@@ -11,21 +11,6 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css" id="layui_layer_skinmoonstylecss">
   <style>
     body{ margin:0 auto; text-align:center}
-    table{margin:0 auto; width:410px}
-    table{ border:1px solid #7b7b81  }
-    table tr th{ height:28px; line-height:28px; background:#999}
-    table.stripe tr td{ height:28px; line-height:28px; text-align:center;background:#FFF;vertical-align:middle;}
-    table.stripe tr.alt td { background:#F2F2F2;}
-    table.stripe tr.over td {background: #2789dc;}
-    .but {
-      -webkit-border-radius: 5px;
-      border-radius: 5px;
-      background-color: #06af3f;
-      color: #FEFEFE;
-      border: none;
-      font-size: 18px;
-      padding: 10px 6px;
-    }
   </style>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript">
@@ -83,7 +68,7 @@
       else if (objv =="next") {
         if (nowindex < Math.ceil(rdlist.length / 20)) nowindex = nowindex + 1; else nowindex = Math.ceil(rdlist.length / 20);
       }
-      htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='stripe'>";
+      htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='table table-striped table-bordered table-hover'>";
       htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>支付金额</th><th>支付状态</th></tr>";
       for (var j=(nowindex-1)*20;j<Math.min((nowindex)*20, rdlist.length);j++){
         htmlstr +="<tr>";
