@@ -1,13 +1,9 @@
 package pf.hgesy.api;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import framework.utils.HttpUtils;
 import framework.utils.XMLParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import pf.ProjectLogger;
 import pf.hgesy.api.RequestBean.RequestData;
@@ -24,19 +20,13 @@ public abstract class HgesyAPIWithSign extends HgesyAPI {
 
         requestData_.buildSign(apiKey);
 
-        System.out.println("apiKey:"+apiKey);
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
             return false;
         }
 
-        XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-        String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-        System.out.println("postDataXML:"+postDataXML);
-        HttpPost httpPost = new HttpPost(apiUri);
-        StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
-        httpPost.addHeader("Content-Type", "text/xml");
-        httpPost.setEntity(postEntity);
+        String requestBody = requestData_.buildRequestData();
+        HttpPost httpPost = new HttpPost(apiUri + "?" +requestBody);
 
         String responseString = new String();
         try {

@@ -45,7 +45,7 @@ public class StringUtils {
 
     public static String generateDate(String pattern, String timeZone) {
         SimpleDateFormat df = new SimpleDateFormat(pattern);
-        df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        df.setTimeZone(TimeZone.getTimeZone(timeZone));
         return df.format(new Date(Long.valueOf(System.currentTimeMillis()).longValue()));
     }
 
