@@ -5,8 +5,8 @@
         SELECT * FROM PayReturn
     </select>
 
-    <update id="updateRtScale" parameterType="double">
-        UPDATE PayReturn SET rtScale=#{rtScale}
+    <update id="updateRtScale" parameterType="pf.database.PayReturn">
+        UPDATE PayReturn SET rtscale=#{rtscale} ,paynum=${paynum},rtmin=${rtmin},rtmax=${rtmax} where id=${id}
     </update>
 
     <update id="updateCommRate" parameterType="double">

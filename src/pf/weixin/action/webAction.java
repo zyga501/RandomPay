@@ -1,6 +1,7 @@
 package pf.weixin.action;
 
 import framework.action.AjaxActionSupport;
+import pf.database.BonusPool;
 import pf.database.MenuTree;
 import pf.database.PayReturn;
 import pf.database.User;
@@ -22,11 +23,12 @@ public class webAction extends AjaxActionSupport {
     }
 
     public String getPayReturn() {
-        Map<String, String> resuleMap = new HashMap<>();
+        Map<String, Object> resuleMap = new HashMap<>();
         List<PayReturn> payReturnList = PayReturn.getPayReturn();
         if (payReturnList.size() > 0) {
-            resuleMap.put("rtScale", String.valueOf(payReturnList.get(0).getRtscale()));
-            resuleMap.put("commRate", String.valueOf(payReturnList.get(0).getCommrate()));
+            resuleMap.put("rlist",payReturnList);
+//            resuleMap.put("rtScale", String.valueOf(payReturnList.get(0).getRtscale()));
+//            resuleMap.put("commRate", String.valueOf(payReturnList.get(0).getCommrate()));
             return AjaxActionComplete(resuleMap);
         }
         else {
@@ -67,10 +69,43 @@ public class webAction extends AjaxActionSupport {
         return "loginjsp";
     }
 
+    public String getBonusPoolReturn(){
+        List<Map> bonusPool =BonusPool.groupBonus();
+       return AjaxActionComplete(bonusPool);
+    }
+
     public String updateRtScale() {
-        if (PayReturn.updateRtScale(Double.parseDouble(getParameter("rtScale").toString())))
+        try {
+            PayReturn payReturn = new PayReturn();
+            payReturn.setId(1);
+            payReturn.setPaynum(Integer.parseInt(getParameter("rta").toString()));
+            payReturn.setRtmin(Integer.parseInt(getParameter("rta1").toString()));
+            payReturn.setRtmax(Integer.parseInt(getParameter("rta2").toString()));
+            payReturn.setRtscale(Float.parseFloat(getParameter("rtScale").toString()));
+            PayReturn.updateRtScale(payReturn);
+            payReturn.setId(2);
+            payReturn.setPaynum(Integer.parseInt(getParameter("rtb").toString()));
+            payReturn.setRtmin(Integer.parseInt(getParameter("rtb1").toString()));
+            payReturn.setRtmax(Integer.parseInt(getParameter("rtb2").toString()));
+            payReturn.setRtscale(Float.parseFloat(getParameter("rtScale").toString()));
+            PayReturn.updateRtScale(payReturn);
+            payReturn.setId(3);
+            payReturn.setPaynum(Integer.parseInt(getParameter("rtc").toString()));
+            payReturn.setRtmin(Integer.parseInt(getParameter("rtc1").toString()));
+            payReturn.setRtmax(Integer.parseInt(getParameter("rtc2").toString()));
+            payReturn.setRtscale(Float.parseFloat(getParameter("rtScale").toString()));
+            PayReturn.updateRtScale(payReturn);
+            payReturn.setId(4);
+            payReturn.setPaynum(Integer.parseInt(getParameter("rtd").toString()));
+            payReturn.setRtmin(Integer.parseInt(getParameter("rtd1").toString()));
+            payReturn.setRtmax(Integer.parseInt(getParameter("rtd2").toString()));
+            payReturn.setRtscale(Float.parseFloat(getParameter("rtScale").toString()));
+            PayReturn.updateRtScale(payReturn);
             return AjaxActionComplete(true);
-        return AjaxActionComplete(false);
+        }
+        catch (Exception e) {
+            return AjaxActionComplete(false);
+        }
     }
 
     public String updateCommRate() {

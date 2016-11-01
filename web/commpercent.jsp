@@ -31,7 +31,7 @@
                 data: $("form").serialize(),
                 success: function (data) {
                     var json = eval("(" + data + ")");
-                    document.getElementById("commRate").value=json.commRate;
+                    document.getElementById("commRate").value=json[0].commRate;
                 }
             })
         });

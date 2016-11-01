@@ -4,6 +4,13 @@
     <select id="getBonusByAmount" parameterType="int" resultMap="bonusPoolResult">
         SELECT * FROM BonusPool WHERE amount=#{amount}
     </select>
+
+    <select id="groupBonus"  resultType="java.util.HashMap">
+        SELECT count(a.amount) as countnum,sum(bonus) as bonussum,b.amount FROM BonusPool a right JOIN
+          (select * from (SELECT   1000 as amount UNION SELECT   2000 UNION SELECT   5000 UNION SELECT   10000) aa ) b
+         on a.amount=b.amount group by b.amount order by b.amount
+    </select>
+
     <select id="deleteBonusByAmountAndBouns" parameterType="pf.database.BonusPool">
         DELETE FROM BonusPool WHERE amount=#{amount} and bonus=#{bonus}
     </select>

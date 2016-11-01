@@ -1,6 +1,7 @@
 package pf.database;
 
 import java.util.List;
+import java.util.Map;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
@@ -13,6 +14,10 @@ public class BonusPool {
         return Database.Instance().selectList(statement, amount);
     }
 
+    public static List<Map> groupBonus( ) {
+        String statement = "pf.database.mapping.bonusPool.groupBonus";
+        return Database.Instance().selectList(statement);
+    }
     public static boolean insertBonus(List<BonusPool> bonusPoolList) {
         String statement = "pf.database.mapping.bonusPool.insertBonus";
         return Database.Instance().insert(statement, bonusPoolList) == 1;
