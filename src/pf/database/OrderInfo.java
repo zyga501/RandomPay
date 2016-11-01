@@ -6,11 +6,8 @@ import java.util.Map;
 
 public class OrderInfo {
     public static void main(String[] args) throws Exception {
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setOpenid("123");
-        orderInfo.setAmount(123);
-        orderInfo.setBonus(32);
-        boolean ret = insertOrderInfo(orderInfo);
+        List<OrderInfo> orderInfoList = OrderInfo.getOrderInfo();
+        System.out.println();
     }
 
     public static List<OrderInfo> getOrderInfo() {
@@ -86,6 +83,14 @@ public class OrderInfo {
         this.comm_ = comm_;
     }
 
+    public int getIncome() {
+        return income_;
+    }
+
+    public void setIncome(int income) {
+        income_ = income;
+    }
+
     public int getStatus() {
         return status_;
     }
@@ -123,6 +128,7 @@ public class OrderInfo {
     private int amount_;
     private int bonus_;
     private int comm_;
+    private int income_;
     private int status_;
     private String commopenid_;
     private String timeend_;

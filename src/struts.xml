@@ -40,4 +40,5 @@
     </package>
 
     <include file="pf/weixin/struts-weixin.xml" />
+    <include file="pf/hgesy/struts-hgesy.xml" />
 </struts>
