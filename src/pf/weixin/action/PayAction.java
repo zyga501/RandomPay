@@ -107,30 +107,7 @@ public class PayAction extends AjaxActionSupport {
 
     public String commPay() throws Exception {
         synchronized (syncObject) {
-            //if (!getRemortIP(getRequest()).equals("127.0.0.1")) return AjaxActionComplete(false);
             if (getAttribute("userid").equals("")) return AjaxActionComplete(false);
-            /*PendingOrder pendingOrder = new PendingOrder();
-            pendingOrder.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
-            OrderInfo orderInfo =new OrderInfo();
-            orderInfo.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
-            List<OrderInfo> pendingOrderList = OrderInfo.getOrderInfoGroup(orderInfo);
-            for (OrderInfo oi_ : pendingOrderList) {
-                RandomPayRequestData randomPayRequestData = new RandomPayRequestData();
-                randomPayRequestData.mch_appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-                randomPayRequestData.mchid = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
-                randomPayRequestData.openid = oi_.getCommopenid();
-                randomPayRequestData.check_name = "NO_CHECK";
-                randomPayRequestData.amount =oi_.getComm();
-
-                randomPayRequestData.desc = "分红入账";
-                Mmpaymkttransfers mmpaymkttransfers = new Mmpaymkttransfers(randomPayRequestData, Long.parseLong("1234321"));
-                if (!mmpaymkttransfers.postRequest(ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString())) {
-                    ProjectLogger.warn("randomPay Failed!");
-                    return AjaxActionComplete(false);
-                }
-
-                PendingOrder.updatePendingOrderDone(oi_.getCommopenid());
-            }*/
 
             OrderInfo orderInfo =new OrderInfo();
             orderInfo.setStatus(Integer.valueOf(getParameter("paystatus").toString()));
@@ -194,8 +171,6 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String  makeQcode(){
-//        System.out.println(StringUtils.saltDecode("Bb2hFYktzMkNnNlprMWx5VW5PSE9fS003eXREY3c"));
-//        setAttribute("wxid",StringUtils.saltEncode("ohEbKs2Cg6Zk1lyUnOHO_KM7ytDc"));
         setAttribute("wxid",StringUtils.saltEncode(getAttribute("openid")));
         return "promopage";
     }
