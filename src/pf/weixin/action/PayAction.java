@@ -141,8 +141,8 @@ public class PayAction extends AjaxActionSupport {
 
     public String brandWCPay() throws Exception {
         UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
-        unifiedOrderRequestData.appid =ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
-        unifiedOrderRequestData.mch_id =ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
+        unifiedOrderRequestData.appid = ProjectSettings.getMapData("weixinserverinfo").get("appid").toString();
+        unifiedOrderRequestData.mch_id = ProjectSettings.getMapData("weixinserverinfo").get("mchid").toString();
         unifiedOrderRequestData.sub_mch_id = "1360239402";//固定死
         unifiedOrderRequestData.body = "购物消费";
         unifiedOrderRequestData.attach = (getAttribute("commopenid"));

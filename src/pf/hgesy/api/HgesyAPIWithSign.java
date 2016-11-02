@@ -38,6 +38,7 @@ public abstract class HgesyAPIWithSign extends HgesyAPI {
             httpPost.abort();
         }
 
+        ProjectLogger.error("Response Data:\r\n" + responseString);
         boolean ret = parseResponse(responseString, apiKey) && handlerResponse(responseResult_);
 
         if (!ret) {
