@@ -69,7 +69,7 @@
         if (nowindex < Math.ceil(rdlist.length / 20)) nowindex = nowindex + 1; else nowindex = Math.ceil(rdlist.length / 20);
       }
       htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='table table-striped table-bordered table-hover'>";
-      htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>支付金额</th><th>支付状态</th></tr>";
+      htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>佣金</th><th>支付状态</th></tr>";
       for (var j=(nowindex-1)*20;j<Math.min((nowindex)*20, rdlist.length);j++){
         htmlstr +="<tr>";
         htmlstr +="<td>****"+(rdlist[j].commopenid).substr(20,4)+"****</td>";

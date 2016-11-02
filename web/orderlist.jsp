@@ -73,7 +73,7 @@
         if (nowindex < Math.ceil(rdlist.length / 20)) nowindex = nowindex + 1; else nowindex = Math.ceil(rdlist.length / 20);
       }
         htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='table table-striped table-bordered table-hover'>";
-        htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>利润</th><th>返佣状态</th></tr>";
+        htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>利润</th><th>交易时间</th><th>返佣状态</th></tr>";
         for (var j=(nowindex-1)*20;j<Math.min((nowindex)*20, rdlist.length);j++){
           htmlstr +="<tr>";
           htmlstr +="<td>****"+(rdlist[j].openid).substr(20,4)+"****</td>";
@@ -81,6 +81,7 @@
           htmlstr +="<td>"+(rdlist[j].bonus/100.00)+"</td>";
           htmlstr +="<td>"+(rdlist[j].comm/100.00)+"</td>";
           htmlstr +="<td>"+(rdlist[j].amount-rdlist[j].bonus-rdlist[j].comm)/100.00+"</td>";
+          htmlstr +="<td>"+(rdlist[j].timeend)+"</td>";
           var v = rdlist[j].status==0?"未支付":(rdlist[j].status==1?"已支付":"已作废");
           htmlstr +="<td>"+v+"</td>";
           htmlstr +="</tr>";
