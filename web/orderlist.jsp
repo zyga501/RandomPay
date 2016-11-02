@@ -73,15 +73,15 @@
         if (nowindex < Math.ceil(rdlist.length / 20)) nowindex = nowindex + 1; else nowindex = Math.ceil(rdlist.length / 20);
       }
         htmlstr = "纪录："+nowindex+" / "+Math.ceil(rdlist.length/20)+"页<br><table class='table table-striped table-bordered table-hover'>";
-        htmlstr +="<tr><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>利润</th><th>交易时间</th><th>返佣状态</th></tr>";
+        htmlstr +="<tr><th>交易时间</th><th>账号</th><th>支付金额</th><th>红包</th><th>返佣金额</th><th>利润</th><th>返佣状态</th></tr>";
         for (var j=(nowindex-1)*20;j<Math.min((nowindex)*20, rdlist.length);j++){
           htmlstr +="<tr>";
+          htmlstr +="<td>"+(rdlist[j].timeend)+"</td>";
           htmlstr +="<td>****"+(rdlist[j].openid).substr(20,4)+"****</td>";
           htmlstr +="<td>"+(rdlist[j].amount/100.00)+"</td>";
           htmlstr +="<td>"+(rdlist[j].bonus/100.00)+"</td>";
           htmlstr +="<td>"+(rdlist[j].comm/100.00)+"</td>";
           htmlstr +="<td>"+(rdlist[j].amount-rdlist[j].bonus-rdlist[j].comm)/100.00+"</td>";
-          htmlstr +="<td>"+(rdlist[j].timeend)+"</td>";
           var v = rdlist[j].status==0?"未支付":(rdlist[j].status==1?"已支付":"已作废");
           htmlstr +="<td>"+v+"</td>";
           htmlstr +="</tr>";
@@ -106,25 +106,25 @@
 <form id="searchform">
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <input name="startdate" id="startdate" class="form-control layer-date" placeholder="开始日期"
                onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <input name="enddate" id="enddate" class="form-control layer-date" placeholder="结束日期"
                onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></div>
-      <div class="col-md-4"><label>支付状态：</label><select name="paystatus" >
+      <div class="col-md-2"><label>支付状态：</label><select name="paystatus" >
         <option value="0">未支付</option>
         <option value="1">已支付</option>
         <option value="2">已作废</option>
       </select></div>
-      </div>
-    <div class="row">
-      <div class="col-md-4"><input name="openid" type="text" class="form-control" placeholder="消费号"></div>
-      <div class="col-md-4"><input name="comopenid" type="text" class="form-control" placeholder="代理/销售编号"></div>
       <div class="col-md-2"><input  type="reset" class=" btn btn-danger" value="重置"></div>
       <div class="col-md-2">
         <input type="button" class="btn btn-primary" onclick="getinfo()" value="检 索"></div>
     </div>
+      </div>
+    <div class="row">
+      <!--div class="col-md-4"><input name="openid" type="text" class="form-control" placeholder="消费号"></div>
+      <div class="col-md-4"><input name="comopenid" type="text" class="form-control" placeholder="代理/销售编号"></div-->
   </div>
   </div>
 
