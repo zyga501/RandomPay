@@ -1,62 +1,72 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-<head>
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="<%=request.getContextPath()%>/css/laypage.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=request.getContextPath()%>/css/laydate.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=request.getContextPath()%>/css/layer.css" rel="stylesheet" type="text/css"/>
-<style>
-    table
-    {
-        width:100%;
-        height:100%;
-        margin-left: auto;
-        margin-right: auto;
-        border-spacing:0px;
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>首页</title>
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/index.css">
+<script type="text/javascript" language="javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="<%=request.getContextPath()%>/js/fontSize.js"></script>
+<script> 
+  $().ready(function(){ 
+  function paychoose() {
+            $.ajax({
+            type: 'post',
+            url: '<%=request.getContextPath()%>/weixin/Pay!checkBonus',
+            dataType:"json",
+            success: function (data) {
+                var json = eval("(" + data + ")");
+                if (json.resultCode == "Failed") { 
+					alert('你可能还有红包尚未领取,请先点击领取');
+					history.go(-1);
+                }
+            }
+            })
+        };
+        });
+   function pay(b){
+        window.parent.location.href = "<%=request.getContextPath()%>/weixin/jsPayCallback.jsp?total_fee="+b;
     }
-    .but {
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
-        background-color: #06af3f;
-        color: #FEFEFE;
-        border: none;
-        font-size: 18px;
-        width: 100%;
-        padding: 10px 6px;
-    }
-    td{
-        width:50%;
-        height:50%;
-        text-align:center;
-    }
-    img{
-        width:80%;
-        vertical-align:middle;
-    }
-    span{
-        color: #FF9900;
-    }
-</style>
-    <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
-    <script>
-        function pay(b){
-            window.parent.location.href = "<%=request.getContextPath()%>/weixin/jsPayCallback.jsp?total_fee="+b;
-        }
-    </script>
+</script>
 </head>
-<body scroll="no">
-<div>
-    <table>
-        <tr>
-            <td><img src="<%=request.getContextPath()%>/image/10pay.png" onclick="pay(1000)"></td>
-            <td><img src="<%=request.getContextPath()%>/image/20pay.png" onclick="pay(2000)"></td>
-        </tr>
-        <tr>
-            <td><img src="<%=request.getContextPath()%>/image/50pay.png" onclick="pay(5000)"></td>
-            <td><img src="<%=request.getContextPath()%>/image/100pay.png" onclick="pay(10000)"></td>
-        </tr>
-    </table>
-    </div>
+
+<body>
+<div class="wrap">
+	<div class="payment">
+    	<ul>
+        	<li onclick="pay(1000)">
+           		<div class="num01">100</div>
+                <div class="num02">封顶</div>
+                <div class="num03">仅需要支付<font>10</font>元</div>
+                
+            </li>
+            <li onclick="pay(2000)">
+           		<div class="num01">200</div>
+                <div class="num02">封顶</div>
+                <div class="num03" >仅需要支付<font>20</font>元</div>
+                
+            </li>
+            <li onclick="pay(5000)">
+           		<div class="num01">600</div>
+                <div class="num02">封顶</div>
+                <div class="num03">仅需要支付<font>50</font>元</div>
+                
+            </li>
+            <li onclick="pay(10000)">
+           		<div class="num01">1200</div>
+                <div class="num02">封顶</div>
+                <div class="num03" >仅需要支付<font>100</font>元</div>
+                
+            </li>
+        </ul>
+    </div>	
+	
+</div>
+<div class="footer">
+    <a href="choosepay.jsp">去支付</a>
+    <a href="randompay.jsp">抢红包</a>
+    <a href="promopage.jsp">代理</a>
+    <a href="infocenter.jsp">个人中心</a>
+</div>
 </body>
 </html>

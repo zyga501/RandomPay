@@ -7,6 +7,9 @@ import pf.database.PendingOrder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +42,7 @@ public class CallbackAction extends AjaxActionSupport {
         saveOrderToDb(responseResult);
     }
 
-    private boolean saveOrderToDb(Map<String,Object> responseResult) {
+    private boolean saveOrderToDb(Map<String,Object> responseResult) throws ParseException {
         synchronized (syncObject) {
             if (PendingOrder.getPendingOrderByOpenId(responseResult.get("openid").toString()) == null) {
                 PendingOrder pendingOrder = new PendingOrder();
@@ -59,7 +62,7 @@ public class CallbackAction extends AjaxActionSupport {
                     }
                     pendingOrder.setComm((int)(pendingOrder.getAmount()* payReturnList.get(minIndex).getCommrate()));
                 }
-                pendingOrder.setTimeend(responseResult.get("time_end").toString());
+                pendingOrder.setTimeend((new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" )).format(( new SimpleDateFormat( "yyyyMMddHHmmss" )).parse(responseResult.get("time_end").toString())));
                 PendingOrder.insertOrderInfo(pendingOrder);
             }
         }

@@ -278,5 +278,12 @@ public class PayAction extends AjaxActionSupport {
         }
     }
 
+    public  String getBonusList(){
+        Map pa =new HashMap<>();
+        pa.put("openid",getAttribute("openid"));
+        List<OrderInfo> ol = OrderInfo.getOrderInfoByPara(pa);
+        return AjaxActionComplete(ol);
+    }
+
     public final static Object syncObject = new Object();
 }

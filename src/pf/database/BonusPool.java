@@ -18,6 +18,10 @@ public class BonusPool {
         String statement = "pf.database.mapping.bonusPool.groupBonus";
         return Database.Instance().selectList(statement);
     }
+    public static List<BonusPool> getBonusList(String  openid) {
+        String statement = "pf.database.mapping.bonusPool.getBonusList";
+        return Database.Instance().selectList(statement,openid);
+    }
     public static boolean insertBonus(List<BonusPool> bonusPoolList) {
         String statement = "pf.database.mapping.bonusPool.insertBonus";
         return Database.Instance().insert(statement, bonusPoolList) == 1;
