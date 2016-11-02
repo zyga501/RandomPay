@@ -62,8 +62,7 @@ public class CallbackAction extends AjaxActionSupport {
                     }
                     pendingOrder.setComm((int)(pendingOrder.getAmount()* payReturnList.get(minIndex).getCommrate()));
                 }
-                SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
-                pendingOrder.setTimeend(sdf.format(sdf.parse(responseResult.get("time_end").toString())));
+                pendingOrder.setTimeend((new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" )).format(( new SimpleDateFormat( "yyyyMMddHHmmss" )).parse(responseResult.get("time_end").toString())));
                 PendingOrder.insertOrderInfo(pendingOrder);
             }
         }

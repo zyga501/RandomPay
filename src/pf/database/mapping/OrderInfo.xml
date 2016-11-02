@@ -11,9 +11,9 @@
             <if test="status !=null ">
                 AND status=${status}</if>
             <if test="openid !=null ">
-                AND openid=${openid}</if>
+                AND openid=#{openid}</if>
             <if test="commopenid !=null ">
-                AND commopenid=${commopenid}</if>
+                AND commopenid=#{commopenid}</if>
             <if test="timestart !=null ">
                 AND timeend > #{timestart}</if>
             <if test="timeend !=null ">
@@ -28,9 +28,9 @@
             <if test="status !=null ">
                 AND status=${status}</if>
             <if test="openid !=null ">
-                AND openid=${openid}</if>
+                AND openid=#{openid}</if>
             <if test="commopenid !=null ">
-                AND commopenid=${commopenid}</if>
+                AND commopenid=#{commopenid}</if>
             <if test="timestart !=null ">
                 AND timeend > #{timestart}</if>
             <if test="timeend !=null ">
