@@ -33,7 +33,7 @@
             </result>
             <result name="page404">./404.jsp</result>
         </global-results>
-        <action name="web!*" class="pf.weixin.action.webAction" method="{1}">
+        <action name="web!*" class="pf.weixin.action.WebAction" method="{1}">
             <result name="mainpagejsp">mainpage.jsp</result>
             <result name="loginjsp">adminlogin.jsp</result>
         </action>
