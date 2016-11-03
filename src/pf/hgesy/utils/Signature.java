@@ -21,18 +21,16 @@ public class Signature {
         for (Field f : fields) {
             f.setAccessible(true);
             if (f.get(o) != null && f.get(o) != "") {
-                list.add(f.getName() + "=" + f.get(o) + "&");
+                list.add(f.get(o).toString());
             }
         }
         int size = list.size();
-        String [] arrayToSort = list.toArray(new String[size]);
-        Arrays.sort(arrayToSort, String.CASE_INSENSITIVE_ORDER);
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < size; i ++) {
-            sb.append(arrayToSort[i]);
+            sb.append(list.get(i));
         }
         String result = sb.toString();
-        result += "key=" + key;
+        result += key;
         result = MD5.MD5Encode(result).toUpperCase();
         return result;
     }

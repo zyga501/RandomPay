@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class webAction extends AjaxActionSupport {
+public class WebAction extends AjaxActionSupport {
 
     private List<Object> menulist = new ArrayList<>();
     public List<Object> getMenulist() {

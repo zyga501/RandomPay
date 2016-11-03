@@ -11,6 +11,9 @@ public class RequestData {
         this.sign = Signature.generateSign(this, apiKey);
     }
 
+    public String buildRequestData() {
+        return "";
+    }
 
     public String sign;
 }

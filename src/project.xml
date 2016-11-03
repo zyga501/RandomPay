@@ -17,4 +17,8 @@
         <p12path>D:\\cert\\apiclient_cert.p12</p12path>
         <p122path>C:\\Users\\hammer\\Downloads\\cert\\apiclient_cert.p12</p122path>
     </weixinserverinfo>
+    <hgesy>
+        <account>wzqm</account>
+        <appKey>A14E9EC817A7A1DE144A0420DCAED3C5</appKey>
+    </hgesy>
 </project>
