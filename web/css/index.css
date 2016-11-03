@@ -43,7 +43,7 @@ body {
 }
 .wrap {
   width: 100%;
-  height: 28.44444444rem;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -87,7 +87,7 @@ body {
 .index_list ul li {
   float: left;
   width: 2.96296296rem;
-  height: 4.56296296rem;
+  height: 3.67407407rem;
   margin: 0 0.1037037rem 0.38518519rem 0;
   background: url(../images/lin_hb_bg.png) no-repeat;
   background-size: 100% 100%;
@@ -125,7 +125,7 @@ body {
 }
 .index_list ul li .click_text {
   position: absolute;
-  top: 3.55555556rem;
+  top: 2.81481481rem;
   left: 0.74074074rem;
   width: 1.48148148rem;
   line-height: 0.47407407rem;
@@ -137,7 +137,7 @@ body {
 }
 .index_list ul li .num_text {
   position: absolute;
-  top: 3.55555556rem;
+  top: 2.81481481rem;
   left: 0.74074074rem;
   width: 1.48148148rem;
   line-height: 0.47407407rem;
@@ -166,7 +166,7 @@ body {
 /*个人中心*/
 .person_top {
   position: absolute;
-  top: 12.14814815rem;
+  top: 11.25925926rem;
   left: 50%;
   margin-left: -7.27407407rem;
   width: 14.54814815rem;
@@ -202,11 +202,11 @@ body {
 }
 .person_content {
   position: absolute;
-  top: 15.82222222rem;
+  top: 14.04444444rem;
   left: 50%;
   margin-left: -7.27407407rem;
   width: 14.54814815rem;
-  height: 10.75555556rem;
+  height: 9.27407407rem;
   border: 2px solid #d8cccc;
   border-radius: 5px;
 }
@@ -263,7 +263,7 @@ body {
   left: 50%;
   margin-left: -6.66666667rem;
   width: 13.33333333rem;
-  height: 8.88888889rem;
+  height: 7.40740741rem;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -319,12 +319,12 @@ body {
   top: 50%;
   left: 50%;
   margin-left: -7.11111111rem;
-  margin-top: -5.33333333rem;
+  margin-top: -8.14814815rem;
   width: 14.22222222rem;
-  height: 6.66666667rem;
+  height: 5.18518519rem;
   background: #fff;
   border-radius: 10px;
-  padding-top: 0.74074074rem;
+  padding-top: 0.44444444rem;
 }
 .pop_content h2 {
   width: 100%;
@@ -341,7 +341,7 @@ body {
   text-align: center;
   font-size: 0.59259259rem;
   color: #666;
-  line-height: 1.18518519rem;
+  line-height: 0.88888889rem;
 }
 .pop_btn {
   position: absolute;
@@ -366,13 +366,13 @@ body {
   left: 50%;
   margin-left: -7.00740741rem;
   width: 14.01481481rem;
-  height: 14.37037037rem;
+  height: 11.85185185rem;
   overflow: hidden;
 }
 .payment ul li {
   float: left;
   width: 6.37037037rem;
-  height: 6.81481481rem;
+  height: 5.62962963rem;
   background: url(../images/red_paper_bg.png) no-repeat;
   background-size: 100% 100%;
   margin: 0 0.53333333rem 0.53333333rem 0;
@@ -390,17 +390,20 @@ body {
 }
 .payment ul li .num01 {
   position: absolute;
-  top: 2.51851852rem;
+  top: 2.07407407rem;
   left: 0.14814815rem;
-  font-size: 1.54074074rem;
+  font-size: 0.95925926rem;
   font-family: "Arial";
   width: 5.18518519rem;
   text-align: center;
   z-index: 2;
 }
+.payment ul li .num01 font {
+  font-size: 0.74074074rem;
+}
 .payment ul li .num02 {
   position: absolute;
-  top: 3.97037037rem;
+  top: 3.17037037rem;
   left: 0;
   font-size: 0.5037037rem;
   font-family: "Arial";
@@ -410,7 +413,7 @@ body {
 }
 .payment ul li .num03 {
   position: absolute;
-  top: 5.03703704rem;
+  top: 4rem;
   left: 0;
   font-size: 0.68148148rem;
   font-family: "Arial";
@@ -437,11 +440,11 @@ body {
 /*联系我们*/
 .link_code {
   position: absolute;
-  top: 12.23703704rem;
+  top: 11.2rem;
   left: 50%;
   margin-left: -5.25925926rem;
   width: 10.51851852rem;
-  height: auto;
+  height: 10.4rem;
 }
 .link_code img {
   width: 10.51851852rem;
@@ -449,7 +452,7 @@ body {
 }
 .link_text {
   position: absolute;
-  top: 23.11111111rem;
+  top: 21.62962963rem;
   left: 0;
   padding: 0 0.44444444rem;
   color: red;
