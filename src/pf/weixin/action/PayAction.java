@@ -305,7 +305,14 @@ public class PayAction extends AjaxActionSupport {
 
     public  String getBonusList(){
         Map pa =new HashMap<>();
-        pa.put("openid",getAttribute("openid"));
+        pa.put("openid",getAttribute("openid"));//getAttribute("openid")
+        List<OrderInfo> ol = OrderInfo.getOrderInfoByPara(pa);
+        return AjaxActionComplete(ol);
+    }
+
+    public  String getCommList(){
+        Map pa =new HashMap<>();
+        pa.put("commopenid",getAttribute("openid"));//
         List<OrderInfo> ol = OrderInfo.getOrderInfoByPara(pa);
         return AjaxActionComplete(ol);
     }
