@@ -167,7 +167,7 @@
     <a href="choosepay.jsp">去支付</a>
     <a href="randompay.jsp">抢红包</a>
     <a href="Pay!makeQcode">代理</a>
-    <a href="infocenter.jsp">个人中心</a>
+    <a href="Pay!getCommission">个人中心</a>
 </div>
 </body>
 </html>
