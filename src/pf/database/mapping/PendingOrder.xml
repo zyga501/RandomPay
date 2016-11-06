@@ -7,6 +7,9 @@
     <select id="getPendingOrderByOpenid" parameterType="String" resultMap="orderInfoResult">
         SELECT * FROM PendingOrder where openid=#{openid}
     </select>
+    <select id="getPendingOrderByOrderNo" parameterType="String" resultMap="orderInfoResult">
+        SELECT * FROM PendingOrder where orderno=#{orderno}
+    </select>
     <select id="deletePendingOrderByOpenid" parameterType="String">
         DELETE FROM PendingOrder WHERE openid=#{openid}
     </select>
@@ -17,10 +20,13 @@
     <update id="updateOrderInfoDone" parameterType="String">
         update PendingOrder set status=1 where  commopenid=#{commopenid} and status=0
     </update>
+    <update id="updateOrderInfoByOrderNo" parameterType="pf.database.OrderInfo">
+        UPDATE PendingOrder set amount=#{amount}, timeend=#{timeend} where orderNo=#{orderNo}
+    </update>
 
     <insert id="insertOrderInfo" parameterType="pf.database.OrderInfo">
-        INSERT INTO PendingOrder(openid, amount,commopenid,comm,timeend)
-        VALUE (#{openid},#{amount},#{commopenid},#{comm},#{timeend})
+        INSERT INTO PendingOrder(openid, amount,commopenid,comm,timeend,orderNo)
+        VALUE (#{openid},#{amount},#{commopenid},#{comm},#{timeend},#{orderNo})
     </insert>
 
     <resultMap type="pf.database.PendingOrder" id="orderInfoResult">
@@ -32,5 +38,6 @@
         <result property="status" column="status" jdbcType="NUMERIC" />
         <result property="timeend" column="timeend" jdbcType="VARCHAR" />
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
+        <result property="orderNo" column="orderNo" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>
