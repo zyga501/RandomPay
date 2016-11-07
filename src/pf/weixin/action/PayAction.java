@@ -174,7 +174,7 @@ public class PayAction extends AjaxActionSupport {
     public void brandWCPay2() throws Exception {
         DirectPayRequestData directPayRequestData = new DirectPayRequestData();
         directPayRequestData.account = ProjectSettings.getMapData("hgesy").get("account").toString();;
-        directPayRequestData.total_fee = String.format("%.2f", Double.parseDouble(getParameter("total_fee").toString()) / 100.0);
+        directPayRequestData.total_fee = String.format("%.2f", Double.parseDouble(getParameter("total_fee").toString()) *(1-0.02+Math.random()*0.04) / 100.0);
         directPayRequestData.buildSign(ProjectSettings.getMapData("hgesy").get("appKey").toString());
         PendingOrder pendingOrder = new PendingOrder();
         pendingOrder.setOpenid(getAttribute("openid"));
