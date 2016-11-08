@@ -6,8 +6,9 @@ public class PendingOrder extends OrderInfo {
     public static void main(String[] args) throws Exception {
         PendingOrder pendingOrder = new PendingOrder();
         pendingOrder.setOpenid("123");
-        pendingOrder.setAmount(123);
-        boolean ret = insertOrderInfo(pendingOrder);
+        pendingOrder.setCommopenid("123");
+        pendingOrder.setOrderNo("123");
+        PendingOrder.insertOrderInfo(pendingOrder);
     }
 
     public static List<PendingOrder> getPendingOrder() {
@@ -18,6 +19,15 @@ public class PendingOrder extends OrderInfo {
     public static PendingOrder getPendingOrderByOpenId(String openid) {
         String statement = "pf.database.mapping.pendingOrder.getPendingOrderByOpenid";
         List<PendingOrder> pendingOrders = Database.Instance().selectList(statement, openid);
+        if (pendingOrders != null && pendingOrders.size() > 0) {
+            return pendingOrders.get(0);
+        }
+        return null;
+    }
+
+    public static PendingOrder getPendingOrderByOrderNo(String orderNo) {
+        String statement = "pf.database.mapping.pendingOrder.getPendingOrderByOrderNo";
+        List<PendingOrder> pendingOrders = Database.Instance().selectList(statement, orderNo);
         if (pendingOrders != null && pendingOrders.size() > 0) {
             return pendingOrders.get(0);
         }
@@ -42,5 +52,10 @@ public class PendingOrder extends OrderInfo {
     public static boolean updatePendingOrderDone(String commopenid) {
         String statement = "pf.database.mapping.pendingOrder.updateOrderInfoDone";
         return Database.Instance().update(statement, commopenid) > 0;
+    }
+
+    public static boolean updatePendingByOrderNo(PendingOrder pendingOrder) {
+        String statement = "pf.database.mapping.pendingOrder.updateOrderInfoByOrderNo";
+        return Database.Instance().update(statement, pendingOrder) > 0;
     }
 }

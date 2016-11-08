@@ -25,7 +25,7 @@
         };
         });
    function pay(b){
-        window.parent.location.href = "<%=request.getContextPath()%>/weixin/jsPayCallback.jsp?total_fee="+b;
+       window.parent.location.href = "<%=request.getContextPath()%>/weixin/Pay!brandWCPay2?total_fee="+b;
     }
 </script>
 </head>

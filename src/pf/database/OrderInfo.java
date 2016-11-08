@@ -123,6 +123,14 @@ public class OrderInfo {
         this.createTime_ = createTime;
     }
 
+    public String getOrderNo() {
+        return orderNo_;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo_ = orderNo;
+    }
+
     private long id_;
     private String openid_;
     private int amount_;
@@ -133,4 +141,5 @@ public class OrderInfo {
     private String commopenid_;
     private String timeend_;
     private Timestamp createTime_;
+    private String orderNo_;
 }

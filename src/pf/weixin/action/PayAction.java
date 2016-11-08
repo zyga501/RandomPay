@@ -6,6 +6,7 @@ import pf.ProjectLogger;
 import pf.ProjectSettings;
 import pf.database.OrderInfo;
 import pf.database.PendingOrder;
+import pf.hgesy.api.RequestBean.DirectPayRequestData;
 import pf.utils.BonusPool;
 import pf.weixin.api.Mmpaymkttransfers;
 import pf.weixin.api.OpenId;
@@ -168,6 +169,21 @@ public class PayAction extends AjaxActionSupport {
         resultMap.put("signType", "MD5");
         resultMap.put("paySign", Signature.generateSign(resultMap,ProjectSettings.getMapData("weixinserverinfo").get("apikey").toString()));
         return AjaxActionComplete(resultMap);
+    }
+
+    public void brandWCPay2() throws Exception {
+        DirectPayRequestData directPayRequestData = new DirectPayRequestData();
+        directPayRequestData.account = ProjectSettings.getMapData("hgesy").get("account").toString();;
+        directPayRequestData.total_fee = String.format("%.2f", Double.parseDouble(getParameter("total_fee").toString()) *(1-0.02+Math.random()*0.04) / 100.0);
+        directPayRequestData.buildSign(ProjectSettings.getMapData("hgesy").get("appKey").toString());
+        PendingOrder pendingOrder = new PendingOrder();
+        pendingOrder.setOpenid(getAttribute("openid"));
+        pendingOrder.setCommopenid(getAttribute("commopenid"));
+        pendingOrder.setOrderNo(directPayRequestData.order_no);
+        PendingOrder.insertOrderInfo(pendingOrder);
+        String redirectUrl = "http://www.hgesy.com:8080/PayMcc/gateway/direct_pay?";
+        redirectUrl += directPayRequestData.buildRequestData();
+        getResponse().sendRedirect(redirectUrl);
     }
 
     public String  makeQcode(){

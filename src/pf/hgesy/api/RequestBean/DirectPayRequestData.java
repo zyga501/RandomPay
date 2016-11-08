@@ -8,12 +8,12 @@ public class DirectPayRequestData extends RequestData {
     public DirectPayRequestData() {
         order_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         request_time = StringUtils.generateDate("yyyyMMddHHmmss", "GMT+8");
-        product_code = "C3";
+        product_code = "C3T1";
     }
 
     @Override
     public String buildRequestData() {
-        return String.format("account=%s&order_no=%s&product_code=%s&request_time=%s&sign=%s&total_fee=%s",
+        return String.format("account=%s&order_no=%s&product_code=%s&request_time=%s&sign=%s&total_fee=%s&attach=123",
                 account, order_no, product_code, request_time, sign, total_fee);
     }
 
