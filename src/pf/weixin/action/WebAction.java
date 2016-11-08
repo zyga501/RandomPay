@@ -5,7 +5,9 @@ import pf.database.BonusPool;
 import pf.database.MenuTree;
 import pf.database.PayReturn;
 import pf.database.User;
+import pf.utils.PublicFunc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,5 +155,22 @@ public class WebAction extends AjaxActionSupport {
         wwb.close();
         os.flush();
         os.close();*/
+    }
+
+    public  String   replaceLinkme(){
+        String p= Thread.currentThread().getContextClassLoader().getResource("").getPath().substring(1).replace("WEB-INF/classes/","");
+        System.out.print(p);
+        try {
+            File ff = (File) getParameter("file_data");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+            File fm = new File(p+"/images/linkme.jpg");
+            if (null != ff && ff.length() > 0) {
+                PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return  AjaxActionComplete(false);
+        }
+        return  AjaxActionComplete(true);
     }
 }

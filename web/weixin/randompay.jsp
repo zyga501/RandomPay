@@ -33,11 +33,11 @@
                     }
                     else {
                         for (var i = 1; i <= json.hblist.length; i++) {
-                            $('.bjtr td#t' + i).text(json.hblist[i - 1]);
+                            $('#t' + i+" .menoy_icon").text(json.hblist[i - 1]);
                         }
                         alert(json.State);
                         for (var i = 1; i <= 15; i++) {
-                            $('.bjtr td#t' + i).text("");
+                            $('#t' + i+" .menoy_icon").text("");
                         }
                     }
                     boolclick = false;
