@@ -5,6 +5,7 @@ import framework.utils.StringUtils;
 import pf.ProjectLogger;
 import pf.ProjectSettings;
 import pf.database.OrderInfo;
+import pf.database.PayReturn;
 import pf.database.PendingOrder;
 import pf.hgesy.api.RequestBean.DirectPayRequestData;
 import pf.utils.BonusPool;
@@ -95,10 +96,19 @@ public class PayAction extends AjaxActionSupport {
         }
 
         BonusPool.deleteBonus(pendingOrder.getAmount(), randomPayRequestData.amount);
-
+        int minv = 0 ;
+        int maxv = 0 ;
+        List<PayReturn> payReturn =PayReturn.getPayReturn();
+        for (int i=0;i<payReturn.size();i++){
+            if (payReturn.get(i).getPaynum()*100==randomPayRequestData.amount ){
+                maxv = payReturn.get(i).getRtmax();
+                minv = payReturn.get(i).getRtmin();
+                break;
+            }
+        }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("State", "恭喜您，抽到了" + randomPayRequestData.amount / 100.00 + "元红包！");
-        float[] aryint = BonusPool.generateVirtualBonus(Integer.parseInt(getParameter("itempos").toString())-1, (float) (randomPayRequestData.amount / 100.00),200);
+        float[] aryint = BonusPool.generateVirtualBonus(Integer.parseInt(getParameter("itempos").toString())-1, (float) (randomPayRequestData.amount / 100.00),minv,maxv);
         List<Float> hbList = new ArrayList<>();
         for (int i=0;i<aryint.length;i++)
             hbList.add(i,aryint[i]);

@@ -6,16 +6,20 @@ import java.util.*;
 
 public class BonusPool {
     public static void main(String[] args) throws Exception {
-        int totalBonus = 0;
-        do {
-            int bonus = BonusPool.getBonus(2000);
-            totalBonus += bonus;
-            pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(2000, bonus));
-        } while (BonusPool.getBonusSize(2000) != 0);
+//        int totalBonus = 0;
+//        do {
+//            int bonus = BonusPool.getBonus(2000);
+//            totalBonus += bonus;
+//            pf.database.BonusPool.deleteBonus(new pf.database.BonusPool(2000, bonus));
+//        } while (BonusPool.getBonusSize(2000) != 0);
+//        System.out.println("Total Bonus:" + totalBonus);
 
-        System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + 200);
-        System.out.println("Total Bonus:" + totalBonus);
-        System.out.println();
+
+//        float[] aryint = BonusPool.generateVirtualBonus(12, (float) (1000 / 100.00),1,100);
+//        List<Float> hbList = new ArrayList<>();
+//        for (int i=0;i<aryint.length;i++)
+//            System.out.println(aryint[i]);
+//        System.out.println("BonusBase:" + 10 + " BonusMax:" + 200 + " LossRate:" + 0.9 + " PoolSize:" + 200);
     }
 
     public static int getBonus(int amount) {
@@ -170,15 +174,15 @@ public class BonusPool {
         return true;
     }
 
-    public static float[] generateVirtualBonus(int bonusIndex, float bonus,int maxval){
+    public static float[] generateVirtualBonus(int bonusIndex, float bonus,int minval,int maxval){
         Random indexRand = new Random();
         int rd =indexRand.nextInt(3)+1;
         float[] intArray =new float[15];
         for (int i=0;i<rd;i++) {
-            intArray[i] = (float) ((indexRand.nextInt((int) (bonus*100))+100)/100.00);
+            intArray[i] = (float) ((indexRand.nextInt((int) (bonus*100))+minval*100)/100.00);
         }
         for (int i=rd;i<14;i++) {
-            intArray[i] = (float) ((indexRand.nextInt(maxval*100)+100)/100.00);
+            intArray[i] = (float) ((indexRand.nextInt((maxval*100-minval*100-(int)(bonus*100)))+minval*100+(int) (bonus*100))/100.00);
         }
         float tmpint;
         for (int i=0;i<14;i++){
